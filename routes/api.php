@@ -48,7 +48,7 @@ Route::get('country/states/{country_id}', [StateController::class, 'getByCountry
 Route::resource('cities', CityController::class);
 Route::get('state/cities/{state_id}', [CityController::class, 'getByState'])->name('api.cities_by_state');
 Route::get('get_csrf_token', [AuthController::class, 'get_csrf_token']);
-Route::get('latest/offers', [JobOfferController::class, 'get_latest_offers'])->name('get_latest_offers');
+Route::get('/latest/offers', [JobOfferController::class, 'get_latest_offers'])->name('get_latest_offers');
 
 Route::middleware('auth:sanctum')->group(function () {
 

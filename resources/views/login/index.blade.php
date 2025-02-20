@@ -24,9 +24,9 @@
                 <label>Password</label>
                 <input id="password-field" type="password" name="password" value="" placeholder="Password" required>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <div class="g-recaptcha" data-sitekey="6LeYCvYlAAAAAM5-aLYRj4D5vIKg903-p2DCRtDe"></div>
-              </div>
+              </div> -->
               <div class="form-group">
                 <button class="theme-btn btn-style-one" type="submit" name="log-in">Log In</button>
               </div>

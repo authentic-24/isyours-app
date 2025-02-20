@@ -6,8 +6,7 @@ use App\Models\KeyResponsability;
 use Illuminate\Http\Request;
 use App\Models\JobOffer;
 use Illuminate\Support\Facades\Validator;
-
-
+use Illuminate\Support\Facades\DB;
 
 class JobOfferController extends Controller
 {
@@ -167,18 +166,77 @@ class JobOfferController extends Controller
 
     public function get_latest_offers()
     {
-        $jobOffers = JobOffer::with(
-            'jobType', 
-            'skills', 
-            'city.state', 
-            'users.city', 
-            'jobLevel', 
-            'jobTitle', 
-            'educationLevel',
-            'language',
-            'proficiencyLevel',
-            'company'
-        )->orderBy('created_at', 'DESC')->take(3)->get();
-        return response()->json($jobOffers);
+        try {
+            $startTime = microtime(true);
+
+            DB::enableQueryLog(); // Enable query logging
+
+            $jobOffers = JobOffer::select('job_offers.*', 
+                'job_types.name as job_type_name',
+                'cities.name as city_name',
+                'states.name as state_name',
+                'states.code as state_code',
+                'job_levels.name as job_level_name',
+                'job_titles.name as job_title_name',
+                'education_levels.name as education_level_name',
+                'languages.name as language_name',
+                'proficiency_levels.name as proficiency_level_name',
+                'company_profile.name as company_name')
+            ->join('job_types', 'job_offers.job_type_id', '=', 'job_types.id')
+            ->join('cities', 'job_offers.city_id', '=', 'cities.id')
+            ->join('states', 'cities.state_id', '=', 'states.id')
+            ->join('job_levels', 'job_offers.job_level_id', '=', 'job_levels.id')
+            ->join('job_titles', 'job_offers.job_title_id', '=', 'job_titles.id')
+            ->join('education_levels', 'job_offers.education_level_id', '=', 'education_levels.id')
+            ->join('languages', 'job_offers.language_id', '=', 'languages.id')
+            ->join('proficiency_levels', 'job_offers.proficiency_level_id', '=', 'proficiency_levels.id')
+            ->leftJoin('company_profile', 'job_offers.company_id', '=', 'company_profile.id')
+            ->orderBy('job_offers.created_at', 'DESC')
+            ->take(3)
+            ->get();
+
+            // Fetch skills separately (as it's a many-to-many relationship)
+            $jobOfferIds = $jobOffers->pluck('id')->toArray();
+            $skills = DB::table('job_offer_skill')
+                ->join('skills', 'job_offer_skill.skill_id', '=', 'skills.id')
+            ->whereIn('job_offer_skill.job_offer_id', $jobOfferIds)
+            ->select('job_offer_skill.job_offer_id', 'skills.id as skill_id', 'skills.name as skill_name')
+            ->get();
+
+            // Group skills by job offer
+            $skillsByJobOffer = $skills->groupBy('job_offer_id');
+
+            // Add skills to job offers
+            $jobOffers->each(function ($jobOffer) use ($skillsByJobOffer) {
+                $jobOffer->skills = $skillsByJobOffer->get($jobOffer->id, collect());
+            });
+
+            $queries = DB::getQueryLog(); // Get query log
+
+            $endTime = microtime(true);
+            $executionTime = ($endTime - $startTime) * 1000; // in milliseconds
+
+            \Log::info('Query execution time: ' . $executionTime . 'ms');
+            \Log::info('Latest job offers fetched', ['count' => $jobOffers->count()]);
+
+            // Log each query
+            foreach ($queries as $query) {
+                \Log::info('SQL Query:', [
+                    'query' => $query['query'],
+                    'bindings' => $query['bindings'],
+                    'time' => $query['time']
+                ]);
+            }
+
+            DB::disableQueryLog(); // Disable query logging
+
+            return response()->json($jobOffers);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching latest job offers', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json(['error' => 'An error occurred while fetching latest offers'], 500);
+        }
     }
 }

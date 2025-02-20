@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
+use App\Mail\WelcomeEmail;
 
 class AuthController extends Controller
 {
@@ -56,6 +60,14 @@ class AuthController extends Controller
             $user->assignRole('candidate');
         } elseif ($request->user_type == 'employer') {
             $user->assignRole('employer');
+        }
+
+        // Add email sending logic here
+        try {
+            Mail::to($user->email)->queue(new WelcomeEmail($user));
+            Log::info('Welcome email sent successfully', ['user_id' => $user->id]);
+        } catch (\Exception $e) {
+            Log::error('Failed to send welcome email', ['user_id' => $user->id, 'error' => $e->getMessage()]);
         }
 
         $token = $user->createToken('API Token');

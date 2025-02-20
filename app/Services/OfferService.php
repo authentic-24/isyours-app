@@ -5,7 +5,6 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Http;
 
 class OfferService
 {
@@ -113,37 +112,44 @@ class OfferService
         return json_decode($response->getBody(), true);
     }
 
-    public function get_latest_offers()
+    public function getLatestOffers()
     {
-        // Create a new HTTP client with specific headers.
-        $client = new Client([
-            'headers' => [
-                'Authorization' => 'Bearer ' . session('access_token'),
-                'Accept' => 'application/json',
-            ]
-        ]);
         try {
-            $response = $client->get(route('get_latest_offers'));
-        } catch (ClientException $e) {
+            \Log::info('getLatestOffers method called in OfferService');
+            $client = new Client([
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+                'timeout' => 30, // Reduce timeout to 30 seconds
+            ]);
+            $url = route('get_latest_offers');
+            \Log::info('Sending request to get_latest_offers', ['url' => $url]);
             
-            if ($e->getResponse()->getStatusCode() === 401) {
-                $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-                $error['error'] = true;
-                $error['code'] = 401;
-                return $error;
-            }
-            if ($e->getResponse()->getStatusCode() === 422) {
-                $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-                $error['error'] = true;
-                $error['code'] = 422;
-                return $error;
-            }
+            $startTime = microtime(true);
+            $response = $client->get($url);
+            $endTime = microtime(true);
             
-            throw $e;
+            $executionTime = ($endTime - $startTime) * 1000; // in milliseconds
+            \Log::info('Response received from get_latest_offers', [
+                'status' => $response->getStatusCode(),
+                'execution_time' => $executionTime . 'ms',
+                'body_length' => strlen($response->getBody()->getContents())
+            ]);
+            
+            $data = json_decode($response->getBody(), true);
+            if (!is_array($data)) {
+                throw new \Exception('Invalid response format');
+            }
+            \Log::info('Data decoded successfully', ['data_count' => count($data)]);
+            return $data;
+        } catch (\Exception $e) {
+            \Log::error('Exception in getLatestOffers', [
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return ['error' => true, 'message' => $e->getMessage(), 'code' => $e->getCode()];
         }
-
-        // Return the response body as an array.
-        return json_decode($response->getBody(), true);
     }
 
     public function create(array $data)
@@ -155,6 +161,7 @@ class OfferService
             ]
         ]);
 
+        //dd($client);
         try {
             $response = $client->post(route('joboffers.store'), [
                 'json' => $data,

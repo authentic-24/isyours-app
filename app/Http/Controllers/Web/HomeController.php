@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Rules\ReCaptcha;
+// use App\Rules\ReCaptcha;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Services\CountryService;
 use App\Services\OfferService;
 use App\Helpers\ArrayHelper;
+use App\Http\Controllers\JobOfferController;
 
 
 
@@ -30,14 +31,34 @@ class HomeController extends \App\Http\Controllers\Controller
      */
     public function home(OfferService $offerService)
     {
+        \Log::info('Home method called');
         
-        $data = [];
-        // Get latest offers
-        $response = $offerService->get_latest_offers();
-        $result = ArrayHelper::arrayToObject($response);
+        try {
+            $startTime = microtime(true);
+            $response = $offerService->getLatestOffers();
+            $endTime = microtime(true);
+            $executionTime = ($endTime - $startTime) * 1000; // in milliseconds
+            
+            \Log::info('Offer service response', [
+                'response' => $response,
+                'execution_time' => $executionTime . 'ms'
+            ]);
+            
+            if (isset($response['error'])) {
+                throw new \Exception($response['message']);
+            }
 
-        $data['latest_offers'] = $result;
-        return view('home/index', $data);
+            $result = ArrayHelper::arrayToObject($response);
+            $data['latest_offers'] = $result;
+            
+            return view('home/index', $data);
+        } catch (\Exception $e) {
+            \Log::error('Exception in home method', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return view('home/index', ['latest_offers' => []]);
+        }
     }
 
     public function sitemap()
@@ -50,7 +71,11 @@ class HomeController extends \App\Http\Controllers\Controller
         return view('home/about');
     }
     
-
+    public function index()
+    {
+        // Return the view for your home page
+        return view('home');
+    }
 
     /**
      * Show the application dashboard.
@@ -98,12 +123,11 @@ class HomeController extends \App\Http\Controllers\Controller
 
     public function login_post(Request $request, AuthService $authService)
     {
-
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-            'g-recaptcha-response' => ['required', new ReCaptcha]
-
+            // Remove the following line completely
+            // 'g-recaptcha-response' => ['required', new ReCaptcha]
         ]);
 
         $response = $authService->login($request->all());
