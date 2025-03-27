@@ -9,9 +9,8 @@
                     <div class="inner-column">
                         <div class="title-box wow fadeInUp" data-wow-delay="300ms">
                             <h3>We Connect Stories With Job Opportunities</h3>
-                            <div class="text"><strong>We are at the forefront of promoting visibility for Migrant Workers,
-                                    Refugees, and Diversity and Inclusion groups, connecting Women migrants and refugees.</strong></div>
-                            <div class="text">Find Your Perfect HoReCa Job Match!</div>
+                            <div class="text"><strong>We are at the forefront of promoting the visibility of workers, focusing on diversity and inclusion groups, connecting women. </strong></div>
+                            <div class="text">Find your perfect job in HoReCa!</div>
                         </div>
 
                         <!-- Job Search Form -->

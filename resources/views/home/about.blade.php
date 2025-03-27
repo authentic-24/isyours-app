@@ -16,15 +16,14 @@
         <div class="text-box">
             <h4>About Is Yours</h4>
             <h3>Our solution:</h3>
-            <p>We are a scalable digital platform based on emerging technological solutions that,
-                through mobile devices, connect companies with people that are seeking a service
-                and/or vacancy with immigrants, diverse and inclusive groups.</p>
+            <p>We are a scalable digital platform based on emerging technological solutions that, 
+                through mobile devices, connect companies with individuals seeking a service and/or 
+                vacancy, including diverse and inclusive groups</p>
 
             <h3>Problem:</h3>
-            <p>We want to make the workforce visible in its majority Migrant, Diversity and inclusion
-                groups; By connecting occupations with opportunities through an agile digital
-                platform, allowing them to find a job in the hotel, gastronomy - bar and catering
-                sector.
+            <p>We aim to highlight the workforce within its major diverse and inclusive groups, 
+                connecting occupations with opportunities through an agile digital platform, 
+                enabling them to find employment in the hospitality, gastronomy-bar, and restaurant sector.
             <p>
 
             <blockquote class="blockquote-style-one">Diversity, inclusion, fairness, pillars of sustainability, corporate
@@ -70,23 +69,7 @@
                 </div>
 
                 <!-- Work Block -->
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="work-block -type-2 mb-0">
-                        <div class="inner-box">
-                            <figure class="image-box"><a href="#"><img src="{{ asset('images/index-11/clients/1.svg') }}"
-                                        alt=""></a></figure>
-                            <h5>Laura Mojica Rojas</h5>
-                            <p><strong>Co-Founder</strong> Laura Mojica Rojas, is a Master in visual arts and design, is
-                                preparing
-                                to understand psychosocial environments through gestalt, she is convinced that
-                                digital transformation will allow us to advance in employability issues. More than 3
-                                years in digital marketing expertise, the field of illustration, visual arts and social
-                                media, teacher of visual arts, technological skills and DNA of social projects. It
-                                contributes to everything related to illustration, e-learning and campaigns.
-                                The Cloud Architect, </p>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Work Block -->
                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -100,6 +83,18 @@
                                 companies such as IBM, Accenture and Getronics, and 5 years driving digital
                                 transformation in solutions that contribute and benefit the community such as
                                 employability, banking and digital identity projects.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="work-block -type-2 mb-0">
+                        <div class="inner-box">
+                            <figure class="image-box"><a href="#"><img src="{{ asset('images/team/julian.jpg') }}"
+                                        alt=""></a></figure>
+                            <h5>Julian Andres Garnica</h5>
+                            <p>Full Stack Developer, Systems engineer with more than 4 years of experience 
+                                developing strategic, modern, and scalable software and technological solutions for businesses.</p>
                         </div>
                     </div>
                 </div>
@@ -121,25 +116,13 @@
                             <div class="inner-box">
                                 <figure class="image-box"><a href="#"><img src="{{ asset('images/index-11/clients/1.svg') }}"
                                             alt=""></a></figure>
-                                <h5>Juan David Patino</h5>
-                                <p>Full Stack Developer, Systems Engineer with 6 years of experience
+                                <h5>Julian Andres Garnica</h5>
+                                <p>Full Stack Developer, Systems Engineer with 3 years of experience
                                     in the area of digital employability and education solutions development.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Work Block -->
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="work-block -type-2 mb-0">
-                            <div class="inner-box">
-                                <figure class="image-box"><a href="#"><img src="{{ asset('images/index-11/clients/1.svg') }}"
-                                            alt=""></a></figure>
-                                <h5>Cristian Acevedo</h5>
-                                <p>student of industrial engineering, experience with more than 2 years
-                                    modeling digital marketing strategy.
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
