@@ -105,7 +105,7 @@
     <!-- Team section 1 -->
 
     <!-- team section 2 -->
-    <section class="layout-pt-60 layout-pb-60">
+    {{-- <section class="layout-pt-60 layout-pb-60">
         <div class="auto-container">
             <div class="row justify-content-center">
                 <div class="row grid-base wow fadeInUp, row justify-content-center">
@@ -127,7 +127,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
     </section>
     <!-- Team section 2 -->
 
