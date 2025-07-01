@@ -31,6 +31,7 @@ class HomeController extends \App\Http\Controllers\Controller
      */
     public function home(OfferService $offerService)
     {
+        
         \Log::info('Home method called');
         
         try {

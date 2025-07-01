@@ -126,7 +126,9 @@ class OfferService
             \Log::info('Sending request to get_latest_offers', ['url' => $url]);
             
             $startTime = microtime(true);
+            
             $response = $client->get($url);
+            
             $endTime = microtime(true);
             
             $executionTime = ($endTime - $startTime) * 1000; // in milliseconds

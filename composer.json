@@ -11,7 +11,7 @@
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.5",
         "guzzlehttp/psr7": "^2.4.5",
-        "laravel/framework": "^8.75",
+        "laravel/framework": "^11.0",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
