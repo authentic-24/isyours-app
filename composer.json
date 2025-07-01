@@ -6,8 +6,6 @@
     "license": "MIT",
    "require": {
         "php": "^8.2",
-        "nunomaduro/collision": "^7.12",
-        "nunomaduro/termwind": "^2.3",
         "aws/aws-sdk-php": "^3.281",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.5",
@@ -22,8 +20,9 @@
         "fakerphp/faker": "^1.21",
         "laravel/pint": "^1.0",
         "mockery/mockery": "^1.5",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0"
+        "nunomaduro/collision": "^8.0",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {
         "psr-4": {
@@ -64,4 +63,3 @@
     "minimum-stability": "dev",
     "prefer-stable": true
 }
-
