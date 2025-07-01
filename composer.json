@@ -4,9 +4,10 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
-    "require": {
+   "require": {
         "php": "^8.2",
-        "nunomaduro/collision": "^7.0",
+        "nunomaduro/collision": "^7.12",
+        "nunomaduro/termwind": "^2.3",
         "aws/aws-sdk-php": "^3.281",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.5",
