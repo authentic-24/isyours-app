@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.281",
-        "fruitcake/laravel-cors": "^3.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.5",
         "guzzlehttp/psr7": "^2.4.5",
