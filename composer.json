@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "nunomaduro/collision": "^7.0",
         "aws/aws-sdk-php": "^3.281",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.5",
