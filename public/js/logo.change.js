@@ -1,5 +1,6 @@
-var initialSrc = "../images/logo-main-big.svg";
+// var initialSrc = "../images/logo-main-big.svg";
 var scrollSrc = "../images/logo-main-white-big.svg";
+var initialSrc = "../images/logo-main-white-big.svg";
 
 $(window).scroll(function() {
    var value = $(this).scrollTop();

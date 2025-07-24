@@ -1,77 +1,130 @@
-<footer class="main-footer -type-13 alternate3">
-    <div class="auto-container">
-      <!--Widgets Section-->
-      <div class="widgets-section">
-        <div class="row">
-          <div class="big-column col-xl-4 col-lg-3 col-md-12">
-            <div class="footer-column about-widget">
-              <div class="logo"><a href="#"><img src="{{ asset('images/logo-main.svg')}}" alt=""></a></div>
-              <p class="phone-num"><span>Contact Us </span></p>
-              <p class="address"><strong>¿Hablas español?</strong><br><a href="hola@isyours.us" class="email">hola@isyours.us</a></p>
-              <p class="address"><strong>Do You Speak English?</strong><br><a href="hello@isyours.us" class="email">hello@isyours.us</a></p>
-            </div>
-          </div>
-
-          <div class="big-column col-xl-8 col-lg-9 col-md-12">
+<footer class="professional-footer">
+    <div class="footer-main">
+        <div class="container">
             <div class="row">
-              <div class="footer-column col-lg-3 col-md-6 col-sm-12">
-                <div class="footer-widget links-widget">
-                  <h4 class="widget-title">Navigation</h4>
-                  <div class="widget-content">
-                    <ul class="list">
-                      <li><a href="{{ route('home') }}">Home</a></li>
-                      <li><a href="{{ route('sitemap') }}">Site Map</a></li>
-                    </ul>
-                  </div>
+                <!-- Company Info Section -->
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="footer-section company-info">
+                        <div class="footer-logo">
+                            <a href="{{ route('home') }}">
+                                <img src="{{ asset('images/logo-main.svg')}}" alt="Is Yours" class="logo-img">
+                            </a>
+                        </div>
+                        <p class="company-description">
+                            Connecting talented professionals with exceptional opportunities worldwide. 
+                            Build your career or find the perfect candidate with our innovative platform.
+                        </p>
+                        <div class="social-media">
+                            <h6 class="social-title">Follow Us</h6>
+                            <div class="social-links">
+                                <a href="#" class="social-link facebook" title="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-link twitter" title="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-link linkedin" title="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="social-link instagram" title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
 
-
-              <div class="footer-column col-lg-3 col-md-6 col-sm-12">
-                <div class="footer-widget links-widget">
-                  <h4 class="widget-title">Resources</h4>
-                  <div class="widget-content">
-                    <ul class="list">
-                      <li>Coming Soon!</li>
-                     
-                    </ul>
-                  </div>
+                <!-- Quick Links Section -->
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <div class="footer-section">
+                        <h5 class="footer-title">Platform</h5>
+                        <ul class="footer-links">
+                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="#">Find Jobs</a></li>
+                            <li><a href="#">Post Jobs</a></li>
+                            <li><a href="#">Browse Companies</a></li>
+                            <li><a href="#">Salary Guide</a></li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
 
-              <div class="footer-column col-lg-3 col-md-6 col-sm-12">
-                <div class="footer-widget links-widget">
-                  <h4 class="widget-title">Our Company</h4>
-                  <div class="widget-content">
-                    <ul class="list">
-                      <li><a href="{{ route('about') }}">About Us</a></li>
-                    </ul>
-                  </div>
+                <!-- Resources Section -->
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <div class="footer-section">
+                        <h5 class="footer-title">Resources</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Career Advice</a></li>
+                            <li><a href="#">Resume Builder</a></li>
+                            <li><a href="#">Interview Tips</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Help Center</a></li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
-              </div>
+
+                <!-- Contact Info Section -->
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="footer-section">
+                        <h5 class="footer-title">Get In Touch</h5>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">General Inquiries</span>
+                                    <a href="mailto:hello@isyours.us" class="contact-value">hello@isyours.us</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">Soporte en Español</span>
+                                    <a href="mailto:hola@isyours.us" class="contact-value">hola@isyours.us</a>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span class="contact-label">Phone Support</span>
+                                    <a href="tel:+15551234567" class="contact-value">+1 (555) 123-4567</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 
-
-    <!--Bottom-->
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <div class="auto-container">
-        <div class="outer-box">
-          <div class="copyright-text">© 2023 <a href="#">Is Yours</a>. All Right Reserved.</div>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          </div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="copyright">
+                        <p>&copy; 2025 <a href="{{ route('home') }}">Is Yours</a>. All rights reserved.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Scroll To Top -->
-    <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div>
-  </footer>
+    <div class="scroll-to-top scroll-to-target" data-target="html">
+        <span class="fa fa-angle-up"></span>
+    </div>
+</footer>

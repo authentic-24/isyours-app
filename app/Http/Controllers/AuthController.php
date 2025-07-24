@@ -135,11 +135,12 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+        
         $user->role_name = $user->getRoleNames()->first();
 
 
         $token = $user->createToken('API Token');
-
+        // return $token;
         return response()->json([
             'access_token' => $token->plainTextToken,
             'token_type' => 'Bearer',

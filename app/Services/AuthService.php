@@ -14,6 +14,7 @@ class AuthService
             $response = $client->post(route('api.login'), [
                 'json' => $data,
             ]);
+            // dd($response->getBody()->getContents());
         } catch (ClientException $e) {
 
             if ($e->getResponse()->getStatusCode() === 401) {
@@ -35,6 +36,7 @@ class AuthService
             $response = $client->post(route('api.register'), [
                 'json' => $data,
             ]);
+            
         } catch (ClientException $e) {
 
             if ($e->getResponse()->getStatusCode() === 401) {
