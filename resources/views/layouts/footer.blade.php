@@ -125,6 +125,6 @@
 
     <!-- Scroll To Top -->
     <div class="scroll-to-top scroll-to-target" data-target="html">
-        <span class="fa fa-angle-up"></span>
+        <span class="arrow-up">↑</span>
     </div>
 </footer>

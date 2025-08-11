@@ -4,13 +4,13 @@
 <!-- Register Section -->
 <section class="register-section">
     <div class="register-overlay"></div>
-    <div class="floating-elements">
+    {{-- <div class="floating-elements">
         <div class="floating-circle circle-1"></div>
         <div class="floating-circle circle-2"></div>
         <div class="floating-circle circle-3"></div>
-    </div>
+    </div> --}}
     <div class="auto-container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center pt-5">
             <div class="col-lg-5 col-md-7 col-sm-9 col-11">
                 <div class="register-card">
 
