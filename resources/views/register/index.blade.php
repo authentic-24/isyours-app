@@ -189,6 +189,13 @@
                                 </div>
                                 <div class="form-options">
                                     <div class="terms-agreement">
+                                        <input name="security_id" type="hidden" value="0">
+                                        <input type="checkbox" id="security_id" name="security_id" value="1" class="custom-checkbox" {{ old('security_id') ? 'checked' : '' }}>
+                                        <label for="security_id" class="form-check-label">Do you have a security ID?</label>
+                                    </div>
+                                </div>
+                                <div class="form-options">
+                                    <div class="terms-agreement">
                                         <input type="checkbox" id="agree_terms" name="is_agree_terms_privacy" value="1" class="custom-checkbox" required {{ old('is_agree_terms_privacy') ? 'checked' : '' }}>
                                         <label for="agree_terms" class="form-check-label">I accept the <a href="#" target="_blank">terms and privacy policy</a>.</label>
                                     </div>

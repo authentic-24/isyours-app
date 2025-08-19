@@ -148,6 +148,17 @@
                                             value="{{ isset($user) ? $user->license_plates : old('license_plates') }}"><br>
                                     </div>
 
+                                    
+                                    <div class="form-group col-lg-6 col-md-12">
+                                        <input name="security_id" type="hidden" value="0">
+                                        @if($user->security_id)
+                                        <input type="checkbox" id="agree" name="security_id" value="1" checked>
+                                        @else
+                                        <input type="checkbox" id="agree" name="security_id" value="1">
+                                        @endif
+                                        <label for="agree">Do you have a security ID?</label><br>
+                                    </div>
+
 
                                     <div class="widget-title">
                                         <h4>Current Address Information</h4>

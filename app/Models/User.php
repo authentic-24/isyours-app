@@ -38,7 +38,8 @@ class User extends Authenticatable
         'visa_number',
         'license_plates',
         'country_of_origin_id',
-        'education_level_id'
+        'education_level_id',
+        'security_id'
     ];
 
     /**

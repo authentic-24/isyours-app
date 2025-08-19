@@ -31,11 +31,31 @@
     
     @include('partials/header_candidate')
     
-    @yield('content')
+    
+  
+    <style>
+      @media (min-width: 992px) {
+        .main-content-responsive {
+          padding-left: 300px !important;
+        }
+      }
+      @media (max-width: 991.98px) {
+        .main-content-responsive {
+          padding-left: 1rem !important;
+        }
+      }
+    </style>
+    <div class="row">
+      <div class="col-12 main-content-responsive">
+        @yield('content')
+        @include('layouts/footer')
+      </div>
+    </div>
+    
 
 
   </div><!-- End Page Wrapper -->
-  @include('layouts/footer')
+
 
 
 <!-- 

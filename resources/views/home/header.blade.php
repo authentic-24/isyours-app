@@ -14,7 +14,7 @@
             <span>Home</span> 
           </a></li>
           <li><a href="#">
-            {{-- <li><a href="{{ route('about') }}"> --}}
+            <li><a href="{{ route('about') }}">
             <span>About Us</span>
           </a></li>
         </ul>
@@ -26,7 +26,7 @@
       <!-- Login/Register -->
       <div class="btn-box">
         <a href="{{ route('web_login') }}" class="theme-btn btn-style-three btn-white-10">Login / Register</a>
-        
+        <a href="#" class="theme-btn btn-style-seven btn-post-job">Job Post</a>
       </div>
     </div>
   </div>
@@ -77,6 +77,14 @@
   .mobile-header .logo img {
     max-height: 32px !important;
   }
+}
+.btn-post-job {
+  background-color: #f39c12;
+  color: #fff;
+}
+.btn-post-job:hover {
+  background-color: #e67e22;
+  color: #fff;
 }
 </style>
 
