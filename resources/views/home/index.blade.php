@@ -216,7 +216,7 @@
                                     <div class="inner-box">
                                         <div class="content">
                                             <span class="company-logo enhanced-logo"><img src="{{ asset('images/resource/company-logo/4-1.png') }}" alt=""></span>
-                                            <h4 class="job-title"><a href="#">{{ $offer->job_level->name ?? '' }} / {{ $offer->job_title->name ?? '' }}</a></h4>
+                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ $offer->job_level_name ?? '' }} / {{ $offer->job_title_name ?? '' }}</a></h4>
                                             <ul class="job-info">
                                                 <li><span class="icon flaticon-briefcase"></span> HoReCa</li>
                                                 <li><span class="icon flaticon-map-locator"></span> {{ $offer->city->name ?? ''}}, {{ $offer->city->state->code ?? ''}}</li>
@@ -250,7 +250,7 @@
                                     <div class="inner-box">
                                         <div class="content">
                                             <span class="company-logo enhanced-logo"><img src="{{ asset('images/resource/company-logo/4-1.png') }}" alt=""></span>
-                                            <h4 class="job-title"><a href="#">{{ $offer->job_level->name ?? '' }} / {{ $offer->job_title->name ?? '' }}</a></h4>
+                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ $offer->job_level_name ?? '' }} / {{ $offer->job_title_name ?? '' }}</a></h4>
                                             <ul class="job-info">
                                                 <li><span class="icon flaticon-briefcase"></span> HoReCa</li>
                                                 <li><span class="icon flaticon-map-locator"></span> {{ $offer->city->name ?? ''}}, {{ $offer->city->state->code ?? ''}}</li>
@@ -284,7 +284,7 @@
                                     <div class="inner-box">
                                         <div class="content">
                                             <span class="company-logo enhanced-logo"><img src="{{ asset('images/resource/company-logo/4-1.png') }}" alt=""></span>
-                                            <h4 class="job-title"><a href="#">{{ $offer->job_level->name ?? '' }} / {{ $offer->job_title->name ?? '' }}</a></h4>
+                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ $offer->job_level_name ?? '' }} / {{ $offer->job_title_name ?? '' }}</a></h4>
                                             <ul class="job-info">
                                                 <li><span class="icon flaticon-briefcase"></span> HoReCa</li>
                                                 <li><span class="icon flaticon-map-locator"></span> {{ $offer->city->name ?? ''}}, {{ $offer->city->state->code ?? ''}}</li>

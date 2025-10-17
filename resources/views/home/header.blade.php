@@ -1,4 +1,4 @@
- <!-- Main Header-->
+<!-- Main Header-->
  <header class="main-header -type-11">
   <!-- Main box -->
   <div class="main-box">
@@ -26,7 +26,7 @@
       <!-- Login/Register -->
       <div class="btn-box">
         <a href="{{ route('web_login') }}" class="theme-btn btn-style-three btn-white-10">Login / Register</a>
-        <a href="#" class="theme-btn btn-style-seven btn-post-job">Job Post</a>
+        <a href="{{ route('job.create') }}" class="theme-btn btn-style-seven btn-post-job">Job Post</a>
       </div>
     </div>
   </div>

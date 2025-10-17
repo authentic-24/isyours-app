@@ -16,12 +16,20 @@
                                  {{ \Carbon\Carbon::parse($offer->created_at)->diffForHumans() }}</li>
                          </ul>
                      </div>
-
-                     <div class="btn-box">
-                         <a href="{{ route('web.offer.apply_offer', ['offer_id' => $offer->id]) }}"
-                             class="theme-btn btn-style-one">Apply For Job</a>
-                         <!-- <button class="bookmark-btn"><i class="flaticon-bookmark"></i></button> -->
-                     </div>
+                     @if ($company != null)
+                        <div class="btn-box">
+                            <a href="{{ route('web.offer.apply_offer', ['offer_id' => $offer->id]) }}"
+                                class="theme-btn btn-style-one">Apply For Job</a>
+                            <!-- <button class="bookmark-btn"><i class="flaticon-bookmark"></i></button> -->
+                        </div>
+                    @else
+                        <div class="btn-box">
+                            <a href="{{ route('web_login') }}"
+                                class="theme-btn btn-style-one">Login to Apply</a>
+                            <!-- <button class="bookmark-btn"><i class="flaticon-bookmark"></i></button> -->
+                        </div>
+                    @endif
+                     
 
 
                  </div>

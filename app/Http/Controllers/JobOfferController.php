@@ -13,12 +13,12 @@ class JobOfferController extends Controller
     public function index()
     {
         $jobOffers = JobOffer::with(
-            'jobType', 
-            'skills', 
-            'city.state', 
-            'users.city', 
-            'jobLevel', 
-            'jobTitle', 
+            'jobType',
+            'skills',
+            'city.state',
+            'users.city',
+            'jobLevel',
+            'jobTitle',
             'educationLevel',
             'language',
             'proficiencyLevel',
@@ -30,12 +30,12 @@ class JobOfferController extends Controller
     public function show($id)
     {
         $jobOffer = JobOffer::with(
-            'jobType', 
-            'skills', 
-            'city.state', 
-            'users.city', 
-            'jobLevel', 
-            'jobTitle', 
+            'jobType',
+            'skills',
+            'city.state',
+            'users.city',
+            'jobLevel',
+            'jobTitle',
             'educationLevel',
             'language',
             'proficiencyLevel',
@@ -48,6 +48,8 @@ class JobOfferController extends Controller
 
     public function store(Request $request)
     {
+
+
         $validator = Validator::make($request->all(), [
             'description' => 'required|string',
             'job_type_id' => 'required|exists:job_types,id',
@@ -65,17 +67,17 @@ class JobOfferController extends Controller
             'expiration_date' => 'date',
             //'zip_code' => 'integer',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-    
+
         $jobOffer = new JobOffer();
         $jobOffer->fill($request->all());
         $user = auth()->user();
-        if(!is_null($user)){
+        if (!is_null($user)) {
             $user = auth()->user();
-            if($user->company){
+            if ($user->company) {
                 $jobOffer->company_id = $user->company->id;
             }
         }
@@ -89,9 +91,14 @@ class JobOfferController extends Controller
         }
         $jobOffer->keyResponsabilities;
 
+        if ($request->isMethod('get')) {
+            return back();
+        }
+
+
         return response()->json(['data' => $jobOffer], 201);
     }
-    
+
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -103,17 +110,17 @@ class JobOfferController extends Controller
             'skills' => 'nullable|array',
             'skills.*' => 'exists:skills,id'
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
-    
+
         $jobOffer = JobOffer::find($id);
-    
+
         if (!$jobOffer) {
             return response()->json(['error' => 'Job offer not found'], 404);
         }
-    
+
         $jobOffer->fill([
             'description' => $request->input('description'),
             'job_type_id' => $request->input('job_type_id'),
@@ -121,14 +128,14 @@ class JobOfferController extends Controller
             'server_position' => $request->input('server_position'),
             'responsibilities' => $request->input('responsibilities')
         ]);
-    
+
         $jobOffer->skills()->sync($request->input('skills'));
-    
+
         $jobOffer->save();
-    
+
         return response()->json(['jobOffer' => $jobOffer], 200);
     }
-    
+
 
     public function destroy($id)
     {
@@ -171,7 +178,8 @@ class JobOfferController extends Controller
 
             DB::enableQueryLog(); // Enable query logging
 
-            $jobOffers = JobOffer::select('job_offers.*', 
+            $jobOffers = JobOffer::select(
+                'job_offers.*',
                 'job_types.name as job_type_name',
                 'cities.name as city_name',
                 'states.name as state_name',
@@ -181,27 +189,28 @@ class JobOfferController extends Controller
                 'education_levels.name as education_level_name',
                 'languages.name as language_name',
                 'proficiency_levels.name as proficiency_level_name',
-                'company_profile.name as company_name')
-            ->join('job_types', 'job_offers.job_type_id', '=', 'job_types.id')
-            ->join('cities', 'job_offers.city_id', '=', 'cities.id')
-            ->join('states', 'cities.state_id', '=', 'states.id')
-            ->join('job_levels', 'job_offers.job_level_id', '=', 'job_levels.id')
-            ->join('job_titles', 'job_offers.job_title_id', '=', 'job_titles.id')
-            ->join('education_levels', 'job_offers.education_level_id', '=', 'education_levels.id')
-            ->join('languages', 'job_offers.language_id', '=', 'languages.id')
-            ->join('proficiency_levels', 'job_offers.proficiency_level_id', '=', 'proficiency_levels.id')
-            ->leftJoin('company_profile', 'job_offers.company_id', '=', 'company_profile.id')
-            ->orderBy('job_offers.created_at', 'DESC')
-            ->take(3)
-            ->get();
+                'company_profile.name as company_name'
+            )
+                ->join('job_types', 'job_offers.job_type_id', '=', 'job_types.id')
+                ->join('cities', 'job_offers.city_id', '=', 'cities.id')
+                ->join('states', 'cities.state_id', '=', 'states.id')
+                ->join('job_levels', 'job_offers.job_level_id', '=', 'job_levels.id')
+                ->join('job_titles', 'job_offers.job_title_id', '=', 'job_titles.id')
+                ->join('education_levels', 'job_offers.education_level_id', '=', 'education_levels.id')
+                ->join('languages', 'job_offers.language_id', '=', 'languages.id')
+                ->join('proficiency_levels', 'job_offers.proficiency_level_id', '=', 'proficiency_levels.id')
+                ->leftJoin('company_profile', 'job_offers.company_id', '=', 'company_profile.id')
+                ->orderBy('job_offers.created_at', 'DESC')
+                ->take(3)
+                ->get();
 
             // Fetch skills separately (as it's a many-to-many relationship)
             $jobOfferIds = $jobOffers->pluck('id')->toArray();
             $skills = DB::table('job_offer_skill')
                 ->join('skills', 'job_offer_skill.skill_id', '=', 'skills.id')
-            ->whereIn('job_offer_skill.job_offer_id', $jobOfferIds)
-            ->select('job_offer_skill.job_offer_id', 'skills.id as skill_id', 'skills.name as skill_name')
-            ->get();
+                ->whereIn('job_offer_skill.job_offer_id', $jobOfferIds)
+                ->select('job_offer_skill.job_offer_id', 'skills.id as skill_id', 'skills.name as skill_name')
+                ->get();
 
             // Group skills by job offer
             $skillsByJobOffer = $skills->groupBy('job_offer_id');
@@ -238,5 +247,18 @@ class JobOfferController extends Controller
             ]);
             return response()->json(['error' => 'An error occurred while fetching latest offers'], 500);
         }
+    }
+
+    public function create()
+    {
+        return view('job_offer.create', [
+            'jobLevels' => \App\Models\JobLevel::all(),
+            'jobTitles' => \App\Models\JobTitle::all(),
+            'jobTypes' => \App\Models\JobType::all(),
+            'educationLevels' => \App\Models\EducationLevel::all(),
+            'languages' => \App\Models\Language::all(),
+            'proficiencyLevels' => \App\Models\ProficiencyLevel::all(),
+            'countries' => \App\Models\Country::all(),
+        ]);
     }
 }

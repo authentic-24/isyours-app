@@ -57,7 +57,6 @@ Route::prefix('web')->group(function () {
     Route::get('test-web', function () {
         return 'Test Web Route';
     });
-
 });
 
 // Move this route outside of the 'web' prefix group
@@ -94,34 +93,5 @@ Route::middleware('auth')->get('/test-email', function () {
     }
 });
 
-// Route::get('/test-email', function () {
-//     \Log::info('Test-email route hit');
-//     try {
-//         // Ensure the User model is imported
-
-//         // Log the start of the process
-//         \Log::info('Starting test-email process');
-
-//         $firstUser = User::first();
-        
-//         if ($firstUser) {
-//             \Log::info('User found: ' . $firstUser->id);
-            
-//             // Use a queue to send the email
-//             Mail::to('info@goldbots.com')->queue(new WelcomeEmail($firstUser));
-            
-//             \Log::info('Email queued successfully');
-//             return 'Test email queued successfully for the first user!';
-//         } else {
-//             \Log::warning('No users found in the database');
-//             return 'No users found in the database.';
-//         }
-//     } catch (\Exception $e) {
-//         // Log the full exception for debugging
-//         \Log::error('Error in test-email: ' . $e->getMessage(), [
-//             'exception' => $e,
-//             'trace' => $e->getTraceAsString()
-//         ]);
-//         return 'Error sending email: ' . $e->getMessage();
-//     }
-// });
+Route::post('/job-post', [App\Http\Controllers\JobOfferController::class, 'store'])->name('job.post');
+Route::get('/job-post', [App\Http\Controllers\JobOfferController::class, 'create'])->name('job.create');

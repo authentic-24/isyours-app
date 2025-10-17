@@ -23,9 +23,7 @@ class OfferController extends \App\Http\Controllers\Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * Show offers index.
@@ -49,7 +47,7 @@ class OfferController extends \App\Http\Controllers\Controller
         $result = $response;
 
         $user = User::find(session('user_id'));
-        $company = $user->company;
+        $company = $user ? $user->company : null;
 
         // Return view with offer object
         return view('offer/index', ['offers' => $result, 'company' => $company]);
@@ -74,12 +72,12 @@ class OfferController extends \App\Http\Controllers\Controller
 
         // Convert result to object
         $offer = $jobOffer = JobOffer::with(
-            'jobType', 
-            'skills', 
-            'city.state', 
-            'users.city', 
-            'jobLevel', 
-            'jobTitle', 
+            'jobType',
+            'skills',
+            'city.state',
+            'users.city',
+            'jobLevel',
+            'jobTitle',
             'educationLevel',
             'language',
             'proficiencyLevel',
@@ -89,17 +87,20 @@ class OfferController extends \App\Http\Controllers\Controller
         )->findOrFail($offer_id);
 
         $user = User::find(session('user_id'));
-        $company = $user->company;
+        $company = $user ? $user->company : null;
         //dd($result);
         foreach ($offer->users as $user) {
             $user->distance = '-';
-            if(is_numeric($offer->zip_code) && is_numeric($user->zip_code)){
+            if (is_numeric($offer->zip_code) && is_numeric($user->zip_code)) {
                 $user->distance = $this->distancia($offer->zip_code, $user->zip_code);
             }
         }
 
         //dd($company);
         // Return view with offer object
+        if ($company == null) {
+            return view('offer/show2', ['offer' => $offer, 'company' => $company]);
+        }
         return view('offer/show', ['offer' => $offer, 'company' => $company]);
     }
 
@@ -143,7 +144,6 @@ class OfferController extends \App\Http\Controllers\Controller
         $distanciaMillas = $distancia * $factorConversion;
 
         return number_format($distanciaMillas, 2);
-
     }
 
     // Función para calcular la distancia (puedes utilizar alguna fórmula como la de Haversine)
@@ -209,7 +209,6 @@ class OfferController extends \App\Http\Controllers\Controller
         }
 
         return redirect()->back()->with('message', $response['message']);
-
     }
 
 
@@ -290,6 +289,4 @@ class OfferController extends \App\Http\Controllers\Controller
 
         return redirect()->route('web.offer.show', $response['data']['id']);
     }
-
-
 }
