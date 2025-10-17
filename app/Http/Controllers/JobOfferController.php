@@ -95,6 +95,10 @@ class JobOfferController extends Controller
             return back();
         }
 
+        // Check if request came from /job-post route and redirect to home
+        if ($request->is('job-post')) {
+            return redirect()->route('home')->with('success', 'Job offer created successfully!');
+        }
 
         return response()->json(['data' => $jobOffer], 201);
     }
