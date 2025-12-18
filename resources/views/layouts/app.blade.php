@@ -27,28 +27,71 @@
     <div class="preloader"></div>
 
     <!-- Header Span -->
-    <span class="header-span"></span>
+    {{-- <span class="header-span"></span> --}}
     
     @include('partials/header_candidate')
     
     
   
     <style>
+      body {
+        background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 50%, #ede9fe 100%);
+        background-attachment: fixed;
+      }
+      
       @media (min-width: 992px) {
         .main-content-responsive {
-          padding-left: 300px !important;
+          margin-left: 300px;
+          transition: all 300ms ease;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          padding: 20px 20px 0 0 !important;
         }
       }
       @media (max-width: 991.98px) {
         .main-content-responsive {
-          padding-left: 1rem !important;
+          margin-left: 0;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          padding: 10px !important;
+        }
+      }
+      
+      .content-wrapper {
+        flex: 1;
+        padding: 0;
+        background: #ffffff;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+      
+      .footer-wrapper {
+        margin-top: 0;
+      }
+      
+      .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 25px;
+      }
+
+      @media (max-width: 991.98px) {
+        .content-wrapper {
+          border-radius: 8px;
         }
       }
     </style>
-    <div class="row">
-      <div class="col-12 main-content-responsive">
+    
+    <div class="main-content-responsive">
+      <div class="content-wrapper">
         @yield('content')
-        @include('layouts/footer')
+      </div>
+      <div class="footer-wrapper">
+        @include('layouts/footerapp')
       </div>
     </div>
     

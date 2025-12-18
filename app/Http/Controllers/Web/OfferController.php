@@ -106,44 +106,51 @@ class OfferController extends \App\Http\Controllers\Controller
 
     public function distancia($codigoPostal1, $codigoPostal2)
     {
-        $locationService = new LocationServiceClient([
-            'version' => 'latest',
-            'region' => 'us-east-1',
-            // Cambia la región según tus necesidades
-            'credentials' => [
-                'key' => 'AKIAUMFJASHM5XIIXDWK',
-                'secret' => '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',
-            ],
-        ]);
+        try {
+            $locationService = new LocationServiceClient([
+                'version' => 'latest',
+                'region' => 'us-east-1',
+                // Cambia la región según tus necesidades
+                'credentials' => [
+                    'key' => 'AKIAUMFJASHM5XIIXDWK',
+                    'secret' => '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',
+                ],
+            ]);
 
-        // Define los códigos postales o ubicaciones geográficas de interés
-        // $codigoPostal1 = '12345'; // Cambia esto por tu primer código postal
-        // $codigoPostal2 = '67890'; // Cambia esto por tu segundo código postal
+            // Define los códigos postales o ubicaciones geográficas de interés
+            // $codigoPostal1 = '12345'; // Cambia esto por tu primer código postal
+            // $codigoPostal2 = '67890'; // Cambia esto por tu segundo código postal
 
-        // Obtén las coordenadas geográficas de los códigos postales
-        $response1 = $locationService->searchPlaceIndexForText([
-            'IndexName' => 'indiceyosoy',
-            'Text' => $codigoPostal1,
-        ]);
+            // Obtén las coordenadas geográficas de los códigos postales
+            $response1 = $locationService->searchPlaceIndexForText([
+                'IndexName' => 'indiceyosoy',
+                'Text' => $codigoPostal1,
+            ]);
 
-        $response2 = $locationService->searchPlaceIndexForText([
-            'IndexName' => 'indiceyosoy',
-            'Text' => $codigoPostal2,
-        ]);
+            $response2 = $locationService->searchPlaceIndexForText([
+                'IndexName' => 'indiceyosoy',
+                'Text' => $codigoPostal2,
+            ]);
 
-        // Extrae las coordenadas geográficas (latitud y longitud)
-        $coordenadas1 = $response1['Results'][0]['Place']['Geometry']['Point'];
-        $coordenadas2 = $response2['Results'][0]['Place']['Geometry']['Point'];
-        //dd($coordenadas1);
-        // Calcula la distancia entre las coordenadas usando alguna fórmula adecuada
-        $distancia = $this->calcularDistancia($coordenadas1, $coordenadas2);
+            // Extrae las coordenadas geográficas (latitud y longitud)
+            $coordenadas1 = $response1['Results'][0]['Place']['Geometry']['Point'];
+            $coordenadas2 = $response2['Results'][0]['Place']['Geometry']['Point'];
+            //dd($coordenadas1);
+            // Calcula la distancia entre las coordenadas usando alguna fórmula adecuada
+            $distancia = $this->calcularDistancia($coordenadas1, $coordenadas2);
 
-        $factorConversion = 0.621371;
+            $factorConversion = 0.621371;
 
-        // Aplicar la conversión
-        $distanciaMillas = $distancia * $factorConversion;
+            // Aplicar la conversión
+            $distanciaMillas = $distancia * $factorConversion;
 
-        return number_format($distanciaMillas, 2);
+            return number_format($distanciaMillas, 2);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Error calculating distance: ' . $e->getMessage());
+            // Return a default value when AWS service fails
+            return '-';
+        }
     }
 
     // Función para calcular la distancia (puedes utilizar alguna fórmula como la de Haversine)

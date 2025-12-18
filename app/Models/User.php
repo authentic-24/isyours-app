@@ -85,4 +85,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(EducationLevel::class, 'education_level_id');
     }
+
+    public function jobOffers()
+    {
+        return $this->belongsToMany(JobOffer::class, 'job_offer_user');
+    }
+
+    public function workExperiences()
+    {
+        return $this->hasMany(WorkExperience::class)->orderBy('start_date', 'desc');
+    }
+
+    public function talents()
+    {
+        return $this->hasMany(UserTalent::class);
+    }
 }

@@ -18,10 +18,10 @@
                     <div class="register-header text-center">
                         <div class="register-badge">
                             <span class="icon flaticon-user-plus"></span>
-                            Join HORECA
+                            {{ __('home.register_join') }}
                         </div>
-                        <h2 class="main-heading">Create Your Account</h2>
-                        <p class="subtitle">Start your career journey in hospitality industry</p>
+                        <h2 class="main-heading">{{ __('home.register_create_account') }}</h2>
+                        <p class="subtitle">{{ __('home.register_subtitle') }}</p>
                     </div>
 
                     <!-- Form Body -->
@@ -51,14 +51,14 @@
                             <div class="form-group-enhanced">
                                 <label for="name" class="form-label">
                                     <span class="icon flaticon-user"></span>
-                                    Full Name
+                                    {{ __('home.full_name') }}
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="text" 
                                            class="form-control-enhanced" 
                                            id="name" 
                                            name="name" 
-                                           placeholder="Enter your full name"
+                                           placeholder="{{ __('home.enter_full_name') }}"
                                            value="{{ old('name') }}"
                                            required>
                                     <span class="input-focus-line"></span>
@@ -69,14 +69,14 @@
                             <div class="form-group-enhanced">
                                 <label for="email" class="form-label">
                                     <span class="icon flaticon-email"></span>
-                                    Email Address
+                                    {{ __('home.email_address') }}
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="email" 
                                            class="form-control-enhanced" 
                                            id="email" 
                                            name="email" 
-                                           placeholder="Enter your email address"
+                                           placeholder="{{ __('home.enter_email') }}"
                                            value="{{ old('email') }}"
                                            required>
                                     <span class="input-focus-line"></span>
@@ -87,14 +87,14 @@
                             <div class="form-group-enhanced">
                                 <label for="password" class="form-label">
                                     <span class="icon flaticon-lock"></span>
-                                    Password
+                                    {{ __('home.password') }}
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="password" 
                                            class="form-control-enhanced" 
                                            id="password" 
                                            name="password" 
-                                           placeholder="Create a strong password"
+                                           placeholder="{{ __('home.create_strong_password') }}"
                                            required>
                                     <span class="input-focus-line"></span>
                                     <button type="button" class="password-toggle" onclick="togglePassword('password', 'toggleIcon1')">
@@ -105,7 +105,7 @@
                                     <div class="strength-bar">
                                         <div class="strength-fill" id="strengthFill"></div>
                                     </div>
-                                    <span class="strength-text" id="strengthText">Password strength</span>
+                                    <span class="strength-text" id="strengthText">{{ __('home.password_strength') }}</span>
                                 </div>
                             </div>
                             
@@ -113,14 +113,14 @@
                             <div class="form-group-enhanced">
                                 <label for="password_confirmation" class="form-label">
                                     <span class="icon flaticon-lock"></span>
-                                    Confirm Password
+                                    {{ __('home.confirm_password') }}
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="password" 
                                            class="form-control-enhanced" 
                                            id="password_confirmation" 
                                            name="password_confirmation" 
-                                           placeholder="Confirm your password"
+                                           placeholder="{{ __('home.confirm_your_password') }}"
                                            required>
                                     <span class="input-focus-line"></span>
                                     <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation', 'toggleIcon2')">
@@ -134,8 +134,8 @@
                                 <div class="terms-agreement">
                                     <input type="checkbox" id="terms" name="terms" class="custom-checkbox" required>
                                     <label for="terms">
-                                        I agree to the <a href="#" class="terms-link">Terms & Conditions</a> 
-                                        and <a href="#" class="privacy-link">Privacy Policy</a>
+                                        {{ __('home.i_agree_to') }} <a href="#" class="terms-link">{{ __('home.terms_conditions') }}</a> 
+                                        {{ __('home.and') }} <a href="#" class="privacy-link">{{ __('home.privacy_policy') }}</a>
                                     </label>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                             <!-- Submit Button -->
                             <div class="form-group-submit">
                                 <button type="submit" class="btn-enhanced register-btn">
-                                    <span class="btn-text">Create Account</span>
+                                    <span class="btn-text">{{ __('home.create_account') }}</span>
                                     <span class="btn-icon">
                                         <i class="fas fa-user-plus"></i>
                                     </span>
@@ -155,13 +155,13 @@
                     <!-- Footer -->
                     <div class="register-footer text-center">
                         <p class="signin-text">
-                            Already have an account? 
-                            <a href="{{ route('login') }}" class="signin-link">Sign In</a>
+                            {{ __('home.already_have_account') }} 
+                            <a href="{{ route('login') }}" class="signin-link">{{ __('home.sign_in_here') }}</a>
                         </p>
                         
                         <div class="social-divider">
                             <span class="divider-line"></span>
-                            <span class="divider-text">or register with</span>
+                            <span class="divider-text">{{ __('home.or_continue_with') }}</span>
                             <span class="divider-line"></span>
                         </div>
                         

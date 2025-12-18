@@ -1,14 +1,240 @@
 @extends('layouts.app_home')
 
 @section('content')
+<style>
+/* Ocultar header */
+.main-header,
+#language-bar {
+    display: none !important;
+}
+
+body {
+    padding-top: 0 !important;
+}
+
+/* Estilos minimalistas para register */
+.register-section {
+    min-height: 100vh;
+    background: #a9a4c5 !important;
+    display: flex;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.register-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.register-logo a {
+    display: inline-block;
+}
+
+.register-logo img {
+    max-width: 140px;
+    height: auto;
+}
+
+.language-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.language-selector select {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #1a1a1a;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.language-selector select:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.register-overlay {
+    display: none !important;
+}
+
+.register-card {
+    background: #a9a4c5 !important;
+    backdrop-filter: none !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    border: #d1d5db 0px solid !important;
+    padding: 20px 20px !important;
+    max-width: 500px !important;
+}
+
+.register-badge {
+    display: none !important;
+}
+
+.register-header {
+    padding: 0 0 30px 0 !important;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 30px;
+}
+
+.main-heading {
+    color: #1a1a1a !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    margin-bottom: 0 !important;
+}
+
+.subtitle {
+    display: none !important;
+}
+
+.register-body {
+    padding: 0 !important;
+}
+
+.form-label {
+    color: #1a1a1a !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+}
+
+.form-label .icon {
+    display: none !important;
+}
+
+.form-control-enhanced {
+    border: 1px solid #d1d5db !important;
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border-radius: 4px !important;
+    padding: 12px 16px !important;
+    font-size: 15px !important;
+}
+
+.form-control-enhanced:focus {
+    border-color: #1a1a1a !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.input-focus-line {
+    display: none !important;
+}
+
+.btn-wizard-next,
+.btn-wizard-prev,
+.btn-enhanced,
+.register-btn {
+    background: #1a1a1a !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    padding: 14px 24px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+.btn-wizard-next:hover,
+.btn-wizard-prev:hover,
+.btn-enhanced:hover,
+.register-btn:hover {
+    background: #333333 !important;
+}
+
+.wizard-progress-bar {
+    display: none !important;
+}
+
+.wizard-step-indicator {
+    display: none !important;
+}
+
+.login-link,
+.signin-link {
+    color: #1a1a1a !important;
+    font-weight: 600 !important;
+    text-decoration: underline !important;
+}
+
+.login-link:hover,
+.signin-link:hover {
+    color: #333333 !important;
+}
+
+.social-divider {
+    display: none !important;
+}
+
+.social-login {
+    display: none !important;
+}
+
+.register-footer {
+    padding: 30px 0 0 0 !important;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 30px;
+}
+
+.signin-text {
+    color: #666666 !important;
+    font-size: 14px !important;
+}
+
+.divider-text {
+    color: #666666 !important;
+}
+
+.alert-message.success {
+    background: #f0fdf4 !important;
+    border: 1px solid #86efac !important;
+    color: #166534 !important;
+    border-radius: 4px !important;
+}
+
+.alert-message.error {
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    color: #991b1b !important;
+    border-radius: 4px !important;
+}
+
+.wizard-nav {
+    margin-top: 24px !important;
+}
+
+.form-options {
+    margin: 20px 0 !important;
+}
+
+.form-check-label {
+    color: #1a1a1a !important;
+    font-size: 14px !important;
+}
+</style>
+
 <!-- Register Section -->
 <section class="register-section">
+    <!-- Logo -->
+    <div class="register-logo">
+        <a href="{{ route('home') }}">
+            <img src="{{ asset('images/logo-main.svg') }}" alt="Is Yours Logo">
+        </a>
+    </div>
+    
+    <div class="language-selector">
+        <select onchange="window.location.href=this.value">
+            <option value="{{ route('language.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>EN</option>
+            <option value="{{ route('language.switch', 'es') }}" {{ app()->getLocale() == 'es' ? 'selected' : '' }}>ES</option>
+        </select>
+    </div>
+    
     <div class="register-overlay"></div>
-    {{-- <div class="floating-elements">
-        <div class="floating-circle circle-1"></div>
-        <div class="floating-circle circle-2"></div>
-        <div class="floating-circle circle-3"></div>
-    </div> --}}
     <div class="auto-container">
         <div class="row justify-content-center pt-5">
             <div class="col-lg-5 col-md-7 col-sm-9 col-11">
@@ -18,10 +244,10 @@
                     <div class="register-header text-center">
                         <div class="register-badge">
                             <span class="icon flaticon-user-plus"></span>
-                            Join HORECA
+                            {{ __('home.register_join') }}
                         </div>
-                        <h2 class="main-heading">Create Your Account</h2>
-                        <p class="subtitle">Start your career journey in hospitality industry</p>
+                        <h2 class="main-heading">{{ __('home.register_create_account') }}</h2>
+                        <p class="subtitle">{{ __('home.register_subtitle') }}</p>
                     </div>
 
                     <!-- Form Body -->
@@ -50,17 +276,17 @@
                             <div class="wizard-step" id="step-1">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="user_type" class="form-label"><span class="icon flaticon-user"></span> User type</label>
+                                        <label for="user_type" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.user_type') }}</label>
                                         <div class="input-wrapper">
                                             <select id="user_type" name="user_type" class="form-control-enhanced" required>
-                                                <option value="candidate" {{ old('user_type') == 'candidate' ? 'selected' : '' }}>Candidate</option>
-                                                <option value="employer" {{ old('user_type') == 'employer' ? 'selected' : '' }}>Employer</option>
+                                                <option value="candidate" {{ old('user_type') == 'candidate' ? 'selected' : '' }}>{{ __('home.candidate') }}</option>
+                                                <option value="employer" {{ old('user_type') == 'employer' ? 'selected' : '' }}>{{ __('home.employer') }}</option>
                                             </select>
                                             <span class="input-focus-line"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="identification" class="form-label"><span class="icon flaticon-id"></span> Identification</label>
+                                        <label for="identification" class="form-label"><span class="icon flaticon-id"></span> {{ __('home.identification') }}</label>
                                         <div class="input-wrapper">
                                             <input type="text" id="identification" name="identification" class="form-control-enhanced" value="{{ old('identification') }}" required>
                                             <span class="input-focus-line"></span>
@@ -69,14 +295,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="firstName" class="form-label"><span class="icon flaticon-user"></span> First name</label>
+                                        <label for="firstName" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.first_name') }}</label>
                                         <div class="input-wrapper">
                                             <input type="text" id="firstName" name="first_name" class="form-control-enhanced" value="{{ old('first_name') }}" required>
                                             <span class="input-focus-line"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="lastName" class="form-label"><span class="icon flaticon-user"></span> Last name</label>
+                                        <label for="lastName" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.last_name') }}</label>
                                         <div class="input-wrapper">
                                             <input type="text" id="lastName" name="last_name" class="form-control-enhanced" value="{{ old('last_name') }}" required>
                                             <span class="input-focus-line"></span>
@@ -85,7 +311,7 @@
                                 </div>
                                 <div class="wizard-nav">
                                     <button type="button" class="btn btn-primary btn-wizard-next" id="next-1">
-                                        <i class="fas fa-arrow-right"></i> Next
+                                        <i class="fas fa-arrow-right"></i> {{ __('home.next') }}
                                     </button>
                                 </div>
                             </div>
@@ -94,10 +320,10 @@
                             <div class="wizard-step d-none" id="step-2">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="country" class="form-label"><span class="icon flaticon-map"></span> Country</label>
+                                        <label for="country" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.country') }}</label>
                                         <div class="input-wrapper">
                                             <select id="country" name="country_id" class="form-control-enhanced" required>
-                                                <option value="">--Select country--</option>
+                                                <option value="">{{ __('home.select_country') }}</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
                                                 @endforeach
@@ -106,10 +332,10 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="state" class="form-label"><span class="icon flaticon-map"></span> State</label>
+                                        <label for="state" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.state') }}</label>
                                         <div class="input-wrapper">
                                             <select id="state" name="state_id" class="form-control-enhanced" required>
-                                                <option value="">--Select state--</option>
+                                                <option value="">{{ __('home.select_state') }}</option>
                                             </select>
                                             <span class="input-focus-line"></span>
                                         </div>
@@ -117,16 +343,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="city" class="form-label"><span class="icon flaticon-map"></span> City</label>
+                                        <label for="city" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.city') }}</label>
                                         <div class="input-wrapper">
                                             <select id="city" name="city_id" class="form-control-enhanced" required>
-                                                <option value="">--Select city--</option>
+                                                <option value="">{{ __('home.select_city') }}</option>
                                             </select>
                                             <span class="input-focus-line"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="zipcode" class="form-label"><span class="icon flaticon-map"></span> ZIP code</label>
+                                        <label for="zipcode" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.zip_code') }}</label>
                                         <div class="input-wrapper">
                                             <input type="text" pattern="\d{5}" maxlength="5" title="Enter a valid ZIP code" id="zipcode" name="zip_code" class="form-control-enhanced" value="{{ old('zip_code') }}" required>
                                             <span class="input-focus-line"></span>
@@ -135,10 +361,10 @@
                                 </div>
                                 <div class="wizard-nav">
                                     <button type="button" class="btn btn-outline-primary btn-wizard-prev" id="prev-2">
-                                        <i class="fas fa-arrow-left"></i> Previous
+                                        <i class="fas fa-arrow-left"></i> {{ __('home.previous') }}
                                     </button>
                                     <button type="button" class="btn btn-primary btn-wizard-next" id="next-2">
-                                        Next <i class="fas fa-arrow-right"></i>
+                                        {{ __('home.next') }} <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
                             </div>
@@ -147,7 +373,7 @@
                             <div class="wizard-step d-none" id="step-3">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="phone" class="form-label"><span class="icon flaticon-phone"></span> Phone number</label>
+                                        <label for="phone" class="form-label"><span class="icon flaticon-phone"></span> {{ __('home.phone_number') }}</label>
                                         <div class="input-wrapper">
                                             <input type="text" id="phone" name="phone_number" class="form-control-enhanced" value="{{ old('phone_number') }}" required>
                                             <span class="input-focus-line"></span>
@@ -218,23 +444,9 @@
                     <!-- Footer -->
                     <div class="register-footer text-center">
                         <p class="signin-text">
-                            Already have an account? 
-                            <a href="{{ route('web_login') }}" class="signin-link">Sign In</a>
+                            {{ __('home.already_have_account') }} 
+                            <a href="{{ route('web_login') }}" class="signin-link">{{ __('home.sign_in') }}</a>
                         </p>
-                        
-                        <div class="social-divider">
-                            <span class="divider-line"></span>
-                            <span class="divider-text">or register with</span>
-                            <span class="divider-line"></span>
-                        </div>
-                        
-                        <div class="social-login">
-                            <a href="#" class="social-btn google-btn">
-                                <i class="fab fa-google"></i>
-                                <span>Google</span>
-                            </a>
-                            
-                        </div>
                     </div>
                 </div>
             </div>

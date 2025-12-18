@@ -19,10 +19,10 @@
                     <div class="login-header text-center">
                         <div class="login-badge">
                             <span class="icon flaticon-user"></span>
-                            Welcome Back
+                            {{ __('home.login_welcome_back') }}
                         </div>
-                        <h2 class="main-heading">Sign In to Your Account</h2>
-                        <p class="subtitle">Access your HORECA career dashboard</p>
+                        <h2 class="main-heading">{{ __('home.login_sign_in') }}</h2>
+                        <p class="subtitle">{{ __('home.login_subtitle') }}</p>
                     </div>
 
                     <!-- Form Body -->
@@ -52,14 +52,14 @@
                             <div class="form-group-enhanced">
                                 <label for="email" class="form-label">
                                     <span class="icon flaticon-email"></span>
-                                    Email Address
+                                    {{ __('home.email_address') }}
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="email" 
                                            class="form-control-enhanced" 
                                            id="email" 
                                            name="email" 
-                                           placeholder="Enter your email address"
+                                           placeholder="{{ __('home.enter_email') }}"
                                            value="{{ old('email') }}"
                                            required>
                                     <span class="input-focus-line"></span>
@@ -70,14 +70,14 @@
                             <div class="form-group-enhanced">
                                 <label for="password" class="form-label">
                                     <span class="icon flaticon-lock"></span>
-                                    Password
+                                    {{ __('home.password') }}
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="password" 
                                            class="form-control-enhanced" 
                                            id="password" 
                                            name="password" 
-                                           placeholder="Enter your password"
+                                           placeholder="{{ __('home.enter_password') }}"
                                            required>
                                     <span class="input-focus-line"></span>
                                     <button type="button" class="password-toggle" onclick="togglePassword()">
@@ -90,15 +90,15 @@
                             <div class="form-options">
                                 <div class="remember-me">
                                     <input type="checkbox" id="remember" name="remember" class="custom-checkbox">
-                                    <label for="remember">Remember me</label>
+                                    <label for="remember">{{ __('home.remember_me') }}</label>
                                 </div>
-                                <a href="#" class="forgot-link">Forgot Password?</a>
+                                <a href="#" class="forgot-link">{{ __('home.forgot_password') }}</a>
                             </div>
                             
                             <!-- Submit Button -->
                             <div class="form-group-submit">
                                 <button type="submit" class="btn-enhanced login-btn">
-                                    <span class="btn-text">Sign In</span>
+                                    <span class="btn-text">{{ __('home.sign_in') }}</span>
                                     <span class="btn-icon">
                                         <i class="fas fa-arrow-right"></i>
                                     </span>
@@ -110,13 +110,13 @@
                     <!-- Footer -->
                     <div class="login-footer text-center">
                         <p class="signup-text">
-                            Don't have an account? 
-                            <a href="{{ route('web_register') }}" class="signup-link">Create Account</a>
+                            {{ __('home.dont_have_account') }} 
+                            <a href="{{ route('web_register') }}" class="signup-link">{{ __('home.create_account') }}</a>
                         </p>
                         
                         <div class="social-divider">
                             <span class="divider-line"></span>
-                            <span class="divider-text">or continue with</span>
+                            <span class="divider-text">{{ __('home.or_continue_with') }}</span>
                             <span class="divider-line"></span>
                         </div>
                         

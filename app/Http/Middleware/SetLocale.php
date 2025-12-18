@@ -16,14 +16,19 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        // Obtén el valor del parámetro 'locale' de la URL
-        $locale = $request->segment(1);
+        // Obtener el locale de la sesión, si no existe usa el predeterminado
+        $locale = session('locale', config('app.locale', 'en'));
+
+        \Log::info('SetLocale middleware - Session locale: ' . session('locale', 'not set'));
+        \Log::info('SetLocale middleware - Using locale: ' . $locale);
 
         // Verifica si el valor es 'en' o 'es'; de lo contrario, utiliza el valor predeterminado
-        $locale = in_array($locale, ['en', 'es']) ? $locale : config('app.locale');
+        $locale = in_array($locale, ['en', 'es']) ? $locale : config('app.locale', 'en');
 
         // Establece el locale de la aplicación
         app()->setLocale($locale);
+
+        \Log::info('SetLocale middleware - App locale set to: ' . app()->getLocale());
 
         return $next($request);
     }

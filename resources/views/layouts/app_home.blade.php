@@ -204,7 +204,7 @@
       background-color: #312783 !important;
     }
     
-    /* HORECA section images better fitting */
+    /* Section images better fitting */
     .work-block.-type-2 .image img {
       width: 50% !important;
       height: 200px !important;
@@ -469,7 +469,7 @@
 
 <body data-anm=".anm">
 
-  <div class="page-wrapper">
+  <div class="page-wrapper2"><!-- Page Wrapper -->
 
     <!-- Preloader -->
     <div class="preloader"></div>

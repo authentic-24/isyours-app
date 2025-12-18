@@ -23,6 +23,31 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+// Language switcher route
+Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'changeLocale'])->name('language.switch');
+
+// Test locale route
+Route::get('/test-locale', function () {
+    $locale = app()->getLocale();
+    $sessionLocale = session('locale');
+
+    app()->setLocale('es');
+    $testEs = __('home.login_welcome_back');
+
+    app()->setLocale('en');
+    $testEn = __('home.login_welcome_back');
+
+    return response()->json([
+        'current_locale' => $locale,
+        'session_locale' => $sessionLocale,
+        'spanish_test' => $testEs,
+        'english_test' => $testEn,
+        'lang_path' => lang_path(),
+        'es_file_exists' => file_exists(lang_path('es/home.php')),
+        'en_file_exists' => file_exists(lang_path('en/home.php')),
+    ]);
+});
+
 Route::prefix('web')->group(function () {
     Route::get('home', [App\Http\Controllers\Web\HomeController::class, 'home'])
         ->name('home')
@@ -46,6 +71,8 @@ Route::prefix('web')->group(function () {
     Route::get('apply_offer/{offer_id}', [App\Http\Controllers\Web\OfferController::class, 'apply_offer'])->name('web.offer.apply_offer');
 
     Route::get('candidate/index', [App\Http\Controllers\Web\CandidateController::class, 'index'])->name('web.candidate.index');
+    Route::get('candidate/{id}/profile', [App\Http\Controllers\Web\CandidateController::class, 'show'])->name('web.candidate.show');
+    Route::get('candidate/my-applications', [App\Http\Controllers\Web\CandidateController::class, 'myApplications'])->name('web.candidate.my_applications');
 
     Route::get('company/create', [App\Http\Controllers\Web\CompanyController::class, 'create'])->name('web.company.create');
     Route::post('create_company_profile', [App\Http\Controllers\Web\CompanyController::class, 'create_company_profile'])->name('create_company_profile');
@@ -53,6 +80,17 @@ Route::prefix('web')->group(function () {
 
     Route::get('profile/edit', [App\Http\Controllers\Web\ProfileController::class, 'edit'])->name('web.profile.edit');
     Route::post('profile/update', [App\Http\Controllers\Web\CandidateController::class, 'update'])->name('web.candidate.update');
+    Route::get('profile/change-password', [App\Http\Controllers\Web\ProfileController::class, 'changePasswordForm'])->name('web.profile.change_password');
+    Route::post('profile/update-password', [App\Http\Controllers\Web\ProfileController::class, 'updatePassword'])->name('web.profile.update_password');
+
+    // Work Experience Routes
+    Route::post('profile/work-experience', [App\Http\Controllers\Web\ProfileController::class, 'storeWorkExperience'])->name('web.profile.work_experience.store');
+    Route::put('profile/work-experience/{id}', [App\Http\Controllers\Web\ProfileController::class, 'updateWorkExperience'])->name('web.profile.work_experience.update');
+    Route::delete('profile/work-experience/{id}', [App\Http\Controllers\Web\ProfileController::class, 'destroyWorkExperience'])->name('web.profile.work_experience.destroy');
+
+    // Talents Routes
+    Route::post('profile/talent', [App\Http\Controllers\Web\ProfileController::class, 'storeTalent'])->name('web.profile.talent.store');
+    Route::delete('profile/talent/{id}', [App\Http\Controllers\Web\ProfileController::class, 'destroyTalent'])->name('web.profile.talent.destroy');
 
     Route::get('test-web', function () {
         return 'Test Web Route';

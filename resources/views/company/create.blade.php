@@ -118,7 +118,7 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    {{-- </div> --}}
                 </div>
 
                 <!-- Ls widget -->
@@ -254,6 +254,7 @@
             </div>
 
 
+        </div>  
         </div>
-        </div>
+    </section>
     @endsection

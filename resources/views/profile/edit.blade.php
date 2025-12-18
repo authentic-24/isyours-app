@@ -52,6 +52,13 @@
                                 method="post">
                                 @csrf
                                 @include('partials/errors_div')
+                                
+                                @if(session('success'))
+                                    <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 12px 20px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 20px;">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                
                                 <div class="row">
 
                                     <div class="form-group col-lg-6 col-md-12">
@@ -211,7 +218,138 @@
                                     </div>
 
 
+                                    <!-- Work Experience Section -->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        <h4 style="margin-top: 30px; margin-bottom: 20px;">Work Experience</h4>
+                                    </div>
+
+                                    @if(isset($user) && $user->workExperiences && $user->workExperiences->count() > 0)
+                                        @foreach($user->workExperiences as $experience)
+                                            <div class="work-experience-item" style="background: #f8f9fa; padding: 20px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #e0e0e0;">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-12">
+                                                        <strong style="font-size: 16px; color: #333;">{{ $experience->position }}</strong>
+                                                        @if($experience->company)
+                                                            <p style="margin: 5px 0; color: #666;">{{ $experience->company }}</p>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-12 text-right">
+                                                        <span style="color: #666;">{{ $experience->duration }}</span>
+                                                    </div>
+                                                    @if($experience->description)
+                                                        <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
+                                                            <p style="color: #555; margin: 0;">{{ $experience->description }}</p>
+                                                        </div>
+                                                    @endif
+                                                    <div class="col-lg-12 col-md-12" style="margin-top: 15px; display: flex; gap: 15px;">
+                                                        <button type="button" class="btn-edit-experience" data-id="{{ $experience->id }}" style="background: none; border: none; color: #312683; cursor: pointer; font-size: 18px; padding: 5px; transition: all 0.3s;" title="Edit" onmouseover="this.style.color='#0146A6'" onmouseout="this.style.color='#312683'">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <form action="{{ route('web.profile.work_experience.destroy', $experience->id) }}" method="POST" style="display: inline; margin: 0;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this work experience?')" style="background: none; border: none; color: #f9b232; cursor: pointer; font-size: 18px; padding: 5px; transition: all 0.3s;" title="Delete" onmouseover="this.style.color='#E9A000'" onmouseout="this.style.color='#f9b232'">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="col-lg-12 col-md-12">
+                                            <p style="color: #666; font-style: italic;">No work experience added yet.</p>
+                                        </div>
+                                    @endif
+
+                                    <!-- Add New Work Experience Button -->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        <button type="button" id="btn-add-experience" class="theme-btn btn-style-two" style="margin-bottom: 20px;">Add Work Experience</button>
+                                    </div>
+
+                                    <!-- New Work Experience Form (Hidden by default) -->
+                                    <div id="new-experience-form" style="display: none; background: #f0f7ff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #d0e0f0;">
+                                        <h5 style="margin-bottom: 15px;">Add New Work Experience</h5>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6 col-md-12">
+                                                <label>Position / Job Title *</label>
+                                                <input type="text" id="new_position" name="new_position" placeholder="e.g. Software Developer">
+                                            </div>
+
+                                            <div class="form-group col-lg-6 col-md-12">
+                                                <label>Company Name</label>
+                                                <input type="text" id="new_company" name="new_company" placeholder="e.g. ABC Corporation">
+                                            </div>
+
+                                            <div class="form-group col-lg-4 col-md-12">
+                                                <label>Start Date *</label>
+                                                <input type="date" id="new_start_date" name="new_start_date">
+                                            </div>
+
+                                            <div class="form-group col-lg-4 col-md-12">
+                                                <label>End Date</label>
+                                                <input type="date" id="new_end_date" name="new_end_date">
+                                            </div>
+
+                                            <div class="form-group col-lg-4 col-md-12">
+                                                <label style="display: block;">&nbsp;</label>
+                                                <div style="padding-top: 10px;">
+                                                    <input type="checkbox" id="new_is_current" name="new_is_current" style="width: auto; margin-right: 8px;">
+                                                    <label for="new_is_current" style="display: inline; font-weight: normal;">Currently working here</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-lg-12 col-md-12">
+                                                <label>Description</label>
+                                                <textarea id="new_description" name="new_description" rows="3" placeholder="Describe your responsibilities and achievements..."></textarea>
+                                            </div>
+
+                                            <div class="form-group col-lg-12 col-md-12">
+                                                <button type="button" id="btn-save-experience" class="theme-btn btn-style-one" style="margin-right: 10px;">Save Experience</button>
+                                                <button type="button" id="btn-cancel-experience" class="theme-btn btn-style-three">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     
+
+                                    <!-- Talents Section -->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        <h4 style="margin-top: 30px; margin-bottom: 20px;">Mis Talentos</h4>
+                                    </div>
+
+                                    <!-- Display Talents as Badges -->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        <div id="talents-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                                            @if(isset($user) && $user->talents && $user->talents->count() > 0)
+                                                @foreach($user->talents as $talent)
+                                                    <span class="talent-badge" style="background: #f9b232; color: #202124; padding: 8px 15px; border-radius: 20px; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px;">
+                                                        {{ $talent->talent }}
+                                                        <form action="{{ route('web.profile.talent.destroy', $talent->id) }}" method="POST" style="display: inline; margin: 0;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="background: none; border: none; color: #202124; cursor: pointer; font-size: 16px; padding: 0; line-height: 1; font-weight: bold;" title="Remove talent">×</button>
+                                                        </form>
+                                                    </span>
+                                                @endforeach
+                                            @else
+                                                <p style="color: #666; font-style: italic;">No talents added yet.</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- Add New Talent -->
+                                    <div class="form-group col-lg-12 col-md-12">
+                                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                            <div style="flex: 1; max-width: 400px;">
+                                                <label>Add Talent</label>
+                                                <input type="text" id="new_talent" name="new_talent" placeholder="e.g. Leadership, Communication, Problem Solving..." maxlength="50">
+                                            </div>
+                                            <div style="padding-top: 32px;">
+                                                <button type="button" id="btn-add-talent" class="theme-btn btn-style-two" style="padding: 12px 30px;">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
                                     <div class="form-group col-lg-12 col-md-12">
@@ -222,7 +360,7 @@
 
 
                         </div>
-                    </div>
+                   
                 </div>
 
                 <!-- Ls widget -->
@@ -355,18 +493,155 @@
                         </div>
                     </div> --}}
 
+                </div>
+
+
             </div>
-
-
         </div>
-        </div>
-    @endsection
+    </section>
+@endsection
 
 
 @section('js')
 
 <script type="text/javascript">
     $(window).on('load', function() {
+        // Work Experience functionality
+        $('#btn-add-experience').click(function() {
+            $('#new-experience-form').slideDown();
+            $(this).hide();
+        });
+
+        $('#btn-cancel-experience').click(function() {
+            $('#new-experience-form').slideUp();
+            $('#btn-add-experience').show();
+            clearExperienceForm();
+        });
+
+        $('#new_is_current').change(function() {
+            if($(this).is(':checked')) {
+                $('#new_end_date').val('').prop('disabled', true);
+            } else {
+                $('#new_end_date').prop('disabled', false);
+            }
+        });
+
+        $('#btn-save-experience').click(function() {
+            const position = $('#new_position').val().trim();
+            const company = $('#new_company').val().trim();
+            const startDate = $('#new_start_date').val();
+            const endDate = $('#new_end_date').val();
+            const isCurrent = $('#new_is_current').is(':checked');
+            const description = $('#new_description').val().trim();
+
+            if(!position) {
+                alert('Position is required');
+                return;
+            }
+
+            if(!startDate) {
+                alert('Start date is required');
+                return;
+            }
+
+            if(!isCurrent && endDate && new Date(endDate) < new Date(startDate)) {
+                alert('End date must be after start date');
+                return;
+            }
+
+            // Create form data
+            const formData = {
+                _token: '{{ csrf_token() }}',
+                position: position,
+                company: company,
+                start_date: startDate,
+                end_date: isCurrent ? null : endDate,
+                is_current: isCurrent ? 1 : 0,
+                description: description
+            };
+
+            // Submit via AJAX
+            $.ajax({
+                url: "{{ route('web.profile.work_experience.store') }}",
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr) {
+                    if(xhr.responseJSON && xhr.responseJSON.errors) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMsg = '';
+                        for(let key in errors) {
+                            errorMsg += errors[key][0] + '\n';
+                        }
+                        alert(errorMsg);
+                    } else {
+                        alert('An error occurred. Please try again.');
+                    }
+                }
+            });
+        });
+
+        function clearExperienceForm() {
+            $('#new_position').val('');
+            $('#new_company').val('');
+            $('#new_start_date').val('');
+            $('#new_end_date').val('').prop('disabled', false);
+            $('#new_is_current').prop('checked', false);
+            $('#new_description').val('');
+        }
+
+        // Talents functionality
+        $('#btn-add-talent').click(function() {
+            const talent = $('#new_talent').val().trim();
+
+            if(!talent) {
+                alert('Please enter a talent');
+                return;
+            }
+
+            if(talent.length > 50) {
+                alert('Talent must be 50 characters or less');
+                return;
+            }
+
+            // Submit via AJAX
+            $.ajax({
+                url: "{{ route('web.profile.talent.store') }}",
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    talent: talent
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr) {
+                    if(xhr.responseJSON && xhr.responseJSON.message) {
+                        alert(xhr.responseJSON.message);
+                    } else if(xhr.responseJSON && xhr.responseJSON.errors) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMsg = '';
+                        for(let key in errors) {
+                            errorMsg += errors[key][0] + '\n';
+                        }
+                        alert(errorMsg);
+                    } else {
+                        alert('An error occurred. Please try again.');
+                    }
+                }
+            });
+        });
+
+        // Allow adding talent by pressing Enter
+        $('#new_talent').keypress(function(e) {
+            if(e.which == 13) {
+                e.preventDefault();
+                $('#btn-add-talent').click();
+            }
+        });
+
         // When the country select element changes, retrieve states for the selected country and fill the state select element
         $('#country').change(function() {
             var countryId = $(this).val();

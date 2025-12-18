@@ -12,7 +12,7 @@
             <nav class="nav main-menu">
               <ul class="navigation" id="navbar">
                 <li><a href="{{ route('home') }}">
-                  <span>Home</span> 
+                  <span>{{ __('home.home') }}</span> 
                 </a></li>
                 <li><a href="{{ route('about') }}">
                   <span>About Us</span>

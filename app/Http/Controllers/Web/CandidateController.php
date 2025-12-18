@@ -10,8 +10,8 @@ use App\Helpers\ArrayHelper;
 
 class CandidateController extends Controller
 {
-    
-     /**
+
+    /**
      * Show candidates index.
      */
     public function index(Request $request, CandidateService $candidateService)
@@ -36,16 +36,16 @@ class CandidateController extends Controller
         return view('candidates/index', ['candidates' => $result]);
     }
 
-    public function update(Request $request) 
+    public function update(Request $request)
     {
         $user =  User::find(session('user_id'));
 
         //dd($request->all());
         $user->fill($request->all());
-        if(is_null($user->visa_number)){
+        if (is_null($user->visa_number)) {
             $user->visa_number = " ";
         }
-        if(is_null($user->license_plates)){
+        if (is_null($user->license_plates)) {
             $user->license_plates = " ";
         }
         $user->save();
@@ -53,4 +53,41 @@ class CandidateController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Show my applications (job offers the user has applied to).
+     */
+    public function myApplications(Request $request)
+    {
+        $user = User::find(session('user_id'));
+
+        if (!$user) {
+            return redirect()->route('web_login');
+        }
+
+        // Get all job offers the user has applied to
+        $applications = $user->jobOffers()
+            ->with([
+                'jobType',
+                'jobLevel',
+                'jobTitle',
+                'educationLevel',
+                'city.state',
+                'company'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('candidates/my_applications', ['applications' => $applications]);
+    }
+
+    /**
+     * Show candidate profile with work experience and talents.
+     */
+    public function show($id)
+    {
+        $candidate = User::with(['workExperiences', 'talents', 'city.state', 'visa', 'educationLevel', 'countryOfOrigin'])
+            ->findOrFail($id);
+
+        return view('candidates/show', ['candidate' => $candidate]);
+    }
 }

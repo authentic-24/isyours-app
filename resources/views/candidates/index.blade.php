@@ -240,6 +240,9 @@
                   </div>
                   <div class="btn-box">
                   <a href="tel:{{ $candidate->phone_number }}" class="theme-btn btn-style-three"><span class="icon flaticon-phone"></span></a>
+                  <a href="{{ route('web.candidate.show', $candidate->id) }}"  class="theme-btn btn-style-three">
+                    <i class="fas fa-user-circle"></i>
+                  </a>
                   </div> 
                   {{-- <div class="btn-box">
                   <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button>

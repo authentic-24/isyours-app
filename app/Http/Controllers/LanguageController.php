@@ -102,4 +102,31 @@ class LanguageController extends Controller
             'message' => 'Language deleted successfully.',
         ]);
     }
+
+    /**
+     * Change the application language/locale
+     *
+     * @param  string  $locale
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeLocale($locale)
+    {
+        // Validate that the locale is supported
+        if (!in_array($locale, ['en', 'es'])) {
+            abort(400);
+        }
+
+        // Store the selected language in session
+        session()->put('locale', $locale);
+        session()->save(); // Force save the session
+
+        \Log::info('Locale changed to: ' . $locale);
+        \Log::info('Session locale after save: ' . session('locale'));
+
+        // Set the application locale immediately
+        app()->setLocale($locale);
+
+        // Redirect back to the previous page
+        return redirect()->back()->with('locale_changed', true);
+    }
 }
