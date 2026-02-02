@@ -188,3 +188,35 @@ Route::get('/run-seeders', function () {
         ], 500);
     }
 })->name('web.run.seeders');
+
+// Ruta para crear tabla de sessions
+Route::get('/create-sessions-table', function () {
+    try {
+        $output = '';
+
+        // Generar migración de sessions
+        \Illuminate\Support\Facades\Artisan::call('session:table');
+        $output .= "Migración de sessions generada:\n";
+        $output .= \Illuminate\Support\Facades\Artisan::output();
+
+        // Ejecutar migraciones para crear la tabla
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $output .= "\nMigraciones ejecutadas:\n";
+        $output .= \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Tabla de sessions creada exitosamente',
+            'output' => $output,
+            'timestamp' => now()->toDateTimeString()
+        ]);
+    } catch (\Exception $e) {
+        \Log::error('Error creando tabla de sessions: ' . $e->getMessage());
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Error creando tabla de sessions: ' . $e->getMessage(),
+            'timestamp' => now()->toDateTimeString()
+        ], 500);
+    }
+})->name('web.create.sessions.table');
