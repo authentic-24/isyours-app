@@ -164,3 +164,27 @@ Route::get('/run-migrations', function () {
         ], 500);
     }
 })->name('web.run.migrations');
+
+// Ruta para ejecutar seeders via web
+Route::get('/run-seeders', function () {
+    try {
+        // Ejecutar seeders
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        $output = \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Seeders ejecutados exitosamente',
+            'output' => $output,
+            'timestamp' => now()->toDateTimeString()
+        ]);
+    } catch (\Exception $e) {
+        \Log::error('Error ejecutando seeders via web: ' . $e->getMessage());
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Error ejecutando seeders: ' . $e->getMessage(),
+            'timestamp' => now()->toDateTimeString()
+        ], 500);
+    }
+})->name('web.run.seeders');

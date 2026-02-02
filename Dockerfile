@@ -1,10 +1,10 @@
 # Etapa 1: construir assets con Node
 FROM node:18 AS build-frontend
 WORKDIR /app
-COPY package*.json vite.config.* ./
+COPY package*.json webpack.mix.js ./
 RUN npm install
-COPY . .
-RUN npm run build
+COPY resources/ ./resources/
+RUN npm run production
 
 # Etapa 2: PHP + Apache
 FROM php:8.2-apache
@@ -28,8 +28,8 @@ WORKDIR /var/www/html
 # Copiar proyecto PHP
 COPY . .
 
-# Copiar build de Vite generado en la primera etapa
-COPY --from=build-frontend /app/public/build ./public/build
+# Copiar build de Laravel Mix generado en la primera etapa
+COPY --from=build-frontend /app/public ./public
 
 # Instalar dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
