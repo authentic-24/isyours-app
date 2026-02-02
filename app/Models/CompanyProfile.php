@@ -17,14 +17,19 @@ class CompanyProfile extends Model
         'phone',
         'website',
         'about',
+        'address',
+        'city',
+        'state',
+        'country',
+        'zip_code',
+        'latitude',
+        'longitude',
         'user_id',
         'llc',
-
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

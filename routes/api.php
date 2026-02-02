@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyProfileController;
+use App\Http\Controllers\DistanceController;
 use App\Http\Controllers\EducationLevelController;
 use App\Http\Controllers\JobLevelController;
 use App\Http\Controllers\JobTitleController;
@@ -69,17 +70,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('language', LanguageController::class);
     Route::resource('proficiencylevel', ProficiencyLevelController::class);
     Route::resource('educationlevels', EducationLevelController::class);
-    
+
     Route::get('/jobprofiles/user/{user_id}', [JobProfileController::class, 'getByUser']);
     Route::post('job-offers/{job_offer_id}/apply', [JobOfferController::class, 'apply'])->name('api.job-offer.apply');
 
     Route::post('company_profile/store', [CompanyProfileController::class, 'store'])->name('api.company_profile.store');
 
+    // Distance and Geocoding endpoints
+    Route::get('distance/job-offer/{jobOfferId}', [DistanceController::class, 'calculateDistanceToJobOffer'])
+        ->name('api.distance.to-job-offer');
+    Route::get('distance/candidates/{jobOfferId}', [DistanceController::class, 'getCandidatesByDistance'])
+        ->name('api.distance.candidates');
+    Route::get('distance/job-offers', [DistanceController::class, 'getJobOffersByDistance'])
+        ->name('api.distance.job-offers');
 
-    
-
-
-    
+    // Geocoding endpoints
+    Route::post('geocode/user-address', [DistanceController::class, 'geocodeUserAddress'])
+        ->name('api.geocode.user-address');
+    Route::post('geocode/job-offer/{jobOfferId}', [DistanceController::class, 'geocodeJobOfferAddress'])
+        ->name('api.geocode.job-offer');
+    Route::post('geocode/company-address', [DistanceController::class, 'geocodeCompanyAddress'])
+        ->name('api.geocode.company-address');
 });
 
 

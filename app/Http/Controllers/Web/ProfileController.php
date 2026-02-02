@@ -23,7 +23,13 @@ class ProfileController extends \App\Http\Controllers\Controller
     {
         $data = [];
 
-        $user = User::with('workExperiences', 'talents')->find(session('user_id'));
+        $user = User::with([
+            'workExperiences',
+            'behavioralCompetencies',
+            'powerSkills',
+            'organizationalCultureValues',
+            'leadershipPreferences'
+        ])->find(session('user_id'));
         $data['user'] = $user;
         //dd($user);
         $response = $countryService->getCountries();
@@ -33,12 +39,138 @@ class ProfileController extends \App\Http\Controllers\Controller
         $data['city'] = City::find($user->city_id);
         $data['visas'] = Visa::all();
         $data['educationLevels'] = EducationLevel::all();
+
+        // Cargar las listas completas para los selects
+        $data['behavioralCompetencies'] = \App\Models\BehavioralCompetency::where('is_active', true)
+            ->orderBy('category')
+            ->orderBy('name')
+            ->get()
+            ->groupBy('category');
+        $data['powerSkills'] = \App\Models\PowerSkill::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+        $data['cultureValues'] = \App\Models\OrganizationalCultureValue::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+        $data['leadershipPrefs'] = \App\Models\LeadershipPreference::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
         if ($user->license_plates == " ") {
             $user->license_plates = "";
         }
 
+        // Calcular porcentaje de completitud del perfil
+        $data['profileCompleteness'] = $this->calculateProfileCompleteness($user);
+
         //dd($data);
         return view('profile.edit', $data);
+    }
+
+    /**
+     * Calcula el porcentaje de completitud del perfil
+     */
+    private function calculateProfileCompleteness($user)
+    {
+        $fields = [
+            // Información básica (peso: 30%)
+            'basic' => [
+                'first_name' => !empty($user->first_name),
+                'last_name' => !empty($user->last_name),
+                'email' => !empty($user->email),
+                'phone_number' => !empty($user->phone_number),
+                'identification' => !empty($user->identification),
+                'country_of_origin_id' => !empty($user->country_of_origin_id),
+                'education_level_id' => !empty($user->education_level_id),
+                'city_id' => !empty($user->city_id),
+                'visa_id' => !empty($user->visa_id),
+            ],
+            // Experiencia laboral (peso: 20%)
+            'experience' => [
+                'has_work_experience' => $user->workExperiences && $user->workExperiences->count() > 0,
+            ],
+            // Talentos (peso: 15%)
+            'talents' => [
+                'innate_talent' => !empty($user->innate_talent),
+                'potential_talent' => !empty($user->potential_talent),
+            ],
+            // Competencias comportamentales (peso: 15%)
+            'competencies' => [
+                'has_behavioral_competencies' => $user->behavioralCompetencies && $user->behavioralCompetencies->count() >= 5,
+            ],
+            // Power Skills (peso: 10%)
+            'power_skills' => [
+                'has_power_skills' => $user->powerSkills && $user->powerSkills->count() >= 5,
+            ],
+            // Valores culturales (peso: 5%)
+            'culture' => [
+                'has_culture_values' => $user->organizationalCultureValues && $user->organizationalCultureValues->count() >= 3,
+            ],
+            // Preferencias de liderazgo (peso: 5%)
+            'leadership' => [
+                'has_leadership_prefs' => $user->leadershipPreferences && $user->leadershipPreferences->count() >= 3,
+            ],
+        ];
+
+        $weights = [
+            'basic' => 30,
+            'experience' => 20,
+            'talents' => 15,
+            'competencies' => 15,
+            'power_skills' => 10,
+            'culture' => 5,
+            'leadership' => 5,
+        ];
+
+        $totalScore = 0;
+
+        foreach ($fields as $category => $categoryFields) {
+            $categoryTotal = count($categoryFields);
+            $categoryCompleted = count(array_filter($categoryFields));
+            $categoryPercentage = ($categoryTotal > 0) ? ($categoryCompleted / $categoryTotal) : 0;
+            $totalScore += $categoryPercentage * $weights[$category];
+        }
+
+        return [
+            'percentage' => round($totalScore),
+            'details' => [
+                'basic' => [
+                    'completed' => count(array_filter($fields['basic'])),
+                    'total' => count($fields['basic']),
+                    'weight' => $weights['basic']
+                ],
+                'experience' => [
+                    'completed' => count(array_filter($fields['experience'])),
+                    'total' => count($fields['experience']),
+                    'weight' => $weights['experience']
+                ],
+                'talents' => [
+                    'completed' => count(array_filter($fields['talents'])),
+                    'total' => count($fields['talents']),
+                    'weight' => $weights['talents']
+                ],
+                'competencies' => [
+                    'completed' => count(array_filter($fields['competencies'])),
+                    'total' => count($fields['competencies']),
+                    'weight' => $weights['competencies']
+                ],
+                'power_skills' => [
+                    'completed' => count(array_filter($fields['power_skills'])),
+                    'total' => count($fields['power_skills']),
+                    'weight' => $weights['power_skills']
+                ],
+                'culture' => [
+                    'completed' => count(array_filter($fields['culture'])),
+                    'total' => count($fields['culture']),
+                    'weight' => $weights['culture']
+                ],
+                'leadership' => [
+                    'completed' => count(array_filter($fields['leadership'])),
+                    'total' => count($fields['leadership']),
+                    'weight' => $weights['leadership']
+                ],
+            ]
+        ];
     }
 
     public function checkErrors($response)
@@ -189,40 +321,5 @@ class ProfileController extends \App\Http\Controllers\Controller
         $experience->delete();
 
         return redirect()->back()->with('success', 'Work experience deleted successfully!');
-    }
-
-    /**
-     * Store new talent.
-     */
-    public function storeTalent(Request $request)
-    {
-        $validated = $request->validate([
-            'talent' => 'required|string|max:50',
-        ]);
-
-        $validated['user_id'] = session('user_id');
-
-        // Check if talent already exists for this user
-        $exists = \App\Models\UserTalent::where('user_id', $validated['user_id'])
-            ->where('talent', $validated['talent'])
-            ->exists();
-
-        if (!$exists) {
-            \App\Models\UserTalent::create($validated);
-            return redirect()->back()->with('success', 'Talent added successfully!');
-        }
-
-        return redirect()->back()->with('error', 'This talent already exists!');
-    }
-
-    /**
-     * Delete talent.
-     */
-    public function destroyTalent($id)
-    {
-        $talent = \App\Models\UserTalent::where('user_id', session('user_id'))->findOrFail($id);
-        $talent->delete();
-
-        return redirect()->back()->with('success', 'Talent deleted successfully!');
     }
 }

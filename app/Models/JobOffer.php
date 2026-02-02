@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\DistanceHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,6 +31,9 @@ class JobOffer extends Model
         'years_of_experience',
         'expiration_date',
         'zip_code',
+        'latitude',
+        'longitude',
+        'full_address',
         'company_id',
     ];
 
@@ -84,7 +88,53 @@ class JobOffer extends Model
     }
 
     public function users()
-{
-    return $this->belongsToMany(User::class, 'job_offer_user');
-}
+    {
+        return $this->belongsToMany(User::class, 'job_offer_user');
+    }
+
+    /**
+     * Calculate distance from job offer to a candidate
+     * Uses exact coordinates if available, falls back to city coordinates
+     * 
+     * @param User $candidate
+     * @param string $unit 'km' or 'mi'
+     * @return float|null Distance in specified unit
+     */
+    public function distanceToCandidate(User $candidate, $unit = 'km')
+    {
+        // Get job offer coordinates (prefer exact, fallback to city)
+        $jobLat = $this->latitude ?? $this->city->latitude ?? null;
+        $jobLon = $this->longitude ?? $this->city->longitude ?? null;
+
+        // Get candidate coordinates (prefer exact, fallback to city)
+        $candidateLat = $candidate->latitude ?? $candidate->city->latitude ?? null;
+        $candidateLon = $candidate->longitude ?? $candidate->city->longitude ?? null;
+
+        if (!$jobLat || !$jobLon || !$candidateLat || !$candidateLon) {
+            return null;
+        }
+
+        return DistanceHelper::calculateDistance(
+            $jobLat,
+            $jobLon,
+            $candidateLat,
+            $candidateLon,
+            $unit
+        );
+    }
+
+    /**
+     * Get all candidates with their distances
+     * 
+     * @param string $unit 'km' or 'mi'
+     * @return \Illuminate\Support\Collection
+     */
+    public function candidatesWithDistance($unit = 'km')
+    {
+        return $this->users->map(function ($candidate) use ($unit) {
+            $candidate->distance = $this->distanceToCandidate($candidate, $unit);
+            $candidate->distance_formatted = DistanceHelper::formatDistance($candidate->distance, $unit);
+            return $candidate;
+        })->sortBy('distance');
+    }
 }

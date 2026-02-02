@@ -1,0 +1,143 @@
+<?php
+
+return [
+    // Profile Page
+    'my_profile' => 'Mi Perfil',
+    'save' => 'Guardar',
+    'profile_updated' => '¡Perfil actualizado exitosamente!',
+
+    // Profile Completeness
+    'profile_completeness' => 'Completitud del Perfil',
+    'complete_profile_message' => 'Completa tu perfil para aumentar tus oportunidades',
+    'complete' => 'Completo',
+    'advice' => 'Consejo',
+    'advice_30' => 'Completa tu información básica para empezar a destacar.',
+    'advice_60' => 'Agrega tu experiencia laboral y talentos para mejorar tu visibilidad.',
+    'advice_85' => 'Define tus competencias y power skills para un perfil más completo.',
+    'advice_almost' => '¡Casi terminas! Completa las secciones restantes para un perfil perfecto.',
+    'congratulations' => '¡Felicitaciones! Tu perfil está 100% completo',
+
+    // Sections
+    'basic_information' => 'Información Básica',
+    'work_experience' => 'Experiencia Laboral',
+    'talents' => 'Talentos',
+    'competencies' => 'Competencias',
+    'power_skills' => 'Power Skills',
+    'culture' => 'Cultura',
+    'leadership' => 'Liderazgo',
+
+    // Basic Information Fields
+    'first_name' => 'Nombre',
+    'last_name' => 'Apellido',
+    'identification' => 'Identificación',
+    'country_of_origin' => 'País de Origen',
+    'select_country' => '--Seleccionar País de Origen--',
+    'education_level' => 'Nivel de Educación',
+    'select_education' => 'Seleccionar nivel de educación',
+    'phone_number' => 'Número de Teléfono',
+    'email' => 'Correo Electrónico',
+    'visa_type' => 'Tipo de Visa',
+    'select_visa' => '--Seleccionar Tipo de Visa--',
+    'visa_number' => 'Número de Visa',
+    'have_vehicle' => '¿Tienes vehículo?',
+    'license_plates' => 'Placas',
+    'security_id' => '¿Tienes security ID?',
+    'security_id_digits' => 'Últimos 4 dígitos del security ID',
+    'no' => 'No',
+    'yes' => 'Sí',
+    'in_process' => 'En proceso',
+
+    // Current Address
+    'current_address' => 'Información de Dirección Actual',
+    'country' => 'País',
+    'select_country_address' => '--Seleccionar País--',
+    'state' => 'Estado',
+    'select_state' => '--Seleccionar Estado--',
+    'city' => 'Ciudad',
+    'select_city' => '--Seleccionar Ciudad--',
+    'zip_code' => 'Código Postal',
+    'address' => 'Dirección',
+
+    // Work Experience
+    'work_experience_section' => 'Experiencia Laboral',
+    'add_experience' => 'Agregar Experiencia Laboral',
+    'no_experience' => 'No se ha agregado experiencia laboral aún.',
+    'position' => 'Posición / Título del Trabajo',
+    'position_placeholder' => 'ej. Desarrollador de Software',
+    'company' => 'Nombre de la Empresa',
+    'company_placeholder' => 'ej. Corporación ABC',
+    'start_date' => 'Fecha de Inicio',
+    'end_date' => 'Fecha de Fin',
+    'currently_working' => 'Actualmente trabajando aquí',
+    'description' => 'Descripción',
+    'description_placeholder' => 'Describe tus responsabilidades y logros...',
+    'save_experience' => 'Guardar Experiencia',
+    'update_experience' => 'Actualizar Experiencia',
+    'cancel' => 'Cancelar',
+    'edit' => 'Editar',
+    'delete' => 'Eliminar',
+    'present' => 'Presente',
+    'confirm_delete_experience' => '¿Estás seguro de que deseas eliminar esta experiencia laboral?',
+    'position_required' => 'Por favor ingresa el nombre de la posición.',
+    'start_date_required' => 'Por favor ingresa la fecha de inicio.',
+    'end_date_after_start' => 'La fecha de fin debe ser posterior a la fecha de inicio.',
+    'error_occurred' => 'Ocurrió un error. Por favor intenta de nuevo.',
+
+    // Professional Profile
+    'professional_profile' => 'Perfil Profesional',
+    'innate_talent' => 'Talento Innato',
+    'innate_talent_desc' => 'Describe tus habilidades naturales, aquellas que te resultan fáciles y disfrutas realizar.',
+    'innate_talent_placeholder' => 'Ej: Tengo facilidad para conectar con las personas, me resulta natural escuchar y entender diferentes perspectivas...',
+    'potential_talent' => 'Talento Potencial',
+    'potential_talent_desc' => 'Describe las habilidades que estás desarrollando o deseas potenciar en tu carrera.',
+    'potential_talent_placeholder' => 'Ej: Estoy desarrollando habilidades de liderazgo de equipos, me interesa profundizar en metodologías ágiles...',
+
+    // Power Skills
+    'power_skills_section' => 'Power Skills',
+    'power_skills_desc' => 'Selecciona tus power skills más desarrolladas y evalúa tu nivel (1-5).',
+    'level' => 'Nivel',
+    'level_basic' => 'Básico',
+    'level_intermediate' => 'Intermedio',
+    'level_advanced' => 'Avanzado',
+    'level_expert' => 'Experto',
+    'level_master' => 'Maestro',
+
+    // Behavioral Competencies
+    'behavioral_competencies' => 'Competencias Comportamentales (Modelo Martha Alles)',
+    'behavioral_competencies_desc' => 'Evalúa tu nivel de desarrollo en las siguientes competencias (1-5).',
+    'cardinal_competencies' => 'Competencias Cardinales (Todos los niveles)',
+    'specific_competencies' => 'Competencias Específicas (Gerenciales)',
+    'technical_competencies' => 'Competencias Técnicas',
+    'level_initial' => 'Inicial',
+    'level_developing' => 'En desarrollo',
+    'level_competent' => 'Competente',
+    'level_advanced' => 'Avanzado',
+    'level_expert' => 'Experto',
+
+    // Organizational Culture
+    'organizational_culture' => 'Match Cultura Organizacional',
+    'what_you_seek_company' => '¿Qué buscas en una empresa?',
+    'organizational_culture_advice' => 'Selecciona los aspectos más importantes para ti en una cultura organizacional (1=más importante, 5=importante).',
+    'priority' => 'Prioridad',
+    'priority_critical' => 'Crítico',
+    'priority_very_important' => 'Muy importante',
+    'priority_important' => 'Importante',
+    'priority_desirable' => 'Deseable',
+    'priority_optional' => 'Opcional',
+
+    // Leadership Preferences
+    'leadership_preferences' => '¿Qué buscas de un líder?',
+    'leadership_advice' => 'Selecciona las características que más valoras en un líder (1=más importante, 5=importante).',    'leadership_advice' => 'Selecciona las características que más valoras en un líder (1=más importante, 5=importante).',    'importance' => 'Importancia',
+    'importance_indispensable' => 'Indispensable',
+    'importance_very_important' => 'Muy importante',
+    'importance_important' => 'Importante',
+    'importance_desirable' => 'Deseable',
+    'importance_valuable' => 'Valorable',
+
+    // Validation Messages
+    'position_required' => 'La posición es requerida',
+    'start_date_required' => 'La fecha de inicio es requerida',
+    'end_date_after_start' => 'La fecha de fin debe ser posterior a la fecha de inicio',
+    'confirm_delete_experience' => '¿Estás seguro de que deseas eliminar esta experiencia laboral?',
+    'error_occurred' => 'Ocurrió un error. Por favor intenta de nuevo.',
+];

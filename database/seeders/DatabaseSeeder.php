@@ -28,7 +28,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Seed Roles
+        $adminRole = Role::create(['name' => 'admin']);
+        Role::create(['name' => 'candidate']);
+        Role::create(['name' => 'employer']);
 
+        // Create Admin User
+        $adminUser = \App\Models\User::create([
+            'name' => 'Admin IsYours',
+            'email' => 'isyours@admin.com',
+            'password' => bcrypt('Admin2026'),
+            'email_verified_at' => now(),
+        ]);
+        $adminUser->assignRole($adminRole);
+
+        // Seed Professional Profile Data
+        $this->call([
+            BehavioralCompetencySeeder::class,
+            PowerSkillSeeder::class,
+            OrganizationalCultureValueSeeder::class,
+            LeadershipPreferenceSeeder::class,
+            GeographicDataSeeder::class,
+        ]);
+
+        // Seed Visa Options
         $visaoptions = [
             "B1" =>	"B1 Business Visa", 
             "B2" =>	"B2 Tourism Visa", 
@@ -49,6 +72,7 @@ class DatabaseSeeder extends Seeder
             "I" =>	"I Foreign media representative", 
             "I_CH" =>	"Child of an I (I)", 
             "I_SP" =>	"Spouse of an I (I)"
+            
         ];
 
 
@@ -56,7 +80,170 @@ class DatabaseSeeder extends Seeder
             Visa::create(['name' => $option, 'code' => $key]);
         }
 
+        // Seed Languages
+        $languageOptions = [
+            'English',
+            'Spanish',
+            'French',
+            'German',
+            'Mandarin Chinese',
+            'Japanese',
+            'Italian',
+            'Portuguese',
+            'Russian',
+            'Arabic',
+        ];
+        
+        foreach ($languageOptions as $option) {
+            Language::create(['name' => $option]);
+        }
 
+        // Seed Proficiency Levels
+        $proficiencyLevelOptions = [
+            'Basic',
+            'Intermediate',
+            'Advanced',
+            'Fluent',
+            'Native',
+        ];
+        
+        foreach ($proficiencyLevelOptions as $option) {
+            ProficiencyLevel::create(['name' => $option]);
+        }
+        
+        // Seed Education Levels
+        $educationLevelsOptions = [
+            'High School Diploma' => 'High School Diploma',
+            "Associate's Degree" => "Associate's Degree",
+            "Bachelor's Degree" => "Bachelor's Degree",
+            "Master's Degree" => "Master's Degree",
+            'Doctorate Degree' => 'Doctorate Degree',
+            'Professional Degree' => 'Professional Degree',
+        ];
+
+        foreach ($educationLevelsOptions as $option) {
+            EducationLevel::create(['name' => $option]);
+        }
+
+        // Seed Job Levels and Titles
+        $jobOptions = [
+            'Hotel Reception' => [
+                'Hotel Receptionist',
+                'Concierge',
+                'Reception Supervisor',
+                'Hotel Reception Manager',
+                'Reservation Agent'
+            ],
+            'Support Staff' => [
+                'Bellboy',
+                'Parking Attendant',
+                'Camera Assistant',
+                'Driver',
+                'Luggage Porter'
+            ],
+            'Housekeeping' => [
+                'Maintenance Worker',
+                'Maintenance Manager',
+                'Cleaning Assistant',
+                'Head Housekeeper',
+                'Cleaning Director'
+            ],
+            'Food Service' => [
+                'Barista',
+                'Bartender',
+                'Busser',
+                'Host/Hostess',
+                'Sommelier'
+            ],
+            'Hotel Kitchen' => [
+                'Pastry Chef',
+                'Sous Chef',
+                'Line Cook',
+                'Café Manager',
+                'Dishwasher',
+                'Food Service Manager',
+                'Kitchen Manager',
+                'Restaurant Manager'
+            ],
+            'Event Planning' => [
+                'Wedding Coordinator',
+                'Meeting Planner',
+                'Event Specialist',
+                'Events Assistant',
+                'Executive Meeting Manager',
+                'Executive Conference Manager',
+                'Convention Planner'
+            ],
+            'Hotel Management' => [
+                'Hotel Sales Director',
+                'Shift Supervisor',
+                'Sales/Marketing Manager',
+                'Group Sales Manager',
+                'Wedding Sales Manager',
+                'Spa Manager',
+                'Purchasing Manager',
+                'Accounts Manager'
+            ]
+        ];
+        
+        foreach ($jobOptions as $key => $titles) {
+            $job_level = JobLevel::create([
+                'name' => $key,
+            ]);
+            foreach ($titles as $title) {
+                JobTitle::create([
+                    'name' => $title,
+                    'job_level_id' => $job_level->id,
+                ]);
+            }
+        }
+
+        // Seed Skills
+        $skills = [
+            'Waiter',
+            'Bartender',
+            'Chef',
+            'Carpenter',
+            'Plumber',
+            'Electrician',
+            'Programmer',
+            'Designer',
+            'Writer',
+            'Translator',
+            'Photographer',
+            'Musician',
+            'Actor',
+            'Dancer',
+            'Athlete',
+            'Teacher',
+            'Doctor',
+            'Lawyer',
+            'Accountant',
+            'Salesperson'
+        ];
+
+        foreach ($skills as $skill) {
+            Skill::create([
+                'name' => $skill,
+            ]);
+        }
+
+        // Seed Job Types
+        $jobTypes = [
+            ['name' => 'Full-time'],
+            ['name' => 'Part-time'],
+            ['name' => 'Temporary'],
+            ['name' => 'Seasonal'],
+        ];
+
+        foreach ($jobTypes as $jobType) {
+            JobType::create($jobType);
+        }
+
+        // Seed Experience Levels  
+        Experience::create(['name' => 'Junior']);
+        Experience::create(['name' => 'Semi-senior']);
+        Experience::create(['name' => 'Senior']);
 
 /*
         $languageOptions = [

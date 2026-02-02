@@ -1,50 +1,46 @@
-# Utiliza la imagen base oficial de PHP 8.2 con Apache.
+# Etapa 1: construir assets con Node
+FROM node:18 AS build-frontend
+WORKDIR /app
+COPY package*.json vite.config.* ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Etapa 2: PHP + Apache
 FROM php:8.2-apache
 
-# Instala dependencias necesarias
 RUN apt-get update && apt-get install -y \
-    git \
-    zip \
-    unzip
+  libpng-dev \
+  libonig-dev \
+  libxml2-dev \
+  libzip-dev \
+  zip \
+  unzip \
+  git \
+  curl \
+  && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Instala extensiones de PHP necesarias
-RUN docker-php-ext-install pdo pdo_mysql
+# Instalar Composer
+COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer
 
-# Configuración de PHP para Cloud Run
-RUN docker-php-ext-install -j "$(nproc)" opcache
+WORKDIR /var/www/html
 
-RUN set -ex; \
-  { \
-    echo "; Cloud Run aplica límites de memoria y tiempo de ejecución."; \
-    echo "memory_limit = -1"; \
-    echo "max_execution_time = 0"; \
-    echo "; Limite de subida de archivos en Cloud Run."; \
-    echo "upload_max_filesize = 32M"; \
-    echo "post_max_size = 32M"; \
-    echo "; Configuración de Opcache para Contenedores."; \
-    echo "opcache.enable = On"; \
-    echo "opcache.validate_timestamps = Off"; \
-    echo "; Configura la memoria de Opcache (específica de la aplicación)."; \
-    echo "opcache.memory_consumption = 32"; \
-  } > "$PHP_INI_DIR/conf.d/cloud-run.ini"
-
-# Instala Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Define el directorio de trabajo del contenedor
-WORKDIR /var/www/html/public/
-
-# Copia los archivos del proyecto al contenedor
+# Copiar proyecto PHP
 COPY . .
 
-# Instala las dependencias de Composer
+# Copiar build de Vite generado en la primera etapa
+COPY --from=build-frontend /app/public/build ./public/build
+
+# Instalar dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Ajusta permisos
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Permisos
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Utiliza la variable de entorno PORT en los archivos de configuración de Apache
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+# Configuración Apache
+RUN a2enmod rewrite
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
 
-# Expone el puerto para Cloud Run
 EXPOSE 8080

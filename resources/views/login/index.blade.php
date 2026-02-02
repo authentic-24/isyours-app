@@ -16,7 +16,7 @@ body {
 /* Estilos minimalistas para login */
 .login-section {
     min-height: 100vh;
-    background: #a9a4c5 !important;
+    background: #f3f4f6 !important;
     display: flex;
     align-items: center;
     padding: 40px 0;
@@ -63,11 +63,12 @@ body {
 }
 
 .login-card {
-    background: #a9a4c5 !important;
+    background: #ffffff !important;
     backdrop-filter: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid #e5e7eb !important;
+    padding: 40px !important;
     max-width: 400px !important;
 }
 
@@ -360,6 +361,12 @@ body {
                         <p class="signup-text">
                             {{ __('home.dont_have_account') }} 
                             <a href="{{ route('web_register') }}" class="signup-link">{{ __('home.create_account') }}</a>
+                        </p>
+                        <p class="privacy-text" style="margin-top: 15px; font-size: 13px; color: #666666;">
+                            {{ __('home.by_logging_in') }}
+                            <a href="{{ route('terms') }}" target="_blank" class="forgot-link" style="text-decoration: none;">{{ __('home.terms_conditions') }}</a>
+                            {{ __('home.and') }}
+                            <a href="{{ route('privacy') }}" target="_blank" class="forgot-link" style="text-decoration: none;">{{ __('home.privacy_policy') }}</a>
                         </p>
                     </div>
                 </div>

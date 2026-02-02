@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\DistanceHelper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,13 +34,19 @@ class User extends Authenticatable
         'is_agree_terms_privacy',
         'zip_code',
         'address',
+        'full_address',
+        'latitude',
+        'longitude',
         'have_vehicle',
         'visa_id',
         'visa_number',
         'license_plates',
         'country_of_origin_id',
         'education_level_id',
-        'security_id'
+        'security_id',
+        'security_id_last_digits',
+        'innate_talent',
+        'potential_talent',
     ];
 
     /**
@@ -96,8 +103,105 @@ class User extends Authenticatable
         return $this->hasMany(WorkExperience::class)->orderBy('start_date', 'desc');
     }
 
-    public function talents()
+    /**
+     * Competencias comportamentales del usuario (Martha Alles)
+     */
+    public function behavioralCompetencies()
     {
-        return $this->hasMany(UserTalent::class);
+        return $this->belongsToMany(BehavioralCompetency::class, 'user_behavioral_competency')
+            ->withPivot('level')
+            ->withTimestamps();
+    }
+
+    /**
+     * Power Skills del usuario
+     */
+    public function powerSkills()
+    {
+        return $this->belongsToMany(PowerSkill::class, 'user_power_skill')
+            ->withPivot('level')
+            ->withTimestamps();
+    }
+
+    /**
+     * Valores de cultura organizacional que el usuario busca
+     */
+    public function organizationalCultureValues()
+    {
+        return $this->belongsToMany(OrganizationalCultureValue::class, 'user_culture_value')
+            ->withPivot('priority')
+            ->withTimestamps();
+    }
+
+    /**
+     * Preferencias de liderazgo del usuario
+     */
+    public function leadershipPreferences()
+    {
+        return $this->belongsToMany(LeadershipPreference::class, 'user_leadership_preference')
+            ->withPivot('importance')
+            ->withTimestamps();
+    }
+
+    /**
+     * Calculate distance from user to a job offer
+     * Uses exact coordinates if available, falls back to city coordinates
+     * 
+     * @param JobOffer $jobOffer
+     * @param string $unit 'km' or 'mi'
+     * @return float|null Distance in specified unit
+     */
+    public function distanceToJobOffer(JobOffer $jobOffer, $unit = 'km')
+    {
+        // Get user coordinates (prefer exact, fallback to city)
+        $userLat = $this->latitude ?? $this->city->latitude ?? null;
+        $userLon = $this->longitude ?? $this->city->longitude ?? null;
+
+        // Get job offer coordinates (prefer exact, fallback to city)
+        $jobLat = $jobOffer->latitude ?? $jobOffer->city->latitude ?? null;
+        $jobLon = $jobOffer->longitude ?? $jobOffer->city->longitude ?? null;
+
+        if (!$userLat || !$userLon || !$jobLat || !$jobLon) {
+            return null;
+        }
+
+        return DistanceHelper::calculateDistance(
+            $userLat,
+            $userLon,
+            $jobLat,
+            $jobLon,
+            $unit
+        );
+    }
+
+    /**
+     * Calculate distance from user to another user
+     * Uses exact coordinates if available, falls back to city coordinates
+     * 
+     * @param User $otherUser
+     * @param string $unit 'km' or 'mi'
+     * @return float|null Distance in specified unit
+     */
+    public function distanceToUser(User $otherUser, $unit = 'km')
+    {
+        // Get user coordinates (prefer exact, fallback to city)
+        $userLat = $this->latitude ?? $this->city->latitude ?? null;
+        $userLon = $this->longitude ?? $this->city->longitude ?? null;
+
+        // Get other user coordinates (prefer exact, fallback to city)
+        $otherLat = $otherUser->latitude ?? $otherUser->city->latitude ?? null;
+        $otherLon = $otherUser->longitude ?? $otherUser->city->longitude ?? null;
+
+        if (!$userLat || !$userLon || !$otherLat || !$otherLon) {
+            return null;
+        }
+
+        return DistanceHelper::calculateDistance(
+            $userLat,
+            $userLon,
+            $otherLat,
+            $otherLon,
+            $unit
+        );
     }
 }

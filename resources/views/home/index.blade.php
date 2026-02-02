@@ -55,7 +55,7 @@
                 <div class="fun-fact-section">
                     <div class="row">
                         <div class="text cta-text">
-                            <span class="">{{ __('home.connect_women_opportunities') }}</span>
+                            {{-- <span class="">{{ __('home.connect_women_opportunities') }}</span> --}}
                         </div>
                         <!--Column-->
                         {{-- <div class="counter-column col-lg-auto col-md-6 col-sm-6 wow fadeInUp">
@@ -219,7 +219,7 @@
                                     <div class="inner-box">
                                         <div class="content">
                                             <span class="company-logo enhanced-logo"><img src="{{ asset('images/resource/company-logo/4-1.png') }}" alt=""></span>
-                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ $offer->job_level_name ?? '' }} / {{ $offer->job_title_name ?? '' }}</a></h4>
+                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ trans_job_level($offer->job_level_name ?? '') }} / {{ trans_job_title($offer->job_title_name ?? '') }}</a></h4>
                                             <ul class="job-info">
                                                 <li><span class="icon flaticon-map-locator"></span> {{ $offer->city->name ?? ''}}, {{ $offer->city->state->code ?? ''}}</li>
                                                 <li><span class="icon flaticon-clock-3"></span> 
@@ -232,8 +232,8 @@
                                                 <li><span class="icon flaticon-money"></span> ${{ $offer->rate ?? ' ' }}/hour</li>
                                             </ul>
                                             <ul class="job-other-info">
-                                                <li class="time">{{ $offer->job_type->name ?? 'Full Time' }}</li>
-                                                <li class="privacy">{{ $offer->job_level->name ?? 'Private' }}</li>
+                                                <li class="time">{{ trans_job_type($offer->job_type->name ?? 'Full Time') }}</li>
+                                                <li class="privacy">{{ trans_job_level($offer->job_level->name ?? 'Private') }}</li>
                                                 <li class="required">Urgent</li>
                                             </ul>
                                             <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button>
@@ -252,7 +252,7 @@
                                     <div class="inner-box">
                                         <div class="content">
                                             <span class="company-logo enhanced-logo"><img src="{{ asset('images/resource/company-logo/4-1.png') }}" alt=""></span>
-                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ $offer->job_level_name ?? '' }} / {{ $offer->job_title_name ?? '' }}</a></h4>
+                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ trans_job_level($offer->job_level_name ?? '') }} / {{ trans_job_title($offer->job_title_name ?? '') }}</a></h4>
                                             <ul class="job-info">
                                                 <li><span class="icon flaticon-map-locator"></span> {{ $offer->city->name ?? ''}}, {{ $offer->city->state->code ?? ''}}</li>
                                                 <li><span class="icon flaticon-clock-3"></span> 
@@ -265,8 +265,8 @@
                                                 <li><span class="icon flaticon-money"></span> ${{ $offer->rate ?? ' ' }}/hour</li>
                                             </ul>
                                             <ul class="job-other-info">
-                                                <li class="time">{{ $offer->job_type->name ?? 'Full Time' }}</li>
-                                                <li class="privacy">{{ $offer->job_level->name ?? 'Private' }}</li>
+                                                <li class="time">{{ trans_job_type($offer->job_type->name ?? 'Full Time') }}</li>
+                                                <li class="privacy">{{ trans_job_level($offer->job_level->name ?? 'Private') }}</li>
                                                 <li class="required">Urgent</li>
                                             </ul>
                                             <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button>
@@ -285,7 +285,7 @@
                                     <div class="inner-box">
                                         <div class="content">
                                             <span class="company-logo enhanced-logo"><img src="{{ asset('images/resource/company-logo/4-1.png') }}" alt=""></span>
-                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ $offer->job_level_name ?? '' }} / {{ $offer->job_title_name ?? '' }}</a></h4>
+                                            <h4 class="job-title"><a href="{{ route('web.offer.show', ['id' => $offer->id]) }}">{{ trans_job_level($offer->job_level_name ?? '') }} / {{ trans_job_title($offer->job_title_name ?? '') }}</a></h4>
                                             <ul class="job-info">
                                                 <li><span class="icon flaticon-map-locator"></span> {{ $offer->city->name ?? ''}}, {{ $offer->city->state->code ?? ''}}</li>
                                                 <li><span class="icon flaticon-clock-3"></span> 
@@ -298,8 +298,8 @@
                                                 <li><span class="icon flaticon-money"></span> ${{ $offer->rate ?? ' ' }}/hour</li>
                                             </ul>
                                             <ul class="job-other-info">
-                                                <li class="time">{{ $offer->job_type->name ?? 'Full Time' }}</li>
-                                                <li class="privacy">{{ $offer->job_level->name ?? 'Private' }}</li>
+                                                <li class="time">{{ trans_job_type($offer->job_type->name ?? 'Full Time') }}</li>
+                                                <li class="privacy">{{ trans_job_level($offer->job_level->name ?? 'Private') }}</li>
                                                 <li class="required">Urgent</li>
                                             </ul>
                                             <button class="bookmark-btn"><span class="flaticon-bookmark"></span></button>
@@ -413,12 +413,12 @@
                     <h2>{{ __('home.featured_cities') }}</h2>
                     <div class="text">{{ __('home.featured_cities_text') }}</div>
                 </div>
-                <a href="#" class="link">{{ __('home.browse_all_locations') }} <span class="fa fa-angle-right"></span></a>
+                {{-- <a href="#" class="link">{{ __('home.browse_all_locations') }} <span class="fa fa-angle-right"></span></a> --}}
             </div>
 
             <div class="row wow fadeInUp">
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg col-md-6 col-sm-12">
                     <!-- Feature Block -->
                     <div class="feature-block">
                         <div class="inner-box">
@@ -426,7 +426,7 @@
                             <div class="overlay-box">
                                 <div class="content">
                                     <h5>Miami</h5>
-                                    <span class="total-jobs">120 {{ __('home.jobs_count') }}</span>
+                                    <span class="total-jobs">0 {{ __('home.jobs_count') }}</span>
                                     <a href="{{ route('web_login') }}" class="overlay-link"></a>
                                 </div>
                             </div>
@@ -434,7 +434,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg col-md-6 col-sm-12">
                     <!-- Feature Block -->
                     <div class="feature-block">
                         <div class="inner-box">
@@ -442,7 +442,7 @@
                             <div class="overlay-box">
                                 <div class="content">
                                     <h5>New York</h5>
-                                    <span class="total-jobs">89 {{ __('home.jobs_count') }}</span>
+                                    <span class="total-jobs">0 {{ __('home.jobs_count') }}</span>
                                     <a href="{{ route('web_login') }}" class="overlay-link"></a>
                                 </div>
                             </div>
@@ -450,7 +450,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg col-md-6 col-sm-12">
                     <!-- Feature Block -->
                     <div class="feature-block">
                         <div class="inner-box">
@@ -458,7 +458,7 @@
                             <div class="overlay-box">
                                 <div class="content">
                                     <h5>Los Angeles</h5>
-                                    <span class="total-jobs">156 {{ __('home.jobs_count') }}</span>
+                                    <span class="total-jobs">0 {{ __('home.jobs_count') }}</span>
                                     <a href="{{ route('web_login') }}" class="overlay-link"></a>
                                 </div>
                             </div>
@@ -466,7 +466,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg col-md-6 col-sm-12">
                     <!-- Feature Block -->
                     <div class="feature-block">
                         <div class="inner-box">
@@ -474,7 +474,23 @@
                             <div class="overlay-box">
                                 <div class="content">
                                     <h5>Las Vegas</h5>
-                                    <span class="total-jobs">78 {{ __('home.jobs_count') }}</span>
+                                    <span class="total-jobs">0 {{ __('home.jobs_count') }}</span>
+                                    <a href="{{ route('web_login') }}" class="overlay-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg col-md-6 col-sm-12">
+                    <!-- Feature Block -->
+                    <div class="feature-block">
+                        <div class="inner-box">
+                            <figure class="image"><img src="{{ asset('images/index-15/cities/1.png') }}" alt=""></figure>
+                            <div class="overlay-box">
+                                <div class="content">
+                                    <h5>Boston</h5>
+                                    <span class="total-jobs">0 {{ __('home.jobs_count') }}</span>
                                     <a href="{{ route('web_login') }}" class="overlay-link"></a>
                                 </div>
                             </div>

@@ -296,4 +296,46 @@ class OfferController extends \App\Http\Controllers\Controller
 
         return redirect()->route('web.offer.show', $response['data']['id']);
     }
+
+    /**
+     * Show public offers index - accessible without login
+     */
+    public function publicIndex(Request $request)
+    {
+        // Get all active offers
+        $offers = JobOffer::with([
+            'jobType',
+            'city.state',
+            'jobLevel',
+            'jobTitle',
+            'company'
+        ])
+            ->where('status', 'active')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        return view('jobs.index', ['offers' => $offers]);
+    }
+
+    /**
+     * Show public offer detail - accessible without login
+     */
+    public function publicShow($offer_id)
+    {
+        // Get offer with relations
+        $offer = JobOffer::with([
+            'jobType',
+            'skills',
+            'city.state',
+            'jobLevel',
+            'jobTitle',
+            'educationLevel',
+            'language',
+            'proficiencyLevel',
+            'keyResponsabilities',
+            'company'
+        ])->findOrFail($offer_id);
+
+        return view('jobs.show', ['offer' => $offer]);
+    }
 }

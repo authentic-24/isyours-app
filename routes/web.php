@@ -62,6 +62,17 @@ Route::prefix('web')->group(function () {
     Route::post('login', [App\Http\Controllers\Web\HomeController::class, 'login_post'])->name('login_post');
     Route::get('log_out', [App\Http\Controllers\Web\HomeController::class, 'log_out'])->name('log_out');
 
+    // Legal pages
+    Route::get('terms', function () {
+        return view('legal.terms');
+    })->name('terms');
+    Route::get('privacy', function () {
+        return view('legal.privacy');
+    })->name('privacy');
+
+    // Public offer routes - accessible without login
+    Route::get('jobs', [App\Http\Controllers\Web\OfferController::class, 'publicIndex'])->name('web.jobs.index');
+    Route::get('job/{id}', [App\Http\Controllers\Web\OfferController::class, 'publicShow'])->name('web.job.show');
 
     Route::get('offers/index', [App\Http\Controllers\Web\OfferController::class, 'index'])->name('web.offer.index');
     Route::get('offer/create', [App\Http\Controllers\Web\OfferController::class, 'create'])->name('web.offer.create');
@@ -87,10 +98,6 @@ Route::prefix('web')->group(function () {
     Route::post('profile/work-experience', [App\Http\Controllers\Web\ProfileController::class, 'storeWorkExperience'])->name('web.profile.work_experience.store');
     Route::put('profile/work-experience/{id}', [App\Http\Controllers\Web\ProfileController::class, 'updateWorkExperience'])->name('web.profile.work_experience.update');
     Route::delete('profile/work-experience/{id}', [App\Http\Controllers\Web\ProfileController::class, 'destroyWorkExperience'])->name('web.profile.work_experience.destroy');
-
-    // Talents Routes
-    Route::post('profile/talent', [App\Http\Controllers\Web\ProfileController::class, 'storeTalent'])->name('web.profile.talent.store');
-    Route::delete('profile/talent/{id}', [App\Http\Controllers\Web\ProfileController::class, 'destroyTalent'])->name('web.profile.talent.destroy');
 
     Route::get('test-web', function () {
         return 'Test Web Route';
@@ -133,3 +140,27 @@ Route::middleware('auth')->get('/test-email', function () {
 
 Route::post('/job-post', [App\Http\Controllers\JobOfferController::class, 'store'])->name('job.post');
 Route::get('/job-post', [App\Http\Controllers\JobOfferController::class, 'create'])->name('job.create');
+
+// Ruta para ejecutar migraciones via web
+Route::get('/run-migrations', function () {
+    try {
+        // Ejecutar migraciones
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        $output = \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Migraciones ejecutadas exitosamente',
+            'output' => $output,
+            'timestamp' => now()->toDateTimeString()
+        ]);
+    } catch (\Exception $e) {
+        \Log::error('Error ejecutando migraciones via web: ' . $e->getMessage());
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Error ejecutando migraciones: ' . $e->getMessage(),
+            'timestamp' => now()->toDateTimeString()
+        ], 500);
+    }
+})->name('web.run.migrations');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KeyResponsability;
+use App\Services\DistanceService;
 use Illuminate\Http\Request;
 use App\Models\JobOffer;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class JobOfferController extends Controller
 {
-    public function index()
+    protected $distanceService;
+
+    public function __construct(DistanceService $distanceService)
+    {
+        $this->distanceService = $distanceService;
+    }
+
+    public function index(Request $request)
     {
         $jobOffers = JobOffer::with(
             'jobType',
@@ -24,10 +32,18 @@ class JobOfferController extends Controller
             'proficiencyLevel',
             'company',
         )->orderBy('created_at', 'DESC')->get();
+
+        // Add distance calculation if user is authenticated
+        $user = auth()->user();
+        if ($user && $user->city) {
+            $unit = $request->input('unit', 'km');
+            $jobOffers = $this->distanceService->enrichJobOffersWithDistance($user, $jobOffers, $unit);
+        }
+
         return response()->json($jobOffers);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $jobOffer = JobOffer::with(
             'jobType',
@@ -43,6 +59,25 @@ class JobOfferController extends Controller
             'company',
             'users.visa',
         )->findOrFail($id);
+
+        // Add distance calculation if user is authenticated
+        $user = auth()->user();
+        if ($user && $user->city && $jobOffer->city) {
+            $unit = $request->input('unit', 'km');
+            $distanceInfo = $this->distanceService->calculateCandidateToJobDistance($user, $jobOffer, $unit);
+            $jobOffer->distance_info = $distanceInfo;
+        }
+
+        // Add distances for all candidates who applied (for employers/admins)
+        if ($user && ($user->hasRole('employer') || $user->hasRole('admin'))) {
+            $unit = $request->input('unit', 'km');
+            $jobOffer->users = $this->distanceService->enrichCandidatesWithDistance(
+                $jobOffer,
+                $jobOffer->users,
+                $unit
+            );
+        }
+
         return response()->json($jobOffer);
     }
 

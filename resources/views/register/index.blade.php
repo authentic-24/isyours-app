@@ -15,7 +15,7 @@ body {
 /* Estilos minimalistas para register */
 .register-section {
     min-height: 100vh;
-    background: #a9a4c5 !important;
+    background: #f3f4f6 !important;
     display: flex;
     align-items: center;
     padding: 40px 0;
@@ -62,13 +62,13 @@ body {
 }
 
 .register-card {
-    background: #a9a4c5 !important;
+    background: #ffffff !important;
     backdrop-filter: none !important;
     border-radius: 12px !important;
-    box-shadow: none !important;
-    border: #d1d5db 0px solid !important;
-    padding: 20px 20px !important;
-    max-width: 500px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid #e5e7eb !important;
+    padding: 40px !important;
+    max-width: 600px !important;
 }
 
 .register-badge {
@@ -216,6 +216,14 @@ body {
     color: #1a1a1a !important;
     font-size: 14px !important;
 }
+
+.row {
+    margin-bottom: 15px;
+}
+
+.form-group-enhanced {
+    margin-bottom: 20px;
+}
 </style>
 
 <!-- Register Section -->
@@ -272,171 +280,183 @@ body {
                         
                         <form method="POST" action="{{ route('register_post') }}" class="enhanced-form">
                             @csrf
-                            <!-- Paso 1 -->
-                            <div class="wizard-step" id="step-1">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="user_type" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.user_type') }}</label>
-                                        <div class="input-wrapper">
-                                            <select id="user_type" name="user_type" class="form-control-enhanced" required>
-                                                <option value="candidate" {{ old('user_type') == 'candidate' ? 'selected' : '' }}>{{ __('home.candidate') }}</option>
-                                                <option value="employer" {{ old('user_type') == 'employer' ? 'selected' : '' }}>{{ __('home.employer') }}</option>
-                                            </select>
-                                            <span class="input-focus-line"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="identification" class="form-label"><span class="icon flaticon-id"></span> {{ __('home.identification') }}</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" id="identification" name="identification" class="form-control-enhanced" value="{{ old('identification') }}" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
+                            
+                            <!-- User Type & Identification -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="user_type" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.user_type') }}</label>
+                                    <div class="input-wrapper">
+                                        <select id="user_type" name="user_type" class="form-control-enhanced" required>
+                                            <option value="candidate" {{ old('user_type') == 'candidate' ? 'selected' : '' }}>{{ __('home.candidate') }}</option>
+                                            <option value="employer" {{ old('user_type') == 'employer' ? 'selected' : '' }}>{{ __('home.employer') }}</option>
+                                        </select>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="firstName" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.first_name') }}</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" id="firstName" name="first_name" class="form-control-enhanced" value="{{ old('first_name') }}" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
+                                <div class="col-md-6">
+                                    <label for="identification" class="form-label"><span class="icon flaticon-id"></span> {{ __('home.identification') }}</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="identification" name="identification" class="form-control-enhanced" value="{{ old('identification') }}" required>
+                                        <span class="input-focus-line"></span>
                                     </div>
-                                    <div class="col-md-12">
-                                        <label for="lastName" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.last_name') }}</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" id="lastName" name="last_name" class="form-control-enhanced" value="{{ old('last_name') }}" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wizard-nav">
-                                    <button type="button" class="btn btn-primary btn-wizard-next" id="next-1">
-                                        <i class="fas fa-arrow-right"></i> {{ __('home.next') }}
-                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Paso 2 -->
-                            <div class="wizard-step d-none" id="step-2">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="country" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.country') }}</label>
-                                        <div class="input-wrapper">
-                                            <select id="country" name="country_id" class="form-control-enhanced" required>
-                                                <option value="">{{ __('home.select_country') }}</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <span class="input-focus-line"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="state" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.state') }}</label>
-                                        <div class="input-wrapper">
-                                            <select id="state" name="state_id" class="form-control-enhanced" required>
-                                                <option value="">{{ __('home.select_state') }}</option>
-                                            </select>
-                                            <span class="input-focus-line"></span>
-                                        </div>
+                            <!-- Names -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.first_name') }}</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="firstName" name="first_name" class="form-control-enhanced" value="{{ old('first_name') }}" required>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="city" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.city') }}</label>
-                                        <div class="input-wrapper">
-                                            <select id="city" name="city_id" class="form-control-enhanced" required>
-                                                <option value="">{{ __('home.select_city') }}</option>
-                                            </select>
-                                            <span class="input-focus-line"></span>
-                                        </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label"><span class="icon flaticon-user"></span> {{ __('home.last_name') }}</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="lastName" name="last_name" class="form-control-enhanced" value="{{ old('last_name') }}" required>
+                                        <span class="input-focus-line"></span>
                                     </div>
-                                    <div class="col-md-12">
-                                        <label for="zipcode" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.zip_code') }}</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" pattern="\d{5}" maxlength="5" title="Enter a valid ZIP code" id="zipcode" name="zip_code" class="form-control-enhanced" value="{{ old('zip_code') }}" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wizard-nav">
-                                    <button type="button" class="btn btn-outline-primary btn-wizard-prev" id="prev-2">
-                                        <i class="fas fa-arrow-left"></i> {{ __('home.previous') }}
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-wizard-next" id="next-2">
-                                        {{ __('home.next') }} <i class="fas fa-arrow-right"></i>
-                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Paso 3 -->
-                            <div class="wizard-step d-none" id="step-3">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="phone" class="form-label"><span class="icon flaticon-phone"></span> {{ __('home.phone_number') }}</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" id="phone" name="phone_number" class="form-control-enhanced" value="{{ old('phone_number') }}" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="email" class="form-label"><span class="icon flaticon-email"></span> Email</label>
-                                        <div class="input-wrapper">
-                                            <input type="email" id="email" name="email" class="form-control-enhanced" value="{{ old('email') }}" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
+                            <!-- Location -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="country" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.country') }}</label>
+                                    <div class="input-wrapper">
+                                        <select id="country" name="country_id" class="form-control-enhanced" required>
+                                            <option value="">{{ __('home.select_country') }}</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12 position-relative">
-                                        <label for="password-field" class="form-label"><span class="icon flaticon-lock"></span> Password</label>
-                                        <div class="input-wrapper">
-                                            <input id="password-field" type="password" name="password" class="form-control-enhanced pr-5" placeholder="Password" required>
-                                            <span class="input-focus-line"></span>
-                                            <button type="button" id="togglePassword" style="position:absolute; right:10px; top:38px; background:none; border:none;" tabindex="-1">
-                                                <i class="fa fa-eye" id="password-eye-icon"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="confirmPassword" class="form-label"><span class="icon flaticon-lock"></span> Confirm password</label>
-                                        <div class="input-wrapper">
-                                            <input type="password" id="confirmPassword" name="password_confirmation" class="form-control-enhanced" required>
-                                            <span class="input-focus-line"></span>
-                                        </div>
+                                <div class="col-md-6">
+                                    <label for="state" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.state') }}</label>
+                                    <div class="input-wrapper">
+                                        <select id="state" name="state_id" class="form-control-enhanced" required>
+                                            <option value="">{{ __('home.select_state') }}</option>
+                                        </select>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="form-options">
-                                    <div class="terms-agreement">
-                                        <input name="have_vehicle" type="hidden" value="0">
-                                        <input type="checkbox" id="have_vehicle" name="have_vehicle" value="1" class="custom-checkbox" {{ old('have_vehicle') ? 'checked' : '' }}>
-                                        <label for="have_vehicle" class="form-check-label">Do you have a vehicle?</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="city" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.city') }}</label>
+                                    <div class="input-wrapper">
+                                        <select id="city" name="city_id" class="form-control-enhanced" required>
+                                            <option value="">{{ __('home.select_city') }}</option>
+                                        </select>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="form-options">
-                                    <div class="terms-agreement">
-                                        <input name="security_id" type="hidden" value="0">
-                                        <input type="checkbox" id="security_id" name="security_id" value="1" class="custom-checkbox" {{ old('security_id') ? 'checked' : '' }}>
-                                        <label for="security_id" class="form-check-label">Do you have a security ID?</label>
+                                <div class="col-md-6">
+                                    <label for="zipcode" class="form-label"><span class="icon flaticon-map"></span> {{ __('home.zip_code') }}</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" pattern="\d{5}" maxlength="5" title="Enter a valid ZIP code" id="zipcode" name="zip_code" class="form-control-enhanced" value="{{ old('zip_code') }}" required>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="form-options">
-                                    <div class="terms-agreement">
-                                        <input type="checkbox" id="agree_terms" name="is_agree_terms_privacy" value="1" class="custom-checkbox" required {{ old('is_agree_terms_privacy') ? 'checked' : '' }}>
-                                        <label for="agree_terms" class="form-check-label">I accept the <a href="#" target="_blank">terms and privacy policy</a>.</label>
+                            </div>
+
+                            <!-- Contact -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="phone" class="form-label"><span class="icon flaticon-phone"></span> {{ __('home.phone_number') }}</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="phone" name="phone_number" class="form-control-enhanced" value="{{ old('phone_number') }}" required>
+                                        <span class="input-focus-line"></span>
                                     </div>
                                 </div>
-                                <div class="form-group-submit">
-                                    <button type="button" class="btn btn-outline-primary btn-wizard-prev" id="prev-3">
-                                        <i class="fas fa-arrow-left"></i> Previous
-                                    </button>
-                                    <button type="submit" class="btn btn-success register-btn">
-                                        <span class="btn-text">Create Account</span>
-                                        <span class="btn-icon">
-                                            <i class="fas fa-user-plus"></i>
-                                        </span>
-                                    </button>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="email" class="form-label"><span class="icon flaticon-email"></span> Email</label>
+                                    <div class="input-wrapper">
+                                        <input type="email" id="email" name="email" class="form-control-enhanced" value="{{ old('email') }}" required>
+                                        <span class="input-focus-line"></span>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="row">
+                                <div class="col-md-12 position-relative">
+                                    <label for="password-field" class="form-label"><span class="icon flaticon-lock"></span> Password</label>
+                                    <div class="input-wrapper">
+                                        <input id="password-field" type="password" name="password" class="form-control-enhanced pr-5" placeholder="Password" required>
+                                        <span class="input-focus-line"></span>
+                                        <button type="button" id="togglePassword" style="position:absolute; right:10px; top:38px; background:none; border:none;" tabindex="-1">
+                                            <i class="fa fa-eye" id="password-eye-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="confirmPassword" class="form-label"><span class="icon flaticon-lock"></span> Confirm password</label>
+                                    <div class="input-wrapper">
+                                        <input type="password" id="confirmPassword" name="password_confirmation" class="form-control-enhanced" required>
+                                        <span class="input-focus-line"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Checkboxes -->
+                            <div class="form-options">
+                                <div class="terms-agreement">
+                                    <input name="have_vehicle" type="hidden" value="0">
+                                    <input type="checkbox" id="have_vehicle" name="have_vehicle" value="1" class="custom-checkbox" {{ old('have_vehicle') ? 'checked' : '' }}>
+                                    <label for="have_vehicle" class="form-check-label">Do you have a vehicle?</label>
+                                </div>
+                            </div>
+                            <div class="form-options">
+                                <div class="terms-agreement">
+                                    <label for="security_id" class="form-check-label" style="display: block; margin-bottom: 8px;">¿Tiene ID de seguridad?</label>
+                                    <select id="security_id" name="security_id" class="form-control-enhanced" style="width: 100%; margin-bottom: 10px;">
+                                        <option value="no" {{ old('security_id') == 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="yes" {{ old('security_id') == 'yes' ? 'selected' : '' }}>Sí</option>
+                                        <option value="in_process" {{ old('security_id') == 'in_process' ? 'selected' : '' }}>En trámite</option>
+                                    </select>
+                                    <div id="security_digits_field" style="display: {{ old('security_id') == 'yes' ? 'block' : 'none' }}; margin-top: 10px;">
+                                        <input type="text" id="security_id_last_digits" name="security_id_last_digits" 
+                                               class="form-control-enhanced" placeholder="4 últimos dígitos" 
+                                               maxlength="4" pattern="\d{4}" value="{{ old('security_id_last_digits') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                document.getElementById('security_id').addEventListener('change', function() {
+                                    var digitsField = document.getElementById('security_digits_field');
+                                    if (this.value === 'yes') {
+                                        digitsField.style.display = 'block';
+                                    } else {
+                                        digitsField.style.display = 'none';
+                                    }
+                                });
+                            </script>
+                            <div class="form-options">
+                                <div class="terms-agreement">
+                                    <input type="checkbox" id="agree_terms" name="is_agree_terms_privacy" value="1" class="custom-checkbox" required {{ old('is_agree_terms_privacy') ? 'checked' : '' }}>
+                                    <label for="agree_terms" class="form-check-label">{{ __('home.i_agree_to') }} <a href="{{ route('terms') }}" target="_blank" style="color: #1a1a1a; font-weight: 600;">{{ __('home.terms_conditions') }}</a> {{ __('home.and') }} <a href="{{ route('privacy') }}" target="_blank" style="color: #1a1a1a; font-weight: 600;">{{ __('home.privacy_policy') }}</a></label>
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="form-group-submit" style="margin-top: 30px;">
+                                <button type="submit" class="btn-enhanced register-btn">
+                                    <span class="btn-text">{{ __('home.create_account') }}</span>
+                                    <span class="btn-icon">
+                                        <i class="fas fa-user-plus"></i>
+                                    </span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -455,184 +475,6 @@ body {
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-    .wizard-nav {
-        margin-top: 2rem;
-        text-align: center;
-    }
-    .btn-wizard-next, .btn-wizard-prev {
-        min-width: 120px;
-        font-weight: 500;
-        font-size: 1rem;
-        border-radius: 25px;
-        padding: 0.5rem 1.5rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        transition: background 0.2s, color 0.2s;
-        margin: 0 0.5rem;
-    }
-    .btn-wizard-next i, .btn-wizard-prev i {
-        font-size: 1.1em;
-        vertical-align: middle;
-    }
-    .btn-wizard-next {
-        background: #1967D2; /* App blue */
-        color: #fff;
-        border: none;
-    }
-    .btn-wizard-next:hover {
-        background: #154db2; /* App blue dark */
-        color: #fff;
-    }
-    .btn-wizard-prev {
-        background: #ffa737; /* App yellow */
-        color: #fff;
-        border: none;
-    }
-    .btn-wizard-prev:hover {
-        background: #e09c2a; /* App yellow dark */
-        color: #fff;
-    }
-    .btn-success.register-btn {
-        border-radius: 25px;
-        font-weight: 600;
-        font-size: 1rem;
-        padding: 0.5rem 2rem;
-        box-shadow: 0 2px 8px rgba(16,185,129,0.08);
-        background: #10b981;
-        color: #fff;
-        border: none;
-    }
-    .btn-success.register-btn:hover {
-        background: #059669;
-        color: #fff;
-    }
-</style>
-<script>
-$(document).ready(function() {
-    // Mostrar el primer paso
-    $('.wizard-step').addClass('d-none');
-    $('#step-1').removeClass('d-none');
-
-    function validateStep(stepId) {
-        let valid = true;
-        $('#' + stepId + ' [required]').each(function() {
-            if ($(this).is(':checkbox')) {
-                if (!$(this).is(':checked')) {
-                    valid = false;
-                    $(this).addClass('is-invalid');
-                } else {
-                    $(this).removeClass('is-invalid');
-                }
-            } else if (!$(this).val()) {
-                valid = false;
-                $(this).addClass('is-invalid');
-            } else {
-                $(this).removeClass('is-invalid');
-            }
-        });
-        return valid;
-    }
-
-    // Siguiente a paso 2
-    $('#next-1').click(function() {
-        if (validateStep('step-1')) {
-            $('.wizard-step').addClass('d-none');
-            $('#step-2').removeClass('d-none');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-
-    // Siguiente a paso 3
-    $('#next-2').click(function() {
-        if (validateStep('step-2')) {
-            $('.wizard-step').addClass('d-none');
-            $('#step-3').removeClass('d-none');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-
-    // Anterior a paso 1
-    $('#prev-2').click(function() {
-        $('.wizard-step').addClass('d-none');
-        $('#step-1').removeClass('d-none');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Anterior a paso 2
-    $('#prev-3').click(function() {
-        $('.wizard-step').addClass('d-none');
-        $('#step-2').removeClass('d-none');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Quitar la clase is-invalid al corregir
-    $('[required]').on('input change', function() {
-        if ($(this).is(':checkbox')) {
-            if ($(this).is(':checked')) {
-                $(this).removeClass('is-invalid');
-            }
-        } else if ($(this).val()) {
-            $(this).removeClass('is-invalid');
-        }
-    });
-});
-</script>
-<script>
-function togglePassword(inputId, iconId) {
-    const passwordInput = document.getElementById(inputId);
-    const toggleIcon = document.getElementById(iconId);
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.classList.remove('fa-eye');
-        toggleIcon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.classList.remove('fa-eye-slash');
-        toggleIcon.classList.add('fa-eye');
-    }
-}
-
-// Password strength checker
-document.getElementById('password').addEventListener('input', function() {
-    const password = this.value;
-    const strengthFill = document.getElementById('strengthFill');
-    const strengthText = document.getElementById('strengthText');
-    
-    let strength = 0;
-    let text = 'Weak';
-    let color = '#ef4444';
-    
-    if (password.length >= 8) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[a-z]/.test(password)) strength++;
-    if (/[0-9]/.test(password)) strength++;
-    if (/[^A-Za-z0-9]/.test(password)) strength++;
-    
-    switch(strength) {
-        case 0:
-        case 1:
-            text = 'Weak';
-            color = '#ef4444';
-            break;
-        case 2:
-        case 3:
-            text = 'Medium';
-            color = '#f59e0b';
-            break;
-        case 4:
-        case 5:
-            text = 'Strong';
-            color = '#10b981';
-            break;
-    }
-    
-    strengthFill.style.width = (strength * 20) + '%';
-    strengthFill.style.backgroundColor = color;
-    strengthText.textContent = text;
-    strengthText.style.color = color;
-});
-</script>
 <script type="text/javascript">
     $(window).on('load', function() {
         // When the country select element changes, retrieve states for the selected country and fill the state select element

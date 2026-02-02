@@ -82,22 +82,120 @@
                         @endif
                     </div>
 
-                    <!-- Talents -->
+                    <!-- Professional Profile -->
+                    @if($candidate->innate_talent || $candidate->potential_talent)
                     <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Talents & Skills</h4>
+                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Perfil de Talento</h4>
                         
-                        @if($candidate->talents && $candidate->talents->count() > 0)
-                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                @foreach($candidate->talents as $talent)
-                                    <span style="background: #f9b232; color: #202124; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 500; display: inline-block;">
-                                        {{ $talent->talent }}
-                                    </span>
-                                @endforeach
-                            </div>
-                        @else
-                            <p style="color: #999; font-style: italic;">No talents listed.</p>
+                        @if($candidate->innate_talent)
+                        <div style="margin-bottom: 20px;">
+                            <h5 style="color: #312683; margin-bottom: 10px; font-size: 16px;">Talento Innato</h5>
+                            <p style="color: #555; line-height: 1.6; text-align: justify;">{{ $candidate->innate_talent }}</p>
+                        </div>
+                        @endif
+
+                        @if($candidate->potential_talent)
+                        <div>
+                            <h5 style="color: #312683; margin-bottom: 10px; font-size: 16px;">Talento Potencial</h5>
+                            <p style="color: #555; line-height: 1.6; text-align: justify;">{{ $candidate->potential_talent }}</p>
+                        </div>
                         @endif
                     </div>
+                    @endif
+
+                    <!-- Power Skills -->
+                    @if($candidate->powerSkills && $candidate->powerSkills->count() > 0)
+                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Power Skills</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                            @foreach($candidate->powerSkills as $skill)
+                            <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #f9b232;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <strong style="color: #312683; font-size: 14px;">{{ $skill->name }}</strong>
+                                    <span style="background: #f9b232; color: #202124; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                                        Nivel {{ $skill->pivot->level }}
+                                    </span>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- Competencias Comportamentales -->
+                    @if($candidate->behavioralCompetencies && $candidate->behavioralCompetencies->count() > 0)
+                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Competencias Comportamentales (Martha Alles)</h4>
+                        
+                        @php
+                            $grouped = $candidate->behavioralCompetencies->groupBy('category');
+                        @endphp
+
+                        @foreach($grouped as $category => $competencies)
+                        <div style="margin-bottom: 25px;">
+                            <h5 style="color: #312683; margin-bottom: 15px; font-size: 15px;">
+                                @if($category == 'cardinal')
+                                    Competencias Cardinales
+                                @elseif($category == 'specific')
+                                    Competencias Específicas
+                                @else
+                                    Competencias Técnicas
+                                @endif
+                            </h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                                @foreach($competencies as $competency)
+                                <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #312683;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <strong style="color: #312683; font-size: 14px;">{{ $competency->name }}</strong>
+                                        <span style="background: #312683; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                                            Nivel {{ $competency->pivot->level }}
+                                        </span>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
+
+                    <!-- Match Cultura Organizacional -->
+                    @if($candidate->organizationalCultureValues && $candidate->organizationalCultureValues->count() > 0)
+                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Valores Culturales que Busca</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                            @foreach($candidate->organizationalCultureValues->sortBy('pivot.priority') as $value)
+                            <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #f9b232;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                    <strong style="color: #312683; font-size: 14px;">{{ $value->name }}</strong>
+                                    <span style="background: #f9b232; color: #202124; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                                        P{{ $value->pivot->priority }}
+                                    </span>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- Preferencias de Liderazgo -->
+                    @if($candidate->leadershipPreferences && $candidate->leadershipPreferences->count() > 0)
+                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Características que Busca en un Líder</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                            @foreach($candidate->leadershipPreferences->sortBy('pivot.importance') as $pref)
+                            <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #312683;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <strong style="color: #312683; font-size: 14px;">{{ $pref->name }}</strong>
+                                    <span style="background: #312683; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                                        I{{ $pref->pivot->importance }}
+                                    </span>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
                 </div>
 
                 <!-- Sidebar -->
@@ -135,10 +233,6 @@
                             <li style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef;">
                                 <strong style="color: #666;">Experience:</strong>
                                 <span style="float: right; color: #333;">{{ $candidate->workExperiences->count() }} positions</span>
-                            </li>
-                            <li style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef;">
-                                <strong style="color: #666;">Skills:</strong>
-                                <span style="float: right; color: #333;">{{ $candidate->talents->count() }} talents</span>
                             </li>
                             <li style="margin-bottom: 0;">
                                 <strong style="color: #666;">Education:</strong>

@@ -41,7 +41,15 @@ class CandidateController extends Controller
         $user =  User::find(session('user_id'));
 
         //dd($request->all());
-        $user->fill($request->all());
+
+        // Actualizar campos básicos
+        $user->fill($request->except([
+            'behavioral_competencies',
+            'power_skills',
+            'culture_values',
+            'leadership_preferences'
+        ]));
+
         if (is_null($user->visa_number)) {
             $user->visa_number = " ";
         }
@@ -50,7 +58,59 @@ class CandidateController extends Controller
         }
         $user->save();
 
-        return redirect()->back();
+        // Sincronizar competencias comportamentales
+        if ($request->has('behavioral_competencies')) {
+            $competencies = [];
+            foreach ($request->behavioral_competencies as $competencyId => $level) {
+                if ($level > 0) {
+                    $competencies[$competencyId] = ['level' => $level];
+                }
+            }
+            $user->behavioralCompetencies()->sync($competencies);
+        } else {
+            $user->behavioralCompetencies()->detach();
+        }
+
+        // Sincronizar power skills
+        if ($request->has('power_skills')) {
+            $skills = [];
+            foreach ($request->power_skills as $skillId => $level) {
+                if ($level > 0) {
+                    $skills[$skillId] = ['level' => $level];
+                }
+            }
+            $user->powerSkills()->sync($skills);
+        } else {
+            $user->powerSkills()->detach();
+        }
+
+        // Sincronizar valores de cultura organizacional
+        if ($request->has('culture_values')) {
+            $values = [];
+            foreach ($request->culture_values as $valueId => $priority) {
+                if ($priority > 0) {
+                    $values[$valueId] = ['priority' => $priority];
+                }
+            }
+            $user->organizationalCultureValues()->sync($values);
+        } else {
+            $user->organizationalCultureValues()->detach();
+        }
+
+        // Sincronizar preferencias de liderazgo
+        if ($request->has('leadership_preferences')) {
+            $preferences = [];
+            foreach ($request->leadership_preferences as $prefId => $importance) {
+                if ($importance > 0) {
+                    $preferences[$prefId] = ['importance' => $importance];
+                }
+            }
+            $user->leadershipPreferences()->sync($preferences);
+        } else {
+            $user->leadershipPreferences()->detach();
+        }
+
+        return redirect()->back()->with('success', 'Perfil actualizado exitosamente!');
     }
 
     /**
@@ -81,12 +141,21 @@ class CandidateController extends Controller
     }
 
     /**
-     * Show candidate profile with work experience and talents.
+     * Show candidate profile with work experience and professional profile.
      */
     public function show($id)
     {
-        $candidate = User::with(['workExperiences', 'talents', 'city.state', 'visa', 'educationLevel', 'countryOfOrigin'])
-            ->findOrFail($id);
+        $candidate = User::with([
+            'workExperiences',
+            'behavioralCompetencies',
+            'powerSkills',
+            'organizationalCultureValues',
+            'leadershipPreferences',
+            'city.state',
+            'visa',
+            'educationLevel',
+            'countryOfOrigin'
+        ])->findOrFail($id);
 
         return view('candidates/show', ['candidate' => $candidate]);
     }
