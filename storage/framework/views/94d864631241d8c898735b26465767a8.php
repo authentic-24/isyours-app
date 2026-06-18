@@ -7,16 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="<?php echo e(asset('css/bootstrap.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-    <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo e(asset('images/favicon.png')); ?>" type="image/x-icon">
+    <link rel="icon" href="<?php echo e(asset('images/favicon.png')); ?>" type="image/x-icon">
 
     <style>
         :root {
@@ -604,72 +604,72 @@
     </style>
 </head>
 <body>
-@php
+<?php
     $currentUser = \App\Models\User::find(session('user_id'));
     $currentInitials = $currentUser ? strtoupper(substr(($currentUser->first_name ?? 'U'), 0, 1) . substr(($currentUser->last_name ?? ''), 0, 1)) : 'U';
-@endphp
+?>
 
 <div class="dash-shell" id="dashShell">
     <aside class="dash-sidebar">
         <div class="brand">
-            <img src="{{ asset('images/logo-white.svg') }}" alt="IsYours" class="brand-logo">
+            <img src="<?php echo e(asset('images/logo-white.svg')); ?>" alt="IsYours" class="brand-logo">
         </div>
 
         <nav class="dash-nav">
-            <a class="{{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+            <a class="<?php echo e(request()->routeIs('home') ? 'active' : ''); ?>" href="<?php echo e(route('home')); ?>">
                 <span class="material-symbols-outlined">dashboard</span>
                 <span>Dashboard</span>
             </a>
-            <a class="{{ request()->routeIs('web.offer.index') || request()->routeIs('web.offer.show') ? 'active' : '' }}" href="{{ route('web.offer.index') }}">
+            <a class="<?php echo e(request()->routeIs('web.offer.index') || request()->routeIs('web.offer.show') ? 'active' : ''); ?>" href="<?php echo e(route('web.offer.index')); ?>">
                 <span class="material-symbols-outlined">work</span>
                 <span>Jobs</span>
             </a>
 
-            @if(!session('admin') && !session('employer'))
-            <a class="{{ request()->routeIs('web.candidate.my_applications') ? 'active' : '' }}" href="{{ route('web.candidate.my_applications') }}">
+            <?php if(!session('admin') && !session('employer')): ?>
+            <a class="<?php echo e(request()->routeIs('web.candidate.my_applications') ? 'active' : ''); ?>" href="<?php echo e(route('web.candidate.my_applications')); ?>">
                 <span class="material-symbols-outlined">description</span>
                 <span>My Applications</span>
             </a>
-            @endif
+            <?php endif; ?>
 
-            @if(session('admin') || session('employer'))
-            <a class="{{ request()->routeIs('web.offer.create') ? 'active' : '' }}" href="{{ route('web.offer.create') }}">
+            <?php if(session('admin') || session('employer')): ?>
+            <a class="<?php echo e(request()->routeIs('web.offer.create') ? 'active' : ''); ?>" href="<?php echo e(route('web.offer.create')); ?>">
                 <span class="material-symbols-outlined">send</span>
                 <span>Post a Job</span>
             </a>
-            @endif
+            <?php endif; ?>
 
-            @if(session('admin') || session('employer'))
-            <a class="{{ request()->routeIs('web.candidate.index') || request()->routeIs('web.candidate.show') ? 'active' : '' }}" href="{{ route('web.candidate.index') }}">
+            <?php if(session('admin') || session('employer')): ?>
+            <a class="<?php echo e(request()->routeIs('web.candidate.index') || request()->routeIs('web.candidate.show') ? 'active' : ''); ?>" href="<?php echo e(route('web.candidate.index')); ?>">
                 <span class="material-symbols-outlined">group</span>
                 <span>Candidates</span>
             </a>
-            @endif
+            <?php endif; ?>
 
-            @if(session('employer'))
-            <a class="{{ request()->routeIs('web.company.create') ? 'active' : '' }}" href="{{ route('web.company.create') }}">
+            <?php if(session('employer')): ?>
+            <a class="<?php echo e(request()->routeIs('web.company.create') ? 'active' : ''); ?>" href="<?php echo e(route('web.company.create')); ?>">
                 <span class="material-symbols-outlined">business</span>
                 <span>Company Profile</span>
             </a>
-            @endif
+            <?php endif; ?>
 
-            <a class="{{ request()->routeIs('web.profile.edit') ? 'active' : '' }}" href="{{ route('web.profile.edit') }}">
+            <a class="<?php echo e(request()->routeIs('web.profile.edit') ? 'active' : ''); ?>" href="<?php echo e(route('web.profile.edit')); ?>">
                 <span class="material-symbols-outlined">person</span>
                 <span>My Profile</span>
             </a>
 
-            @if(!session('admin') && !session('employer'))
-            <a class="{{ request()->routeIs('web.profile.skills') ? 'active' : '' }}" href="{{ route('web.profile.skills') }}">
+            <?php if(!session('admin') && !session('employer')): ?>
+            <a class="<?php echo e(request()->routeIs('web.profile.skills') ? 'active' : ''); ?>" href="<?php echo e(route('web.profile.skills')); ?>">
                 <span class="material-symbols-outlined">psychology</span>
                 <span>My Skills</span>
             </a>
-            @endif
+            <?php endif; ?>
 
         </nav>
 
         <div class="dash-sidebar-bottom">
             <nav class="dash-nav">
-                <a href="{{ route('log_out') }}">
+                <a href="<?php echo e(route('log_out')); ?>">
                     <span class="material-symbols-outlined">logout</span>
                     <span>Logout</span>
                 </a>
@@ -685,77 +685,77 @@
                 <button class="menu-toggle" id="menuToggle" type="button">
                     <span class="material-symbols-outlined">menu</span>
                 </button>
-                <h1 class="dash-title">@yield('dashboard_title', 'Panel de Control')</h1>
+                <h1 class="dash-title"><?php echo $__env->yieldContent('dashboard_title', 'Panel de Control'); ?></h1>
             </div>
 
             <div class="dash-user">
 
-                {{-- Notifications bell --}}
+                
                 <div class="tb-icon-btn" title="Notifications">
                     <span class="material-symbols-outlined">notifications</span>
-                    {{-- Uncomment when notification count is available: --}}
-                    {{-- @if($unreadNotifications ?? 0 > 0)<span class="tb-badge"></span>@endif --}}
+                    
+                    
                 </div>
 
-                {{-- Settings gear --}}
+                
                 <div class="tb-dropdown" id="tbSettingsWrap">
                     <button type="button" class="tb-icon-btn" id="tbSettingsBtn" title="Settings" aria-haspopup="true" aria-expanded="false">
                         <span class="material-symbols-outlined">settings</span>
                     </button>
                     <div class="tb-dropdown-menu" id="tbSettingsMenu">
                         <div class="tb-dd-header">Account</div>
-                        <a href="{{ route('web.profile.change_password') }}" class="tb-dd-item">
+                        <a href="<?php echo e(route('web.profile.change_password')); ?>" class="tb-dd-item">
                             <span class="material-symbols-outlined">lock_reset</span>
                             Change Password
                         </a>
                         <div class="tb-dd-divider"></div>
-                        <a href="{{ route('web.profile.edit') }}" class="tb-dd-item">
+                        <a href="<?php echo e(route('web.profile.edit')); ?>" class="tb-dd-item">
                             <span class="material-symbols-outlined">manage_accounts</span>
                             Edit Profile
                         </a>
                     </div>
                 </div>
 
-                {{-- Language --}}
+                
                 <div class="dash-language">
                     <select onchange="window.location.href=this.value" aria-label="Language switcher">
-                        <option value="{{ route('language.switch', 'en') }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>EN</option>
-                        <option value="{{ route('language.switch', 'es') }}" {{ app()->getLocale() == 'es' ? 'selected' : '' }}>ES</option>
+                        <option value="<?php echo e(route('language.switch', 'en')); ?>" <?php echo e(app()->getLocale() == 'en' ? 'selected' : ''); ?>>EN</option>
+                        <option value="<?php echo e(route('language.switch', 'es')); ?>" <?php echo e(app()->getLocale() == 'es' ? 'selected' : ''); ?>>ES</option>
                     </select>
                 </div>
 
-                {{-- User info + avatar --}}
+                
                 <div style="text-align:right; line-height:1.1;">
-                    <div style="font-size:13px; font-weight:700;">{{ $currentUser->first_name ?? 'Usuario' }} {{ $currentUser->last_name ?? '' }}</div>
-                    <div style="font-size:11px; color:#6b7280;">{{ session('role_name') ?? 'user' }}</div>
+                    <div style="font-size:13px; font-weight:700;"><?php echo e($currentUser->first_name ?? 'Usuario'); ?> <?php echo e($currentUser->last_name ?? ''); ?></div>
+                    <div style="font-size:11px; color:#6b7280;"><?php echo e(session('role_name') ?? 'user'); ?></div>
                 </div>
-                <div class="dash-user-avatar">{{ $currentInitials }}</div>
+                <div class="dash-user-avatar"><?php echo e($currentInitials); ?></div>
 
             </div>
         </header>
 
         <section class="dash-content">
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         </section>
     </main>
 </div>
 
-<script src="{{ asset('js/jquery.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/chosen.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('js/jquery.fancybox.js') }}"></script>
-<script src="{{ asset('js/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/mmenu.polyfills.js') }}"></script>
-<script src="{{ asset('js/mmenu.js') }}"></script>
-<script src="{{ asset('js/appear.js') }}"></script>
-<script src="{{ asset('js/ScrollMagic.min.js') }}"></script>
-<script src="{{ asset('js/rellax.min.js') }}"></script>
-<script src="{{ asset('js/owl.js') }}"></script>
-<script src="{{ asset('js/wow.js') }}"></script>
-<script src="{{ asset('js/script.js') }}"></script>
-<script src="{{ asset('js/api/login.js') }}"></script>
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+<script src="<?php echo e(asset('js/popper.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/chosen.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/bootstrap.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/jquery-ui.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/jquery.fancybox.js')); ?>"></script>
+<script src="<?php echo e(asset('js/jquery.modal.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/mmenu.polyfills.js')); ?>"></script>
+<script src="<?php echo e(asset('js/mmenu.js')); ?>"></script>
+<script src="<?php echo e(asset('js/appear.js')); ?>"></script>
+<script src="<?php echo e(asset('js/ScrollMagic.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/rellax.min.js')); ?>"></script>
+<script src="<?php echo e(asset('js/owl.js')); ?>"></script>
+<script src="<?php echo e(asset('js/wow.js')); ?>"></script>
+<script src="<?php echo e(asset('js/script.js')); ?>"></script>
+<script src="<?php echo e(asset('js/api/login.js')); ?>"></script>
 
 <script>
     (function () {
@@ -807,6 +807,7 @@
     })();
 </script>
 
-@yield('js')
+<?php echo $__env->yieldContent('js'); ?>
 </body>
 </html>
+<?php /**PATH C:\laragon\www\isyours\resources\views/layouts/app2.blade.php ENDPATH**/ ?>

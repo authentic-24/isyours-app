@@ -67,8 +67,6 @@ class CandidateController extends Controller
                 }
             }
             $user->behavioralCompetencies()->sync($competencies);
-        } else {
-            $user->behavioralCompetencies()->detach();
         }
 
         // Sincronizar power skills
@@ -80,8 +78,6 @@ class CandidateController extends Controller
                 }
             }
             $user->powerSkills()->sync($skills);
-        } else {
-            $user->powerSkills()->detach();
         }
 
         // Sincronizar valores de cultura organizacional
@@ -93,8 +89,6 @@ class CandidateController extends Controller
                 }
             }
             $user->organizationalCultureValues()->sync($values);
-        } else {
-            $user->organizationalCultureValues()->detach();
         }
 
         // Sincronizar preferencias de liderazgo
@@ -106,8 +100,6 @@ class CandidateController extends Controller
                 }
             }
             $user->leadershipPreferences()->sync($preferences);
-        } else {
-            $user->leadershipPreferences()->detach();
         }
 
         return redirect()->back()->with('success', 'Perfil actualizado exitosamente!');

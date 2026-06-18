@@ -90,6 +90,7 @@ Route::prefix('web')->group(function () {
     Route::post('edit_company_profile', [App\Http\Controllers\Web\CompanyController::class, 'edit_company_profile'])->name('edit_company_profile');
 
     Route::get('profile/edit', [App\Http\Controllers\Web\ProfileController::class, 'edit'])->name('web.profile.edit');
+    Route::get('profile/skills', [App\Http\Controllers\Web\ProfileController::class, 'skills'])->name('web.profile.skills');
     Route::post('profile/update', [App\Http\Controllers\Web\CandidateController::class, 'update'])->name('web.candidate.update');
     Route::get('profile/change-password', [App\Http\Controllers\Web\ProfileController::class, 'changePasswordForm'])->name('web.profile.change_password');
     Route::post('profile/update-password', [App\Http\Controllers\Web\ProfileController::class, 'updatePassword'])->name('web.profile.update_password');

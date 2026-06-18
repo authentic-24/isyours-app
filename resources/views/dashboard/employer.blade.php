@@ -1,243 +1,238 @@
 @extends('layouts/app2')
 
 @section('content')
-    <!--Page Title-->
-    <section class="page-title" style="padding: 25px 0 20px; background: #ffffff; border-bottom: 1px solid #e5e7eb; margin-bottom: 0;">
-        <div class="dashboard-container">
-            <div class="title-outer">
-                <h1 style="color: #1f2937; font-size: 1.5rem; margin-bottom: 5px; font-weight: 600;">Employer Dashboard</h1>
-                @if($company)
-                    <p style="color: #6b7280; margin-bottom: 0; font-size: 0.875rem;">Welcome back, {{ $company->name }}! Manage your job postings and applications.</p>
-                @else
-                    <p style="color: #6b7280; margin-bottom: 0; font-size: 0.875rem;">Welcome! Please create your company profile to start posting jobs.</p>
-                @endif
-            </div>
-        </div>
-    </section>
-    <!--End Page Title-->
+<style>
+.emp-wrap {
+    padding: 22px;
+    background: radial-gradient(circle at top right, #e4dfff 0%, #f9f9ff 60%);
+}
 
-    <!-- Dashboard Section -->
-    <section class="user-dashboard" style="padding: 25px 0 50px;">
-        <div class="dashboard-container">
-            
+.emp-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 16px;
+}
+
+.emp-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a086e;
+}
+
+.emp-subtitle {
+    color: #474551;
+    margin: 6px 0 0;
+}
+
+.emp-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.emp-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #4b41df 0%, #312783 100%);
+}
+
+.emp-btn.alt {
+    background: #fff;
+    color: #312783;
+    border: 1px solid #c8c4d3;
+}
+
+.emp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.emp-kpi {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(200, 196, 211, 0.7);
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 8px 24px rgba(49, 39, 131, 0.08);
+}
+
+.emp-kpi small {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #5a52ae;
+    font-weight: 700;
+}
+
+.emp-kpi h4 {
+    margin: 7px 0 0;
+    font-size: 1.5rem;
+    color: #151c27;
+    font-weight: 800;
+}
+
+.emp-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 12px;
+}
+
+.emp-panel {
+    background: #fff;
+    border: 1px solid #e1e3e4;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(49, 39, 131, 0.08);
+    overflow: hidden;
+}
+
+.emp-panel h5 {
+    margin: 0;
+    padding: 14px;
+    border-bottom: 1px solid #f0f3ff;
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a086e;
+}
+
+.emp-item {
+    padding: 12px 14px;
+    border-bottom: 1px solid #f0f3ff;
+}
+
+.emp-item:last-child {
+    border-bottom: none;
+}
+
+.emp-item-title {
+    font-weight: 700;
+    color: #151c27;
+    margin-bottom: 4px;
+}
+
+.emp-muted {
+    font-size: 12px;
+    color: #5f5b6b;
+}
+
+.emp-badge {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.emp-badge.active { background: #dcfce7; color: #166534; }
+.emp-badge.expired { background: #fee2e2; color: #991b1b; }
+
+@media (max-width: 1200px) {
+    .emp-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .emp-layout {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<section class="user-dashboard">
+    <div class="dashboard-outer">
+        <div class="emp-wrap">
             @if(!$company)
-                <!-- No Company Profile Alert -->
-                <div class="alert alert-warning" role="alert">
-                    <h5><i class="la la-exclamation-triangle"></i> Company Profile Required</h5>
-                    <p>You need to create your company profile before you can post jobs and manage applications.</p>
-                    <a href="{{ route('web.company.create') }}" class="theme-btn btn-style-one mt-2">
-                        Create Company Profile
-                    </a>
+                <div class="emp-panel" style="padding:18px; max-width:680px;">
+                    <h5 style="padding:0; border:none; margin-bottom:10px;">Perfil de empresa requerido</h5>
+                    <p style="margin-bottom:14px;">Debes crear tu perfil de empresa para publicar ofertas y gestionar postulaciones.</p>
+                    <a href="{{ route('web.company.create') }}" class="emp-btn">Crear perfil de empresa</a>
                 </div>
             @else
-                
-                <!-- Statistics Cards -->
-                <div class="row mb-4">
-                    <!-- Total Offers -->
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="text-muted mb-2">Total Jobs</h6>
-                                        <h2 class="mb-0">{{ $total_offers }}</h2>
-                                    </div>
-                                    <div class="icon" style="font-size: 3rem; color: #1967d2;">
-                                        <i class="la la-briefcase"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="emp-head">
+                    <div>
+                        <h1 class="emp-title">Employer Dashboard</h1>
+                        <p class="emp-subtitle">{{ $company->name }}. Gestiona vacantes, aplicaciones y candidatos en una sola vista.</p>
                     </div>
-
-                    <!-- Active Offers -->
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="text-muted mb-2">Active Jobs</h6>
-                                        <h2 class="mb-0">{{ $active_offers }}</h2>
-                                    </div>
-                                    <div class="icon" style="font-size: 3rem; color: #34a853;">
-                                        <i class="la la-check-circle"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Expired Offers -->
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="text-muted mb-2">Expired Jobs</h6>
-                                        <h2 class="mb-0">{{ $expired_offers }}</h2>
-                                    </div>
-                                    <div class="icon" style="font-size: 3rem; color: #fbbc04;">
-                                        <i class="la la-times-circle"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Total Applications -->
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="text-muted mb-2">Applications</h6>
-                                        <h2 class="mb-0">{{ $total_applications }}</h2>
-                                    </div>
-                                    <div class="icon" style="font-size: 3rem; color: #ea4335;">
-                                        <i class="la la-file-alt"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="emp-actions">
+                        <a href="{{ route('web.offer.create') }}" class="emp-btn">Publicar vacante</a>
+                        <a href="{{ route('web.candidate.index') }}" class="emp-btn alt">Ver candidatos</a>
+                        <a href="{{ route('web.company.create') }}" class="emp-btn alt">Editar empresa</a>
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="mb-3">Quick Actions</h5>
-                                <div class="d-flex gap-2 flex-wrap">
-                                    <a href="{{ route('web.offer.create') }}" class="theme-btn btn-style-one">
-                                        <i class="la la-plus"></i> Post New Job
-                                    </a>
-                                    <a href="{{ route('web.candidate.index') }}" class="theme-btn btn-style-two">
-                                        <i class="la la-search"></i> Browse Candidates
-                                    </a>
-                                    <a href="{{ route('web.company.create') }}" class="theme-btn btn-style-four">
-                                        <i class="la la-edit"></i> Edit Company Profile
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="emp-grid">
+                    <div class="emp-kpi"><small>Ofertas totales</small><h4>{{ $total_offers }}</h4></div>
+                    <div class="emp-kpi"><small>Activas</small><h4>{{ $active_offers }}</h4></div>
+                    <div class="emp-kpi"><small>Expiradas</small><h4>{{ $expired_offers }}</h4></div>
+                    <div class="emp-kpi"><small>Aplicaciones</small><h4>{{ $total_applications }}</h4></div>
                 </div>
 
-                <div class="row">
-                    <!-- Your Job Postings -->
-                    <div class="col-lg-7 mb-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Your Job Postings</h5>
-                                <a href="{{ route('web.offer.index') }}" class="text-primary">View All</a>
-                            </div>
-                            <div class="card-body p-0">
-                                @forelse($recent_offers as $offer)
-                                    <div class="job-block-item border-bottom p-3">
-                                        <div class="d-flex justify-content-between align-items-start">
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-2">
-                                                    <a href="{{ route('web.offer.show', $offer->id) }}">
-                                                        {{ $offer->jobTitle->name ?? 'N/A' }} - {{ $offer->jobLevel->name ?? 'N/A' }}
-                                                    </a>
-                                                </h6>
-                                                <ul class="job-info" style="list-style: none; padding: 0; margin: 0;">
-                                                    <li class="d-inline-block me-3">
-                                                        <span class="icon flaticon-map-locator"></span>
-                                                        {{ $offer->city->name ?? 'N/A' }}
-                                                    </li>
-                                                    <li class="d-inline-block me-3">
-                                                        <span class="icon flaticon-briefcase"></span>
-                                                        {{ $offer->users->count() }} applications
-                                                    </li>
-                                                    <li class="d-inline-block">
-                                                        <span class="icon flaticon-clock-3"></span>
-                                                        Posted {{ $offer->created_at ? $offer->created_at->diffForHumans() : 'recently' }}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div>
-                                                @if($offer->expiration_date > now())
-                                                    <span class="badge bg-success">Active</span>
-                                                @else
-                                                    <span class="badge bg-danger">Expired</span>
-                                                @endif
-                                            </div>
+                <div class="emp-layout">
+                    <div class="emp-panel">
+                        <h5>Vacantes recientes</h5>
+                        @forelse($recent_offers as $offer)
+                            <div class="emp-item">
+                                <div style="display:flex; justify-content:space-between; gap:10px;">
+                                    <div>
+                                        <div class="emp-item-title">
+                                            <a href="{{ route('web.offer.show', $offer->id) }}">{{ $offer->jobTitle->name ?? 'N/A' }} - {{ $offer->jobLevel->name ?? 'N/A' }}</a>
+                                        </div>
+                                        <div class="emp-muted">
+                                            {{ $offer->city->name ?? 'N/A' }} | {{ $offer->users->count() }} aplicaciones | {{ $offer->created_at ? $offer->created_at->diffForHumans() : 'N/A' }}
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="text-center py-5">
-                                        <i class="la la-briefcase" style="font-size: 4rem; color: #ddd;"></i>
-                                        <p class="text-muted mt-3">No job postings yet</p>
-                                        <a href="{{ route('web.offer.create') }}" class="theme-btn btn-style-one">
-                                            Post Your First Job
-                                        </a>
-                                    </div>
-                                @endforelse
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Applications -->
-                    <div class="col-lg-5 mb-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-header bg-white border-bottom">
-                                <h5 class="mb-0">Recent Applications</h5>
-                            </div>
-                            <div class="card-body p-0">
-                                @forelse($recent_applications as $application)
-                                    <div class="application-item border-bottom p-3">
-                                        <h6 class="mb-1">{{ $application->first_name }} {{ $application->last_name }}</h6>
-                                        <p class="text-muted mb-1" style="font-size: 0.875rem;">{{ $application->email }}</p>
-                                        <small class="text-muted">
-                                            Applied {{ $application->applied_at ? \Carbon\Carbon::parse($application->applied_at)->diffForHumans() : 'recently' }}
-                                        </small>
-                                    </div>
-                                @empty
-                                    <div class="text-center py-5">
-                                        <i class="la la-inbox" style="font-size: 3rem; color: #ddd;"></i>
-                                        <p class="text-muted mt-2 mb-0">No applications yet</p>
-                                    </div>
-                                @endforelse
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Most Popular Jobs -->
-                    @if($popular_offers->count() > 0)
-                        <div class="col-lg-12 mb-4">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-header bg-white border-bottom">
-                                    <h5 class="mb-0">Most Popular Job Postings</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        @foreach($popular_offers as $offer)
-                                            <div class="col-md-4 mb-3">
-                                                <div class="border rounded p-3">
-                                                    <h6>
-                                                        <a href="{{ route('web.offer.show', $offer->id) }}">
-                                                            {{ Str::limit($offer->jobTitle->name ?? 'N/A', 30) }}
-                                                        </a>
-                                                    </h6>
-                                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                                        <span class="badge bg-primary">{{ $offer->users_count }} applications</span>
-                                                        <small class="text-muted">{{ $offer->created_at ? $offer->created_at->diffForHumans() : 'N/A' }}</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                    <div>
+                                        @if($offer->expiration_date > now())
+                                            <span class="emp-badge active">Activa</span>
+                                        @else
+                                            <span class="emp-badge expired">Expirada</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @empty
+                            <div class="emp-item">No hay vacantes registradas.</div>
+                        @endforelse
+                    </div>
 
+                    <div class="emp-panel">
+                        <h5>Postulaciones recientes</h5>
+                        @forelse($recent_applications as $application)
+                            <div class="emp-item">
+                                <div class="emp-item-title">{{ $application->first_name }} {{ $application->last_name }}</div>
+                                <div class="emp-muted">{{ $application->email }}</div>
+                                <div class="emp-muted">{{ $application->applied_at ? \Carbon\Carbon::parse($application->applied_at)->diffForHumans() : 'N/A' }}</div>
+                            </div>
+                        @empty
+                            <div class="emp-item">No hay aplicaciones recientes.</div>
+                        @endforelse
+                    </div>
                 </div>
-            @endif
 
+                @if($popular_offers->count() > 0)
+                    <div class="emp-panel" style="margin-top:12px;">
+                        <h5>Vacantes mas populares</h5>
+                        @foreach($popular_offers as $offer)
+                            <div class="emp-item" style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <div class="emp-item-title">
+                                        <a href="{{ route('web.offer.show', $offer->id) }}">{{ $offer->jobTitle->name ?? 'N/A' }}</a>
+                                    </div>
+                                    <div class="emp-muted">{{ $offer->created_at ? $offer->created_at->diffForHumans() : 'N/A' }}</div>
+                                </div>
+                                <span class="emp-badge active">{{ $offer->users_count }} aplicaciones</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            @endif
         </div>
-    </section>
-    <!-- End Dashboard Section -->
+    </div>
+</section>
 @endsection

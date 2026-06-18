@@ -67,6 +67,39 @@ class ProfileController extends \App\Http\Controllers\Controller
         return view('profile.edit', $data);
     }
 
+    public function skills()
+    {
+        $user = User::with([
+            'behavioralCompetencies',
+            'powerSkills',
+            'organizationalCultureValues',
+            'leadershipPreferences'
+        ])->find(session('user_id'));
+
+        if (!$user) {
+            return redirect()->route('web_login');
+        }
+
+        $data = [];
+        $data['user'] = $user;
+        $data['behavioralCompetencies'] = \App\Models\BehavioralCompetency::where('is_active', true)
+            ->orderBy('category')
+            ->orderBy('name')
+            ->get()
+            ->groupBy('category');
+        $data['powerSkills'] = \App\Models\PowerSkill::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+        $data['cultureValues'] = \App\Models\OrganizationalCultureValue::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+        $data['leadershipPrefs'] = \App\Models\LeadershipPreference::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('profile.skills', $data);
+    }
+
     /**
      * Calcula el porcentaje de completitud del perfil
      */

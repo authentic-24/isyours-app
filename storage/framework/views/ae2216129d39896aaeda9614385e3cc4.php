@@ -459,6 +459,18 @@
 
   <link rel="shortcut icon" href="<?php echo e(asset('images/favicon.png')); ?>" type="image/x-icon">
   <link rel="icon" href="<?php echo e(asset('images/favicon.png')); ?>" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    .material-symbols-outlined{
+      font-family:'Material Symbols Outlined' !important;
+      font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24;
+      font-style:normal;font-weight:normal;font-size:24px;
+      line-height:1;letter-spacing:normal;text-transform:none;
+      display:inline-block;white-space:nowrap;word-wrap:normal;
+      direction:ltr;-webkit-font-feature-settings:'liga';
+      -webkit-font-smoothing:antialiased;
+    }
+  </style>
 
   <!-- Responsive -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -502,6 +514,43 @@
   <script src="<?php echo e(asset('js/owl.js')); ?>"></script>
   <script src="<?php echo e(asset('js/wow.js')); ?>"></script>
   <script src="<?php echo e(asset('js/script.js')); ?>"></script>
+
+
+<div class="lang-fab" id="langFab">
+    <button class="lang-fab-btn" id="langFabBtn" aria-label="Change language">
+        <span class="material-symbols-outlined lang-fab-icon">language</span>
+        <span class="lang-fab-current"><?php echo e(strtoupper(app()->getLocale())); ?></span>
+    </button>
+    <div class="lang-fab-menu" id="langFabMenu">
+        <a href="<?php echo e(route('language.switch', 'en')); ?>" class="lang-option <?php echo e(app()->getLocale() === 'en' ? 'active' : ''); ?>">
+            <span class="lang-flag">&#127482;&#127480;</span> EN
+        </a>
+        <a href="<?php echo e(route('language.switch', 'es')); ?>" class="lang-option <?php echo e(app()->getLocale() === 'es' ? 'active' : ''); ?>">
+            <span class="lang-flag">&#127466;&#127480;</span> ES
+        </a>
+    </div>
+</div>
+<style>
+    .lang-fab{position:fixed;bottom:24px;left:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+    .lang-fab-btn{display:flex;align-items:center;gap:6px;background:#312783;color:#fff;border:none;border-radius:50px;padding:10px 16px;font-family:"Plus Jakarta Sans",sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(49,39,131,.35);transition:background .2s,transform .15s,box-shadow .2s}
+    .lang-fab-btn:hover{background:#1e1660;box-shadow:0 6px 20px rgba(49,39,131,.45);transform:translateY(-1px)}
+    .lang-fab-icon{font-size:18px}
+    .lang-fab-current{font-size:13px;font-weight:700;letter-spacing:.05em}
+    .lang-fab-menu{display:none;flex-direction:column;gap:4px;background:#fff;border:1px solid #ece9f6;border-radius:10px;padding:6px;box-shadow:0 8px 24px rgba(49,39,131,.15);min-width:90px}
+    .lang-fab-menu.open{display:flex}
+    .lang-option{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:13px;font-weight:600;color:#312783;text-decoration:none;transition:background .15s}
+    .lang-option:hover{background:#f0eeff}
+    .lang-option.active{background:#312783;color:#fff}
+    .lang-flag{font-size:16px;line-height:1}
+</style>
+<script>
+(function(){
+    var btn = document.getElementById('langFabBtn');
+    var menu = document.getElementById('langFabMenu');
+    btn.addEventListener('click', function(e){ e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click', function(){ menu.classList.remove('open'); });
+})();
+</script>
 
 </body>
 

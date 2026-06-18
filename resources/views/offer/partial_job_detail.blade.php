@@ -1,15 +1,55 @@
+<style>
+    .offer-detail-shell .job-detail-card {
+        margin-bottom: 16px;
+    }
+
+    .offer-detail-shell .offer-header {
+        padding-left: 0;
+    }
+
+    .offer-detail-shell .offer-title {
+        margin-bottom: 10px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 800;
+        color: #1a086e;
+    }
+
+    .offer-detail-shell .offer-title a {
+        color: inherit;
+    }
+
+    .offer-detail-shell .job-detail-outer {
+        padding: 0;
+    }
+
+    .offer-detail-shell .job-detail p {
+        margin-bottom: 0;
+        color: #4b5563;
+        line-height: 1.6;
+    }
+
+    .offer-detail-shell .company-widget .btn-box a {
+        word-break: break-word;
+    }
+
+    .offer-detail-shell .apply-cta {
+        display: inline-block;
+        margin-top: 10px;
+    }
+</style>
+
  <!-- Job Detail Section -->
- <section class="job-detail-section">
+ <section class="job-detail-section offer-detail-shell">
      <!-- Upper Box -->
      <div class="upper-box">
          <div class="auto-container {{ !is_null($offer->company) ? 'row' : ''}}">
              <!-- Job Block -->
              <div class="job-block-seven  {{ !is_null($offer->company) ? 'col-lg-8' : 'col-lg-12'}} col-md-12 col-sm-12">
-                 <div class="inner-box">
-                     <div class="content" style="padding-left:0px;">
+                 <div class="inner-box job-detail-card">
+                     <div class="content offer-header">
                          {{-- <span class="company-logo"><img src="{{ asset('images/resource/company-logo/5-1.png') }}" alt=""></span> --}}
-                         <h4><a id="server_position" href="#">{{ $offer->jobLevel->name ?? '' }} /
-                                 {{ $offer->jobLevel->name ?? '' }}</a></h4>
+                         <h4 class="offer-title"><a id="server_position" href="#">{{ $offer->jobLevel->name ?? '' }} /
+                                 {{ $offer->jobTitle->name ?? '' }}</a></h4>
                          <ul class="job-other-info">
                              <li class="time">{{ $offer->jobType->name ?? '' }}</li>
                              <li class="time"><span class="icon flaticon-clock-3"></span>
@@ -19,13 +59,13 @@
                     @if(!session('admin') && !session('employer'))    
                         @if ($company == null)
                                 <a href="{{ route('web.offer.apply_offer', ['offer_id' => $offer->id]) }}"
-                                    class="theme-btn btn-style-one">Apply For Job</a>
+                                    class="theme-btn btn-style-one apply-cta">Apply For Job</a>
                                 <!-- <button class="bookmark-btn"><i class="flaticon-bookmark"></i></button> -->
                             </div>
                         @else
                             <div class="btn-box">
                                 <a href="{{ route('web_login') }}"
-                                    class="theme-btn btn-style-one">Login to Apply</a>
+                                    class="theme-btn btn-style-one apply-cta">Login to Apply</a>
                                 <!-- <button class="bookmark-btn"><i class="flaticon-bookmark"></i></button> -->
                             </div>
                         @endif
@@ -80,13 +120,13 @@
                          </li>
                      </ul>
                  </div>
-                 <div class="job-detail-outer" style="padding: 0px;">
+                 <div class="job-detail-outer">
                      <div class="auto-container">
                          <div class="row">
                              <div class="content-column col-lg-8 col-md-12 col-sm-12">
                                  <div class="job-detail">
                                      <h4>Job Description</h4>
-                                     <p id="job_description">{{ $offer->description ?? '' }}</h4>
+                                     <p id="job_description">{{ $offer->description ?? '' }}</p>
                                  </div>
 
                                  <div class="job-detail">

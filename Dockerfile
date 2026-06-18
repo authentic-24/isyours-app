@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
   unzip \
   git \
   curl \
-  && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+  && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip
 
 # Instalar Composer
 COPY --from=composer:2.5 /usr/bin/composer /usr/bin/composer

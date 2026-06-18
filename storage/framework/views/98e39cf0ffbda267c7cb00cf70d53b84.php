@@ -1,8 +1,8 @@
-@extends('layouts/app2')
 
-@section('dashboard_title', 'My Applications')
 
-@section('content')
+<?php $__env->startSection('dashboard_title', 'My Applications'); ?>
+
+<?php $__env->startSection('content'); ?>
     <style>
         .my-apps {
             padding: 8px 0 12px;
@@ -192,64 +192,67 @@
             <div class="apps-toolbar">
                 <div>
                     <p class="apps-kicker">Candidate Activity</p>
-                    <p class="apps-total">{{ $applications->count() }} applications tracked</p>
+                    <p class="apps-total"><?php echo e($applications->count()); ?> applications tracked</p>
                 </div>
-                <a href="{{ route('web.offer.index') }}" class="theme-btn btn-style-one">Browse Jobs</a>
+                <a href="<?php echo e(route('web.offer.index')); ?>" class="theme-btn btn-style-one">Browse Jobs</a>
             </div>
 
             <div class="ls-outer">
                         
-                        @if(session('message'))
+                        <?php if(session('message')): ?>
                             <div class="alert alert-success alert-dismissible fade show soft-alert" role="alert">
-                                {{ session('message') }}
+                                <?php echo e(session('message')); ?>
+
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
-                        @if($applications->count() > 0)
+                        <?php if($applications->count() > 0): ?>
                             <div class="row apps-grid">
-                                @foreach($applications as $application)
-                                    @php
+                                <?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $application): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
                                         $companyName = $application->company->name ?? 'Company';
                                         $logoInitial = strtoupper(substr($companyName, 0, 1));
-                                    @endphp
+                                    ?>
                                     <div class="col-lg-6 col-md-12 mb-3">
                                         <article class="app-card">
                                             <div class="app-head">
                                                 <div class="app-logo">
-                                                    @if($application->company && $application->company->logo)
-                                                        <img src="{{ asset('storage/' . $application->company->logo) }}" alt="{{ $companyName }}">
-                                                    @else
-                                                        {{ $logoInitial }}
-                                                    @endif
+                                                    <?php if($application->company && $application->company->logo): ?>
+                                                        <img src="<?php echo e(asset('storage/' . $application->company->logo)); ?>" alt="<?php echo e($companyName); ?>">
+                                                    <?php else: ?>
+                                                        <?php echo e($logoInitial); ?>
+
+                                                    <?php endif; ?>
                                                 </div>
                                                 <h3 class="app-title">
-                                                    <a href="{{ route('web.offer.show', $application->id) }}">
-                                                        {{ $application->jobTitle->name ?? 'N/A' }} - {{ $application->jobLevel->name ?? 'N/A' }}
+                                                    <a href="<?php echo e(route('web.offer.show', $application->id)); ?>">
+                                                        <?php echo e($application->jobTitle->name ?? 'N/A'); ?> - <?php echo e($application->jobLevel->name ?? 'N/A'); ?>
+
                                                     </a>
                                                 </h3>
                                             </div>
 
                                             <ul class="app-meta">
-                                                @if($application->company)
-                                                    <li><span class="icon flaticon-briefcase"></span> {{ $application->company->name }}</li>
-                                                @endif
-                                                <li><span class="icon flaticon-map-locator"></span> {{ $application->city->name ?? 'N/A' }}, {{ $application->city->state->code ?? '' }}</li>
-                                                <li><span class="icon flaticon-clock-3"></span> {{ $application->jobType->name ?? 'N/A' }}</li>
-                                                @if($application->offered_salary)
-                                                    <li><span class="icon flaticon-money"></span> ${{ number_format($application->offered_salary) }}</li>
-                                                @endif
+                                                <?php if($application->company): ?>
+                                                    <li><span class="icon flaticon-briefcase"></span> <?php echo e($application->company->name); ?></li>
+                                                <?php endif; ?>
+                                                <li><span class="icon flaticon-map-locator"></span> <?php echo e($application->city->name ?? 'N/A'); ?>, <?php echo e($application->city->state->code ?? ''); ?></li>
+                                                <li><span class="icon flaticon-clock-3"></span> <?php echo e($application->jobType->name ?? 'N/A'); ?></li>
+                                                <?php if($application->offered_salary): ?>
+                                                    <li><span class="icon flaticon-money"></span> $<?php echo e(number_format($application->offered_salary)); ?></li>
+                                                <?php endif; ?>
                                             </ul>
 
                                             <div class="app-foot">
-                                                <span class="app-badge">Applied {{ \Carbon\Carbon::parse($application->pivot->created_at ?? $application->created_at)->diffForHumans() }}</span>
-                                                <a class="app-link" href="{{ route('web.offer.show', $application->id) }}">View Details</a>
+                                                <span class="app-badge">Applied <?php echo e(\Carbon\Carbon::parse($application->pivot->created_at ?? $application->created_at)->diffForHumans()); ?></span>
+                                                <a class="app-link" href="<?php echo e(route('web.offer.show', $application->id)); ?>">View Details</a>
                                             </div>
                                         </article>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
-                        @else
+                        <?php else: ?>
                             <!-- No Applications -->
                             <div class="empty-state">
                                 <div class="empty-icon">
@@ -257,20 +260,22 @@
                                 </div>
                                 <h3 class="empty-title">No Applications Yet</h3>
                                 <p class="empty-copy">You haven't applied to any jobs yet. Start exploring opportunities!</p>
-                                <a href="{{ route('web.offer.index') }}" class="theme-btn btn-style-one">Browse Jobs</a>
+                                <a href="<?php echo e(route('web.offer.index')); ?>" class="theme-btn btn-style-one">Browse Jobs</a>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script>
     // Auto-hide alerts after 5 seconds
     setTimeout(function() {
         $('.alert').fadeOut('slow');
     }, 5000);
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts/app2', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\isyours\resources\views/candidates/my_applications.blade.php ENDPATH**/ ?>

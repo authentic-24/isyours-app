@@ -1,258 +1,476 @@
-@extends('layouts/app')
+@extends('layouts/app2')
 
 @section('content')
+    <style>
+        .candidate-profile {
+            padding: 20px 0 8px;
+        }
 
-    <!--Page Title-->
-    <section class="page-title" style="background-color: #f8f9fa;">
+        .candidate-profile .profile-card {
+            margin-bottom: 18px;
+        }
+
+        .candidate-profile .profile-head {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .candidate-profile .profile-photo {
+            width: 96px;
+            height: 96px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 3px solid #eef1ff;
+        }
+
+        .candidate-profile .profile-name {
+            margin: 0 0 6px;
+            font-family: "Manrope", sans-serif;
+            font-weight: 800;
+            color: #1a086e;
+            font-size: 1.35rem;
+        }
+
+        .candidate-profile .profile-meta {
+            margin: 4px 0;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .candidate-profile .section-title {
+            margin: 0 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dbe3ff;
+            color: #1a086e;
+            font-size: 1rem;
+            font-weight: 800;
+            font-family: "Manrope", sans-serif;
+        }
+
+        .candidate-profile .k-item {
+            margin: 9px 0;
+            color: #374151;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .candidate-profile .k-label {
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .candidate-profile .is-good {
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        .candidate-profile .is-bad {
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .candidate-profile .exp-item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #ecf0fa;
+        }
+
+        .candidate-profile .exp-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .candidate-profile .exp-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .candidate-profile .exp-role {
+            margin: 0 0 4px;
+            color: #111827;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .candidate-profile .exp-company {
+            margin: 0;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .candidate-profile .exp-duration {
+            color: #6b7280;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .candidate-profile .exp-description {
+            margin: 8px 0 0;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .candidate-profile .muted {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .candidate-profile .grid-capsules {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .candidate-profile .capsule {
+            border: 1px solid #e2e8f5;
+            border-left: 4px solid #4b41df;
+            border-radius: 10px;
+            background: #f6f8ff;
+            padding: 10px 12px;
+        }
+
+        .candidate-profile .capsule-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .candidate-profile .capsule-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a086e;
+        }
+
+        .candidate-profile .capsule-badge {
+            display: inline-flex;
+            border-radius: 999px;
+            padding: 2px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(75, 65, 223, 0.14);
+            color: #2f2f74;
+        }
+
+        .candidate-profile .category-title {
+            margin: 0 0 10px;
+            color: #374151;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .candidate-profile .sidebar-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .candidate-profile .sidebar-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .candidate-profile .sidebar-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .candidate-profile .sidebar-list a {
+            color: #1f2937;
+            text-decoration: none;
+        }
+
+        .candidate-profile .sidebar-list a:hover {
+            color: #1a086e;
+        }
+
+        .candidate-profile .icon-soft {
+            color: #4b41df;
+            font-size: 17px;
+        }
+
+        .candidate-profile .contact-btn {
+            width: 100%;
+            text-align: center;
+            display: block;
+            margin-top: 16px;
+        }
+
+        .candidate-profile .stats-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .candidate-profile .stats-list li {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #edf1fb;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .candidate-profile .stats-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .candidate-profile .stats-list strong {
+            color: #111827;
+        }
+
+        .candidate-profile .back-row {
+            margin-top: 14px;
+        }
+
+        @media (max-width: 767.98px) {
+            .candidate-profile .profile-head {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .candidate-profile .exp-head {
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+    </style>
+
+    <section class="page-title">
         <div class="auto-container">
             <div class="title-outer">
                 <h1>Candidate Profile</h1>
             </div>
         </div>
     </section>
-    <!--End Page Title-->
 
-    <!-- Candidate Detail Section -->
-    <section class="candidate-detail-section" style="padding: 60px 0; background: #ffffff;">
+    <section class="candidate-detail-section candidate-profile">
         <div class="auto-container">
             <div class="row">
                 <div class="col-lg-8 col-md-12">
-                    <!-- Candidate Info -->
-                    <div class="candidate-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
+                    <div class="candidate-block profile-card">
                         <div class="inner-box">
-                            <div class="content" style="display: flex; align-items: center; gap: 20px;">
-                                <figure class="image" style="margin: 0;">
-                                    <img src="{{ asset('images/resource/candidate-1.png') }}" alt="{{ $candidate->first_name }}" style="border-radius: 50%; width: 100px; height: 100px;">
+                            <div class="content profile-head">
+                                <figure class="image">
+                                    <img class="profile-photo" src="{{ asset('images/resource/candidate-1.png') }}" alt="{{ $candidate->first_name }}">
                                 </figure>
                                 <div>
-                                    <h3 style="margin: 0 0 10px 0; color: #312683;">{{ $candidate->first_name }} {{ $candidate->last_name }}</h3>
-                                    <p style="margin: 5px 0; color: #666;"><span class="icon flaticon-mail"></span> {{ $candidate->email }}</p>
+                                    <h3 class="profile-name">{{ $candidate->first_name }} {{ $candidate->last_name }}</h3>
+                                    <p class="profile-meta"><span class="icon flaticon-mail"></span> {{ $candidate->email }}</p>
                                     @if($candidate->phone_number)
-                                        <p style="margin: 5px 0; color: #666;"><span class="icon flaticon-phone"></span> {{ $candidate->phone_number }}</p>
+                                        <p class="profile-meta"><span class="icon flaticon-phone"></span> {{ $candidate->phone_number }}</p>
                                     @endif
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Personal Information -->
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Personal Information</h4>
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Personal Information</h4>
                         <div class="row">
                             <div class="col-md-6">
-                                <p style="margin: 10px 0;"><strong>Location:</strong> {{ $candidate->city->name ?? '-' }}, {{ $candidate->city->state->name ?? '-' }}</p>
-                                <p style="margin: 10px 0;"><strong>Education Level:</strong> {{ $candidate->educationLevel->name ?? '-' }}</p>
+                                <p class="k-item"><span class="k-label">Location:</span> {{ $candidate->city->name ?? '-' }}, {{ $candidate->city->state->name ?? '-' }}</p>
+                                <p class="k-item"><span class="k-label">Education Level:</span> {{ $candidate->educationLevel->name ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p style="margin: 10px 0;"><strong>Visa Status:</strong> {{ $candidate->visa->name ?? '-' }}</p>
-                                <p style="margin: 10px 0;"><strong>Vehicle:</strong> 
+                                <p class="k-item"><span class="k-label">Visa Status:</span> {{ $candidate->visa->name ?? '-' }}</p>
+                                <p class="k-item"><span class="k-label">Vehicle:</span>
                                     @if($candidate->have_vehicle)
-                                        <span style="color: green;">✓ Yes ({{ $candidate->license_plates }})</span>
+                                        <span class="is-good">Yes ({{ $candidate->license_plates }})</span>
                                     @else
-                                        <span style="color: red;">✗ No</span>
+                                        <span class="is-bad">No</span>
                                     @endif
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Work Experience -->
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Work Experience</h4>
-                        
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Work Experience</h4>
                         @if($candidate->workExperiences && $candidate->workExperiences->count() > 0)
                             @foreach($candidate->workExperiences as $experience)
-                                <div class="experience-item" style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #e9ecef;">
-                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                                <div class="exp-item">
+                                    <div class="exp-head">
                                         <div>
-                                            <h5 style="margin: 0 0 5px 0; color: #333; font-size: 18px;">{{ $experience->position }}</h5>
+                                            <h5 class="exp-role">{{ $experience->position }}</h5>
                                             @if($experience->company)
-                                                <p style="margin: 0; color: #666; font-weight: 500;">{{ $experience->company }}</p>
+                                                <p class="exp-company">{{ $experience->company }}</p>
                                             @endif
                                         </div>
-                                        <span style="color: #666; font-size: 14px; white-space: nowrap; margin-left: 15px;">{{ $experience->duration }}</span>
+                                        <span class="exp-duration">{{ $experience->duration }}</span>
                                     </div>
                                     @if($experience->description)
-                                        <p style="margin: 10px 0 0 0; color: #555; line-height: 1.6;">{{ $experience->description }}</p>
+                                        <p class="exp-description">{{ $experience->description }}</p>
                                     @endif
                                 </div>
                             @endforeach
                         @else
-                            <p style="color: #999; font-style: italic;">No work experience listed.</p>
+                            <p class="muted">No work experience listed.</p>
                         @endif
                     </div>
 
-                    <!-- Professional Profile -->
                     @if($candidate->innate_talent || $candidate->potential_talent)
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Perfil de Talento</h4>
-                        
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Perfil de Talento</h4>
                         @if($candidate->innate_talent)
-                        <div style="margin-bottom: 20px;">
-                            <h5 style="color: #312683; margin-bottom: 10px; font-size: 16px;">Talento Innato</h5>
-                            <p style="color: #555; line-height: 1.6; text-align: justify;">{{ $candidate->innate_talent }}</p>
-                        </div>
+                            <div class="mb-3">
+                                <h5 class="exp-role">Talento Innato</h5>
+                                <p class="exp-description">{{ $candidate->innate_talent }}</p>
+                            </div>
                         @endif
 
                         @if($candidate->potential_talent)
-                        <div>
-                            <h5 style="color: #312683; margin-bottom: 10px; font-size: 16px;">Talento Potencial</h5>
-                            <p style="color: #555; line-height: 1.6; text-align: justify;">{{ $candidate->potential_talent }}</p>
-                        </div>
+                            <div>
+                                <h5 class="exp-role">Talento Potencial</h5>
+                                <p class="exp-description">{{ $candidate->potential_talent }}</p>
+                            </div>
                         @endif
                     </div>
                     @endif
 
-                    <!-- Power Skills -->
                     @if($candidate->powerSkills && $candidate->powerSkills->count() > 0)
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Power Skills</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Power Skills</h4>
+                        <div class="grid-capsules">
                             @foreach($candidate->powerSkills as $skill)
-                            <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #f9b232;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <strong style="color: #312683; font-size: 14px;">{{ $skill->name }}</strong>
-                                    <span style="background: #f9b232; color: #202124; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
-                                        Nivel {{ $skill->pivot->level }}
-                                    </span>
+                                <div class="capsule">
+                                    <div class="capsule-top">
+                                        <span class="capsule-name">{{ $skill->name }}</span>
+                                        <span class="capsule-badge">Nivel {{ $skill->pivot->level }}</span>
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
                     @endif
 
-                    <!-- Competencias Comportamentales -->
                     @if($candidate->behavioralCompetencies && $candidate->behavioralCompetencies->count() > 0)
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Competencias Comportamentales (Martha Alles)</h4>
-                        
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Competencias Comportamentales (Martha Alles)</h4>
+
                         @php
                             $grouped = $candidate->behavioralCompetencies->groupBy('category');
                         @endphp
 
                         @foreach($grouped as $category => $competencies)
-                        <div style="margin-bottom: 25px;">
-                            <h5 style="color: #312683; margin-bottom: 15px; font-size: 15px;">
-                                @if($category == 'cardinal')
-                                    Competencias Cardinales
-                                @elseif($category == 'specific')
-                                    Competencias Específicas
-                                @else
-                                    Competencias Técnicas
-                                @endif
-                            </h5>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
-                                @foreach($competencies as $competency)
-                                <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #312683;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <strong style="color: #312683; font-size: 14px;">{{ $competency->name }}</strong>
-                                        <span style="background: #312683; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
-                                            Nivel {{ $competency->pivot->level }}
-                                        </span>
-                                    </div>
+                            <div class="mb-4">
+                                <h5 class="category-title">
+                                    @if($category == 'cardinal')
+                                        Competencias Cardinales
+                                    @elseif($category == 'specific')
+                                        Competencias Especificas
+                                    @else
+                                        Competencias Tecnicas
+                                    @endif
+                                </h5>
+                                <div class="grid-capsules">
+                                    @foreach($competencies as $competency)
+                                        <div class="capsule">
+                                            <div class="capsule-top">
+                                                <span class="capsule-name">{{ $competency->name }}</span>
+                                                <span class="capsule-badge">Nivel {{ $competency->pivot->level }}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
-                        </div>
                         @endforeach
                     </div>
                     @endif
 
-                    <!-- Match Cultura Organizacional -->
                     @if($candidate->organizationalCultureValues && $candidate->organizationalCultureValues->count() > 0)
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Valores Culturales que Busca</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Valores Culturales que Busca</h4>
+                        <div class="grid-capsules">
                             @foreach($candidate->organizationalCultureValues->sortBy('pivot.priority') as $value)
-                            <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #f9b232;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                    <strong style="color: #312683; font-size: 14px;">{{ $value->name }}</strong>
-                                    <span style="background: #f9b232; color: #202124; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
-                                        P{{ $value->pivot->priority }}
-                                    </span>
+                                <div class="capsule">
+                                    <div class="capsule-top">
+                                        <span class="capsule-name">{{ $value->name }}</span>
+                                        <span class="capsule-badge">P{{ $value->pivot->priority }}</span>
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
                     @endif
 
-                    <!-- Preferencias de Liderazgo -->
                     @if($candidate->leadershipPreferences && $candidate->leadershipPreferences->count() > 0)
-                    <div class="resume-block" style="background: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 30px;">
-                        <h4 style="margin-bottom: 20px; color: #312683; border-bottom: 2px solid #f9b232; padding-bottom: 10px;">Características que Busca en un Líder</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                    <div class="resume-block profile-card">
+                        <h4 class="section-title">Caracteristicas que Busca en un Lider</h4>
+                        <div class="grid-capsules">
                             @foreach($candidate->leadershipPreferences->sortBy('pivot.importance') as $pref)
-                            <div style="background: #f9f9f9; padding: 12px 15px; border-radius: 6px; border-left: 3px solid #312683;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <strong style="color: #312683; font-size: 14px;">{{ $pref->name }}</strong>
-                                    <span style="background: #312683; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
-                                        I{{ $pref->pivot->importance }}
-                                    </span>
+                                <div class="capsule">
+                                    <div class="capsule-top">
+                                        <span class="capsule-name">{{ $pref->name }}</span>
+                                        <span class="capsule-badge">I{{ $pref->pivot->importance }}</span>
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
                     @endif
                 </div>
 
-                <!-- Sidebar -->
                 <div class="col-lg-4 col-md-12">
-                    <!-- Contact Card -->
-                    <div class="sidebar-widget" style="background: #f8f9fa; padding: 25px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 20px;">
-                        <h4 style="margin-bottom: 20px; color: #312683;">Contact Information</h4>
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-bottom: 15px; display: flex; align-items: center;">
-                                <span class="icon flaticon-mail" style="color: #f9b232; margin-right: 10px; font-size: 18px;"></span>
-                                <a href="mailto:{{ $candidate->email }}" style="color: #333; text-decoration: none;">{{ $candidate->email }}</a>
+                    <div class="sidebar-widget profile-card">
+                        <h4 class="section-title">Contact Information</h4>
+                        <ul class="sidebar-list">
+                            <li>
+                                <span class="icon flaticon-mail icon-soft"></span>
+                                <a href="mailto:{{ $candidate->email }}">{{ $candidate->email }}</a>
                             </li>
                             @if($candidate->phone_number)
-                                <li style="margin-bottom: 15px; display: flex; align-items: center;">
-                                    <span class="icon flaticon-phone" style="color: #f9b232; margin-right: 10px; font-size: 18px;"></span>
-                                    <a href="tel:{{ $candidate->phone_number }}" style="color: #333; text-decoration: none;">{{ $candidate->phone_number }}</a>
+                                <li>
+                                    <span class="icon flaticon-phone icon-soft"></span>
+                                    <a href="tel:{{ $candidate->phone_number }}">{{ $candidate->phone_number }}</a>
                                 </li>
                             @endif
-                            <li style="margin-bottom: 15px; display: flex; align-items: center;">
-                                <span class="icon flaticon-map-locator" style="color: #f9b232; margin-right: 10px; font-size: 18px;"></span>
-                                <span style="color: #333;">{{ $candidate->city->name ?? '-' }}, {{ $candidate->city->state->code ?? '-' }}</span>
+                            <li>
+                                <span class="icon flaticon-map-locator icon-soft"></span>
+                                <span>{{ $candidate->city->name ?? '-' }}, {{ $candidate->city->state->code ?? '-' }}</span>
                             </li>
                         </ul>
-                        <div style="margin-top: 25px;">
-                            <a href="tel:{{ $candidate->phone_number }}" class="theme-btn btn-style-one" style="width: 100%; text-align: center; display: block;">
+                        @if($candidate->phone_number)
+                            <a href="tel:{{ $candidate->phone_number }}" class="theme-btn btn-style-one contact-btn">
                                 <span class="btn-title">Contact Candidate</span>
                             </a>
-                        </div>
+                        @endif
                     </div>
 
-                    <!-- Quick Stats -->
-                    <div class="sidebar-widget" style="background: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #e0e0e0;">
-                        <h4 style="margin-bottom: 20px; color: #312683;">Quick Stats</h4>
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef;">
-                                <strong style="color: #666;">Experience:</strong>
-                                <span style="float: right; color: #333;">{{ $candidate->workExperiences->count() }} positions</span>
+                    <div class="sidebar-widget profile-card">
+                        <h4 class="section-title">Quick Stats</h4>
+                        <ul class="stats-list">
+                            <li>
+                                <strong>Experience:</strong>
+                                <span>{{ $candidate->workExperiences->count() }} positions</span>
                             </li>
-                            <li style="margin-bottom: 0;">
-                                <strong style="color: #666;">Education:</strong>
-                                <span style="float: right; color: #333;">{{ $candidate->educationLevel->name ?? '-' }}</span>
+                            <li>
+                                <strong>Education:</strong>
+                                <span>{{ $candidate->educationLevel->name ?? '-' }}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Back Button -->
-            <div class="row" style="margin-top: 30px;">
+            <div class="row back-row">
                 <div class="col-12">
                     <a href="{{ route('web.candidate.index') }}" class="theme-btn btn-style-three">
-                        <span class="btn-title">← Back to Candidates</span>
+                        <span class="btn-title">&larr; Back to Candidates</span>
                     </a>
                 </div>
             </div>
         </div>
     </section>
-    <!--End Candidate Detail Section -->
 
 @endsection

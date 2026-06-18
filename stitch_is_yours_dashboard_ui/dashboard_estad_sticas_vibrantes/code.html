@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard: Estadísticas Vibrantes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f9f9ff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-secondary-fixed": "#0f0069",
+                    "tertiary-fixed-dim": "#c6c5d4",
+                    "surface-container-high": "#e2e8f8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#140067",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#5a52ae",
+                    "primary-fixed-dim": "#c5c0ff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#e2e1f1",
+                    "tertiary": "#1f212c",
+                    "surface-variant": "#dce2f3",
+                    "primary": "#1a086e",
+                    "surface-container-highest": "#dce2f3",
+                    "on-tertiary-fixed": "#191b26",
+                    "outline-variant": "#c8c4d3",
+                    "on-tertiary-fixed-variant": "#454652",
+                    "inverse-primary": "#c5c0ff",
+                    "secondary-container": "#655ef9",
+                    "surface-dim": "#d3daea",
+                    "on-surface": "#151c27",
+                    "on-secondary-fixed-variant": "#3424ca",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2a313d",
+                    "background": "#f9f9ff",
+                    "surface-container": "#e7eefe",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#e2dfff",
+                    "on-tertiary-container": "#9f9fad",
+                    "secondary": "#4b41df",
+                    "tertiary-container": "#353642",
+                    "error": "#ba1a1a",
+                    "surface": "#f9f9ff",
+                    "primary-container": "#312783",
+                    "on-primary-fixed-variant": "#423994",
+                    "on-secondary-container": "#fffbff",
+                    "on-primary": "#ffffff",
+                    "on-background": "#151c27",
+                    "surface-container-low": "#f0f3ff",
+                    "primary-fixed": "#e4dfff",
+                    "outline": "#787583",
+                    "on-surface-variant": "#474551",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "on-primary-container": "#9c94f5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "base": "4px",
+                    "xs": "8px",
+                    "sm": "16px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "margin": "32px",
+                    "lg": "40px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Manrope"],
+                    "body-base": ["Inter"],
+                    "display-lg": ["Manrope"],
+                    "label-bold": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "body-base": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1a086e 0%, #4b41df 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-surface-bright font-body-base text-on-surface">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#312783] dark:bg-slate-950 flex flex-col py-6 space-y-2 border-r border-white/10 shadow-2xl shadow-indigo-900/50 z-50">
+<div class="px-6 mb-8 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white">dashboard_customize</span>
+</div>
+<div>
+<h2 class="text-white font-headline-md text-lg leading-tight">Core Panel</h2>
+<p class="text-indigo-100/60 font-label-bold text-[10px] uppercase">Enterprise Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center px-4 py-3 bg-white/15 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-lg transform transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-sm">Overview</span>
+</a>
+<a class="flex items-center px-4 py-3 text-indigo-100/70 hover:text-white hover:bg-white/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="monitoring">monitoring</span>
+<span class="font-manrope text-sm">Analytics</span>
+</a>
+<a class="flex items-center px-4 py-3 text-indigo-100/70 hover:text-white hover:bg-white/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="table_chart">table_chart</span>
+<span class="font-manrope text-sm">Data Tables</span>
+</a>
+<a class="flex items-center px-4 py-3 text-indigo-100/70 hover:text-white hover:bg-white/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="description">description</span>
+<span class="font-manrope text-sm">Forms</span>
+</a>
+<a class="flex items-center px-4 py-3 text-indigo-100/70 hover:text-white hover:bg-white/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="assessment">assessment</span>
+<span class="font-manrope text-sm">Reports</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<div class="bg-gradient-to-br from-secondary-container to-primary-container p-4 rounded-xl mb-6 shadow-lg shadow-primary/20">
+<p class="text-white font-label-bold text-[10px] mb-1">PRO FEATURES</p>
+<p class="text-white font-headline-md text-sm mb-3">Upgrade Pro</p>
+<button class="w-full py-2 bg-white text-primary font-label-bold text-xs rounded-lg hover:bg-indigo-50 transition-colors">UNLOCK NOW</button>
+</div>
+<a class="flex items-center px-4 py-3 text-indigo-100/70 hover:text-white hover:bg-white/5 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+<span class="font-manrope text-sm">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between px-6 py-3 w-full z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-indigo-100 dark:border-indigo-900/30 sticky top-0 shadow-[0_4px_20px_-5px_rgba(49,39,131,0.15)]">
+<div class="flex items-center">
+<h1 class="font-manrope text-xl font-black tracking-tight text-indigo-900 dark:text-white">Dashboard: Estadísticas Vibrantes</h1>
+</div>
+<div class="flex-1 max-w-xl mx-12">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-slate-50 border-none rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-primary/20 transition-all text-sm font-body-base" placeholder="Buscar métricas, reportes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-indigo-50 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-indigo-50 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-indigo-50 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-px bg-slate-200 mx-2"></div>
+<div class="flex items-center space-x-3">
+<img alt="User profile" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="A professional headshot of a young creative director with a warm smile, set against a blurred modern office background. The lighting is bright and airy with a cool blue tint, maintaining a premium professional look. High resolution digital photography, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeJ_HOUkePZbzVP6pVIYFeEDE_ZmkTzyPClIqgJK2v7a20k1RbkDqWo_OwO-cAL7GEKlgCDfZnc14XtLQewAqtmJDwPG1kgG9j-bADY10KkLSryiqEuMJuAjwhbhPckeR1_nxUzHlAbTzEF5LlZ7RuTtIOWS2YT6sXMdbHz4zzTKTEDXXw_j6uhIVcSitbuAAKjs4e1pM97cTduEq7CHpyS-ucRelsS6QmeJQhqoRm1fCXuie0us9vpxBXQv29zBp7P_eV5rHE_3Q"/>
+<div class="hidden lg:block text-right">
+<p class="text-sm font-bold text-on-surface leading-tight">Alex Rivera</p>
+<p class="text-[10px] font-label-bold text-slate-500">Premium Admin</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-8 space-y-8 max-w-[1600px] mx-auto">
+<!-- KPI Section (Asymmetric Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- KPI Card 1 -->
+<div class="glass-card p-6 rounded-2xl shadow-[0_8px_30px_rgb(49,39,131,0.08)] border-t border-white flex flex-col justify-between group hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-indigo-50 rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="flex items-center text-xs font-label-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span>+12.5%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 font-label-bold text-xs mb-1">REVENUE TOTAL</p>
+<h3 class="font-manrope text-2xl font-extrabold text-on-surface">$128,430.00</h3>
+</div>
+<div class="mt-4 h-12 w-full bg-indigo-50/50 rounded-lg overflow-hidden flex items-end">
+<div class="w-full h-full flex items-end gap-1 px-1">
+<div class="bg-primary/20 w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[55%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[85%] rounded-t-sm"></div>
+<div class="bg-primary/20 w-full h-[70%] rounded-t-sm"></div>
+<div class="bg-primary/40 w-full h-[95%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[80%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="glass-card p-6 rounded-2xl shadow-[0_8px_30px_rgb(49,39,131,0.08)] border-t border-white flex flex-col justify-between group hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-indigo-50 rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<span class="flex items-center text-xs font-label-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span>+4.2%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 font-label-bold text-xs mb-1">USUARIOS ACTIVOS</p>
+<h3 class="font-manrope text-2xl font-extrabold text-on-surface">45,821</h3>
+</div>
+<div class="mt-4 h-12 w-full bg-indigo-50/50 rounded-lg overflow-hidden flex items-end">
+<div class="w-full h-full flex items-end gap-1 px-1">
+<div class="bg-secondary/20 w-full h-[30%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[40%] rounded-t-sm"></div>
+<div class="bg-secondary/20 w-full h-[70%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-secondary/40 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[75%] rounded-t-sm"></div>
+<div class="bg-secondary w-full h-[90%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="glass-card p-6 rounded-2xl shadow-[0_8px_30px_rgb(49,39,131,0.08)] border-t border-white flex flex-col justify-between group hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-indigo-50 rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</div>
+<span class="flex items-center text-xs font-label-bold text-rose-600 bg-rose-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_down</span>-2.1%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 font-label-bold text-xs mb-1">ORDENES PROCESADAS</p>
+<h3 class="font-manrope text-2xl font-extrabold text-on-surface">1,244</h3>
+</div>
+<div class="mt-4 h-12 w-full bg-indigo-50/50 rounded-lg overflow-hidden flex items-end">
+<div class="w-full h-full flex items-end gap-1 px-1">
+<div class="bg-indigo-300 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-indigo-300 w-full h-[70%] rounded-t-sm"></div>
+<div class="bg-indigo-300 w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-indigo-300 w-full h-[60%] rounded-t-sm"></div>
+<div class="bg-indigo-300 w-full h-[50%] rounded-t-sm"></div>
+<div class="bg-indigo-300 w-full h-[45%] rounded-t-sm"></div>
+<div class="bg-indigo-300 w-full h-[40%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- KPI Card 4 -->
+<div class="glass-card p-6 rounded-2xl shadow-[0_8px_30px_rgb(49,39,131,0.08)] border-t border-white flex flex-col justify-between group hover:-translate-y-1 transition-transform">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-indigo-50 rounded-xl text-primary">
+<span class="material-symbols-outlined" data-icon="speed">speed</span>
+</div>
+<span class="flex items-center text-xs font-label-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span>+18%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 font-label-bold text-xs mb-1">TASA CONVERSIÓN</p>
+<h3 class="font-manrope text-2xl font-extrabold text-on-surface">3.84%</h3>
+</div>
+<div class="mt-4 h-12 w-full bg-indigo-50/50 rounded-lg overflow-hidden flex items-end">
+<div class="w-full h-full flex items-end gap-1 px-1">
+<div class="bg-primary/20 w-full h-[20%] rounded-t-sm"></div>
+<div class="bg-primary/30 w-full h-[35%] rounded-t-sm"></div>
+<div class="bg-primary/40 w-full h-[55%] rounded-t-sm"></div>
+<div class="bg-primary/50 w-full h-[65%] rounded-t-sm"></div>
+<div class="bg-primary/60 w-full h-[80%] rounded-t-sm"></div>
+<div class="bg-primary/80 w-full h-[90%] rounded-t-sm"></div>
+<div class="bg-primary w-full h-[100%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Central Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Main Chart (Large Revenue) -->
+<div class="lg:col-span-2 glass-card p-8 rounded-3xl shadow-[0_12px_40px_-10px_rgba(49,39,131,0.1)] relative overflow-hidden">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="font-manrope text-xl font-bold text-on-surface">Rendimiento de Ingresos</h2>
+<p class="text-sm text-slate-500 font-body-base">Análisis comparativo de los últimos 6 meses</p>
+</div>
+<div class="flex bg-slate-100 p-1 rounded-lg">
+<button class="px-4 py-1.5 text-xs font-label-bold rounded-md bg-white text-primary shadow-sm">Mensual</button>
+<button class="px-4 py-1.5 text-xs font-label-bold text-slate-500 hover:text-primary transition-colors">Semanal</button>
+</div>
+</div>
+<div class="relative h-[350px] w-full mt-4 flex items-end space-x-6">
+<!-- Simulated Chart Grid -->
+<div class="absolute inset-0 flex flex-col justify-between py-2">
+<div class="border-b border-slate-100 w-full h-px"></div>
+<div class="border-b border-slate-100 w-full h-px"></div>
+<div class="border-b border-slate-100 w-full h-px"></div>
+<div class="border-b border-slate-100 w-full h-px"></div>
+<div class="border-b border-slate-100 w-full h-px"></div>
+</div>
+<!-- Bar Groups -->
+<div class="relative z-10 flex-1 flex flex-col justify-end items-center h-full">
+<div class="w-12 bg-secondary/20 rounded-t-lg h-[40%] mb-1 relative group">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$12k</div>
+</div>
+<div class="w-12 bg-primary rounded-t-lg h-[65%] shadow-lg shadow-primary/20"></div>
+<p class="mt-4 text-[10px] font-label-bold text-slate-400">MAY</p>
+</div>
+<div class="relative z-10 flex-1 flex flex-col justify-end items-center h-full">
+<div class="w-12 bg-secondary/20 rounded-t-lg h-[45%] mb-1"></div>
+<div class="w-12 bg-primary rounded-t-lg h-[55%]"></div>
+<p class="mt-4 text-[10px] font-label-bold text-slate-400">JUN</p>
+</div>
+<div class="relative z-10 flex-1 flex flex-col justify-end items-center h-full">
+<div class="w-12 bg-secondary/20 rounded-t-lg h-[60%] mb-1"></div>
+<div class="w-12 bg-primary rounded-t-lg h-[75%]"></div>
+<p class="mt-4 text-[10px] font-label-bold text-slate-400">JUL</p>
+</div>
+<div class="relative z-10 flex-1 flex flex-col justify-end items-center h-full">
+<div class="w-12 bg-secondary/20 rounded-t-lg h-[55%] mb-1"></div>
+<div class="w-12 bg-primary rounded-t-lg h-[85%] shadow-lg shadow-primary/20"></div>
+<p class="mt-4 text-[10px] font-label-bold text-slate-400">AUG</p>
+</div>
+<div class="relative z-10 flex-1 flex flex-col justify-end items-center h-full">
+<div class="w-12 bg-secondary/20 rounded-t-lg h-[70%] mb-1"></div>
+<div class="w-12 bg-primary rounded-t-lg h-[92%]"></div>
+<p class="mt-4 text-[10px] font-label-bold text-slate-400">SEP</p>
+</div>
+<div class="relative z-10 flex-1 flex flex-col justify-end items-center h-full">
+<div class="w-12 bg-secondary/20 rounded-t-lg h-[65%] mb-1"></div>
+<div class="w-12 bg-primary rounded-t-lg h-[80%]"></div>
+<p class="mt-4 text-[10px] font-label-bold text-slate-400">OCT</p>
+</div>
+</div>
+</div>
+<!-- Traffic Source (Donut Chart) -->
+<div class="glass-card p-8 rounded-3xl shadow-[0_12px_40px_-10px_rgba(49,39,131,0.1)] flex flex-col">
+<h2 class="font-manrope text-xl font-bold text-on-surface mb-2">Fuentes de Tráfico</h2>
+<p class="text-sm text-slate-500 font-body-base mb-8">Distribución por canales</p>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<div class="w-48 h-48 rounded-full border-[20px] border-slate-100 flex items-center justify-center relative">
+<!-- Custom Donut Simulation -->
+<div class="absolute inset-0 w-48 h-48 rounded-full border-[20px] border-primary border-t-transparent border-l-transparent rotate-45"></div>
+<div class="absolute inset-0 w-48 h-48 rounded-full border-[20px] border-secondary border-b-transparent border-r-transparent -rotate-12"></div>
+<div class="text-center">
+<p class="text-3xl font-black text-primary">82%</p>
+<p class="text-[10px] font-label-bold text-slate-400">CONVERSION</p>
+</div>
+</div>
+<div class="mt-10 w-full space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-primary mr-3"></span>
+<span class="text-sm font-body-base text-slate-700">Búsqueda Directa</span>
+</div>
+<span class="text-sm font-bold">45%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-secondary mr-3"></span>
+<span class="text-sm font-body-base text-slate-700">Redes Sociales</span>
+</div>
+<span class="text-sm font-bold">30%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-indigo-300 mr-3"></span>
+<span class="text-sm font-body-base text-slate-700">Email Marketing</span>
+</div>
+<span class="text-sm font-bold">15%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<span class="w-3 h-3 rounded-full bg-slate-200 mr-3"></span>
+<span class="text-sm font-body-base text-slate-700">Otros</span>
+</div>
+<span class="text-sm font-bold">10%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Recent Activity & Secondary Metrics -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Recent Activity Log -->
+<div class="xl:col-span-2 glass-card rounded-3xl overflow-hidden shadow-[0_12px_40px_-10px_rgba(49,39,131,0.1)]">
+<div class="p-6 border-b border-indigo-50 flex justify-between items-center">
+<h2 class="font-manrope text-lg font-bold text-on-surface">Actividad Reciente</h2>
+<button class="text-primary font-label-bold text-xs hover:underline">Ver Historial Completo</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-indigo-50/30">
+<th class="px-6 py-4 text-[10px] font-label-bold text-slate-500 uppercase">Evento</th>
+<th class="px-6 py-4 text-[10px] font-label-bold text-slate-500 uppercase">Usuario</th>
+<th class="px-6 py-4 text-[10px] font-label-bold text-slate-500 uppercase">Estado</th>
+<th class="px-6 py-4 text-[10px] font-label-bold text-slate-500 uppercase">Monto</th>
+<th class="px-6 py-4 text-[10px] font-label-bold text-slate-500 uppercase">Fecha</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-indigo-50">
+<tr class="hover:bg-indigo-50/20 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg mr-3">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+</div>
+<span class="text-sm font-bold">Nueva Venta</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center">
+<img class="w-7 h-7 rounded-full mr-2 object-cover" data-alt="Close-up portrait of a smiling woman with glasses in a professional studio setting. The lighting is soft and warm, with a subtle blue backlighting that fits the vibrant modern dashboard style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfmO7sTD_dydSmSyQ3otNrxYzQFnb9Ii2pvOo5loaOZnah3pIwqfPW850W_6OeEn7zg6u6b7z4QAscYIBaDclFO9TNn7zTLbYBDwIADix48uoVUgOE8SzS6cy6GL-tqLp7fypMOjyzvtIgqRFfUSye0lIaHi2duRCn1nB8AMtfG7qNJCkjFCslH08AEOnz-UUbKQYGXaIa3cHBe18HMurF_BQ2gVBspU8vsEZrvcrGc3FjQXKHCC0AB9eX4E3ZvR5faJch7bccRX0"/>
+<span class="text-sm">Elena Morales</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold">COMPLETADO</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm font-extrabold">$1,250.00</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs text-slate-500">Hace 5 min</span>
+</td>
+</tr>
+<tr class="hover:bg-indigo-50/20 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="p-2 bg-blue-50 text-blue-600 rounded-lg mr-3">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<span class="text-sm font-bold">Registro Nuevo</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="w-7 h-7 rounded-full bg-slate-200 mr-2 flex items-center justify-center text-[10px] font-bold">JD</div>
+<span class="text-sm">Julian Diaz</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-bold">PROCESANDO</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm font-extrabold">--</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs text-slate-500">Hace 12 min</span>
+</td>
+</tr>
+<tr class="hover:bg-indigo-50/20 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center">
+<div class="p-2 bg-amber-50 text-amber-600 rounded-lg mr-3">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+<span class="text-sm font-bold">Fallo de Pago</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center">
+<img class="w-7 h-7 rounded-full mr-2 object-cover" data-alt="A medium shot of a man in a professional suit looking concerned at a tablet, captured in a modern office with glass walls. High-key lighting with cool corporate tones. Premium digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB76LWG2cwglcXYS0bdtRIXE0UyloiIIAn0Zu4ISM-G6cIPKFTKX8j4A1jvGMHyksDdjxjNDWPzDPzBC_4jUiX-yUj_8kTu2tFzUKgKzv-YyrtN7Weubry2RNMi0j8Th1u_ntARC9ULgNmJOcp40fKjsrOhJtY9a6_8gqxPtJ0UlaCH8rTthO9Llgkr0glbITYTGg2O9DpeBejTrzoMPKNxnWJvNT3dz606V3sr8NmLWjIodfKBvAMp053qHQk4m_T-eSJX4rjhhwE"/>
+<span class="text-sm">Marco Polo</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-bold">PENDIENTE</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm font-extrabold">$450.00</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs text-slate-500">Hace 45 min</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- World View / Map Stats -->
+<div class="glass-card rounded-3xl overflow-hidden shadow-[0_12px_40px_-10px_rgba(49,39,131,0.1)] flex flex-col">
+<div class="p-6 border-b border-indigo-50">
+<h2 class="font-manrope text-lg font-bold text-on-surface">Ventas por Región</h2>
+</div>
+<div class="flex-1 relative bg-slate-100 overflow-hidden">
+<!-- Abstract Map Representation -->
+<div class="absolute inset-0 opacity-40 mix-blend-multiply grayscale contrast-125" data-alt="A stylized, low-poly digital map of the world rendered in deep indigos and vibrant blues. The continents are defined by glowing cyan outlines and soft ambient shadows, creating a futuristic data visualization aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDC6ClFwbG4YZ6Si2CzhT6kZnfamfL3TflTdb_iTewaGLbeqWrrYz5wFQBreeyPqr5wLSPA7JWowvxdwtGM64UIgz2xcI5yFjfKDb-7lfLOvtGGlNTmr5X9XR_r60-1sXetLAoipq-iay1S8uyBY9IoAvarkUTvOsUWzGZHKe2Ss7_qedF5OSNu3J0wW_AdU5MWyzFL9gjOKLySN6Wl7PY5ZKHBsijK4QPWIi9ZSxzjrO60IMjoYE2hsXnZhz6NcW_ZYFVdw4Oa5y8'); background-size: cover;"></div>
+<!-- Pulsing Hotspots -->
+<div class="absolute top-1/4 left-1/3 w-4 h-4 bg-primary rounded-full animate-pulse shadow-[0_0_15px_rgba(26,8,110,0.6)]"></div>
+<div class="absolute top-1/2 left-1/4 w-3 h-3 bg-secondary rounded-full animate-pulse delay-75 shadow-[0_0_10px_rgba(75,65,223,0.6)]"></div>
+<div class="absolute bottom-1/3 right-1/4 w-5 h-5 bg-primary rounded-full animate-pulse delay-150 shadow-[0_0_20px_rgba(26,8,110,0.6)]"></div>
+<!-- Floating Region Card -->
+<div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur px-4 py-3 rounded-xl border border-white/50 shadow-lg">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold text-primary">Norte América</span>
+<span class="text-xs font-label-bold text-emerald-600">+15.4%</span>
+</div>
+<div class="w-full bg-slate-200 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full w-[75%]"></div>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-body-base">Europa Central</span>
+<span class="text-sm font-bold">$34,200</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-body-base">Asia Pacífico</span>
+<span class="text-sm font-bold">$12,900</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Dashboard relevant) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-br from-secondary to-primary text-white rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>
